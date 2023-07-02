@@ -13,6 +13,7 @@ interface TextAreaProps {
   error: FieldError | undefined;
   disabled?: boolean;
   className?: string;
+  defaultValue?: string;
 }
 
 const TextArea: FC<TextAreaProps> = ({
@@ -23,6 +24,7 @@ const TextArea: FC<TextAreaProps> = ({
   error,
   disabled,
   className,
+  defaultValue,
 }) => {
   return (
     <div>
@@ -35,6 +37,7 @@ const TextArea: FC<TextAreaProps> = ({
       <div className="mt-2">
         <textarea
           id={id}
+          defaultValue={defaultValue}
           placeholder={label}
           autoComplete={id}
           disabled={disabled}

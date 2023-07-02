@@ -1,17 +1,15 @@
-import MotorsList from "./components/MotorsList";
-import prisma from "@/app/libs/prismadb";
-import Container from "@/components/container/Container";
+import TopSection from "./components/sections/TopSection";
+import HowItWorksSection from "./components/sections/HowItWorksSection";
+import Benefits from "./components/sections/Benefits";
+import ContactSection from "./components/sections/ContactSection";
 
 export default async function Home() {
-  const data = await prisma.motor.findMany();
-
   return (
     <>
-      <Container>
-        <div className="flex min-h-screen flex-col items-center justify-between p-5">
-          <MotorsList data={data} />
-        </div>
-      </Container>
+      <TopSection />
+      <HowItWorksSection />
+      <Benefits />
+      <ContactSection />
     </>
   );
 }

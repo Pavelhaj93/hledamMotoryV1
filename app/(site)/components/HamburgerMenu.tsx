@@ -41,7 +41,7 @@ const HamburgerMenu: FC<HamburgerMenuProps> = ({ menu }) => {
           className={clsx(
             "opacity-1 block relative max-md:right-0 max-md:fixed right-3/4 max-md:pr-12 top-0 max-md:w-full w-645 max-md:h-full z-20 bg-white pt-28 pr-28 pb-12 pl-12 transition-all duration-500 ease-in-out",
             imageSrc === "/images/frontend/icon-hamburger.png" &&
-              "opacity-0 h-0"
+              "opacity-0 h-0 hidden"
           )}
         >
           {menu.map(({ title, href }, index) => {

@@ -5,20 +5,24 @@ import HamburgerMenu from "./HamburgerMenu";
 
 const siteMenu = [
   {
-    title: "Hledat další motor",
+    title: "Domů",
     href: "/",
+  },
+  {
+    title: "Hledat další motor",
+    href: "/vyhledat",
   },
   {
     title: "Starší motory",
-    href: "/",
+    href: "/motory/stare",
   },
   {
     title: "Repasované motory",
-    href: "/",
+    href: "/motory/repasovane",
   },
   {
     title: "O nás a kontakt",
-    href: "/",
+    href: "/o-nas-a-kontakt",
   },
 ];
 

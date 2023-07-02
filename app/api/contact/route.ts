@@ -1,3 +1,4 @@
+import { mailOptions, transporter } from "@/config/nodemailer";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
@@ -9,16 +10,13 @@ export async function POST(req: Request) {
       return new NextResponse("Missing fields", { status: 400 });
     }
 
-    // const contact = await prisma.contact.create({
-    //     data: {
-    //     name,
-    //     email,
-    //     phone,p
-    //     message,
-    //     },
-    // });
+    await transporter.sendMail({
+      ...mailOptions,
+      subject: `Nová zpráva od ${name}`,
+      text: message,
+      html: `<h2>Nová zpráva od ${name}</h2><br></br><p>${message}</p>`,
+    });
 
-    console.log(body);
     return NextResponse.json(body);
   } catch (err) {
     console.error(err);

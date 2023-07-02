@@ -28,7 +28,7 @@ const HowItWorksSection = () => {
                   />
                 </div>
                 <p className="text-xl mt-5 px-5 w-64">
-                  Poptáte díl který hledáte
+                  Poptáte motor který hledáte
                 </p>
               </div>
               <div className="navigators-row h-22 flex flex-row justify-center items-center my-6">
@@ -44,7 +44,7 @@ const HowItWorksSection = () => {
                   />
                 </div>
                 <p className="text-xl mt-5 px-5 w-64">
-                  Oslovíme za Vás všechny prodejce použitých autodílů
+                  Oslovíme za Vás všechny prodejce motorů
                 </p>
               </div>
               <div className="navigators-row visible-t h-22 max-lg:block hidden  justify-center items-center py-6 max-lg:flex-row">
@@ -101,7 +101,7 @@ const HowItWorksSection = () => {
                   />
                 </div>
                 <p className="text-xl mt-5 px-5 w-96">
-                  Prodejce použitých autodílů Vás kontaktuje a domluvíte se na
+                  Prodejce použitých motorů Vás kontaktuje a domluvíte se na
                   způsobu předání
                 </p>
               </div>
@@ -122,7 +122,7 @@ const HowItWorksSection = () => {
                     height={78}
                   />
                 </div>
-                <p className="text-xl mt-5 px-5 w-64">Máte díl u sebe</p>
+                <p className="text-xl mt-5 px-5 w-64">Máte motor u sebe</p>
               </div>
               <div className="navigators-row visible-t h-22 hidden justify-center items-center py-6 max-lg:flex-row">
                 <div className="block h-1 max-lg:max-lg:w-14 w-24 bg-red-500 rotate-45 max-lg:w-15 max-lg:rotate-90 "></div>
@@ -131,7 +131,7 @@ const HowItWorksSection = () => {
           </div>
         </div>
         <Button color="primary" arrow>
-          Poptat díl
+          Poptat motor
         </Button>
       </Container>
     </section>
