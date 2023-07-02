@@ -30,8 +30,6 @@ const MessageToast = forwardRef<HTMLDivElement, MessageToastProps>(
       closeSnackbar(id);
     }, [id, closeSnackbar]);
 
-    console.log("called");
-
     return (
       <SnackbarContent ref={ref}>
         <Alert

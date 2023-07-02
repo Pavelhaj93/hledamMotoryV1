@@ -1,40 +1,23 @@
-"use client";
-
-import Button from "@/components/Button";
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import MotorsDataGrid from "../components/MotorsDataGrid";
-
-import MotorDialog from "../components/dialogs/MotorDialog";
-import { Mark } from "@prisma/client";
+import Container from "@/components/container/Container";
 
 const AdminPage = () => {
-  const [marks, setMarks] = useState<Array<Mark["name"]> | []>([]);
-  const [openMotorModal, setOpenMotorModal] = useState<boolean>(false);
-
-  useEffect(() => {
-    axios.get("/api/marks").then((res) => {
-      const data = res.data.map((mark: Mark) => mark.name);
-      setMarks(data);
-    });
-  }, []);
-
   return (
-    <>
-      <div className="w-full flex justify-end p-5">
-        <Button onClick={() => setOpenMotorModal(true)}>Novy motor</Button>
+    <Container>
+      <div className="w-full h-480 flex flex-row justify-between gap-10 p-10">
+        <a
+          href="/admin/old"
+          className="w-1/2 border-s-violet-100 border-2 h-full align-middle items-center justify-center flex flex-col cursor-pointer"
+        >
+          <h1 className="text-3xl font-bold">Staré</h1>
+        </a>
+        <a
+          href="/admin/repas"
+          className="w-1/2 border-s-violet-100 border-2 h-full align-middle items-center justify-center flex flex-col cursor-pointer"
+        >
+          <h1 className="text-3xl font-bold">Repas</h1>
+        </a>
       </div>
-      <div className="p-5">
-        <MotorsDataGrid marks={marks} />
-      </div>
-
-      <MotorDialog
-        open={openMotorModal}
-        onClose={() => setOpenMotorModal(false)}
-        marks={marks}
-        variant="create"
-      />
-    </>
+    </Container>
   );
 };
 

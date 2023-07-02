@@ -2,8 +2,8 @@
 
 import Dialog from "@/components/modal/Dialog";
 import {
-  Alert,
   Autocomplete,
+  Chip,
   FormControl,
   FormHelperText,
   Stack,
@@ -12,29 +12,23 @@ import {
 import axios from "axios";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import React, { FC, useEffect } from "react";
+import { FC } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
-import { Motor } from "@prisma/client";
-import { useRouter } from "next/navigation";
+import { Mark, Motor } from "@prisma/client";
 import useMessage from "@/app/hooks/useMessage";
+import { CldUploadButton } from "next-cloudinary";
+import Image from "next/image";
+import CloudUploadOutlinedIcon from "@mui/icons-material/CloudUploadOutlined";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 
 interface MotorDialogProps {
   open: boolean;
   onClose: () => void;
-  marks: Mark["name"][];
   variant: "create" | "edit";
   motor?: Motor;
+  motorsVariant: "repas" | "old";
 }
-
-interface Mark {
-  id: string;
-  name: string;
-}
-
-export const Refetch = () => {
-  console.log("refetch");
-};
 
 const formSchema = z.object({
   id: z.string().optional(),
@@ -49,6 +43,7 @@ const formSchema = z.object({
     Number,
     z.number({ invalid_type_error: "Cena musí obsahovat čísla" })
   ),
+  image: z.string().optional(),
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -56,14 +51,35 @@ type FormValues = z.infer<typeof formSchema>;
 const MotorDialog: FC<MotorDialogProps> = ({
   open,
   onClose,
-  marks,
   variant,
   motor,
+  motorsVariant,
 }) => {
+  const message = useMessage();
+  const queryClient = useQueryClient();
+
+  const { data } = useQuery<Mark[]>(
+    "marks",
+    async () => {
+      const { data } = await axios.get("/api/marks");
+      return data;
+    },
+    {
+      onError: (error) => {
+        message.error(error as string);
+        console.error(error);
+      },
+    }
+  );
+
+  const dataMarks = data?.map((mark) => mark.name);
+
   const {
     control,
     handleSubmit,
     reset,
+    watch,
+    setValue,
     formState: { isSubmitting },
   } = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -73,37 +89,71 @@ const MotorDialog: FC<MotorDialogProps> = ({
       description: motor?.description ?? undefined,
       markName: motor?.markName ?? undefined,
       price: motor?.price ?? undefined,
+      image: motor?.image ?? undefined,
     },
   });
 
-  const message = useMessage();
+  const image = watch("image");
 
-  const onSubmit: SubmitHandler<FormValues> = (data) => {
-    if (variant === "create") {
-      axios
-        .post("/api/admin/motor/create", {
-          ...data,
-        })
-        .catch((err) => {
-          message.error(err.response.data.message);
-        })
-        .then(() => {
-          message.success("Motor byl úspěšně vytvořen");
-        });
-    } else {
-      axios
-        .put(`/api/admin/${motor?.id}`, {
-          ...data,
-        })
-        .catch((err) => {
-          message.error(err.response.data.message);
-        })
-        .then(() => {
-          message.success("Motor byl úspěšně upraven");
-        });
+  const handleUpload = (result: any) => {
+    setValue("image", result?.info?.secure_url, {
+      shouldValidate: true,
+    });
+  };
+
+  const createMutation = useMutation(
+    async (formValues: FormValues) => {
+      const { data } = await axios.post(`/api/admin/${motorsVariant}/create`, {
+        ...formValues,
+      });
+      return data;
+    },
+    {
+      onSuccess: () => {
+        message.success("Motor byl úspěšně vytvořen");
+        queryClient.invalidateQueries("motors");
+      },
+      onError: (error) => {
+        message.error(error as string);
+      },
+      onSettled: () => {
+        reset();
+        onClose();
+      },
     }
-    reset();
-    onClose();
+  );
+
+  const editMutation = useMutation(
+    async (formValues: FormValues) => {
+      const { data } = await axios.put(
+        `/api/admin/${motorsVariant}/${formValues.id}`,
+        {
+          ...formValues,
+        }
+      );
+      return data;
+    },
+    {
+      onSuccess: () => {
+        message.success("Motor byl úspěšně upraven");
+        queryClient.invalidateQueries("motors");
+      },
+      onError: (error) => {
+        message.error(error as string);
+      },
+      onSettled: () => {
+        reset();
+        onClose();
+      },
+    }
+  );
+
+  const onSubmit: SubmitHandler<FormValues> = async (formValues) => {
+    if (variant === "create") {
+      createMutation.mutate(formValues);
+    } else {
+      editMutation.mutate(formValues);
+    }
   };
 
   return (
@@ -112,14 +162,9 @@ const MotorDialog: FC<MotorDialogProps> = ({
       onClose={onClose}
       fullWidth
       title={variant === "create" ? "Nový motor" : "Upravit motor"}
-      submitTitle="Vytvorit"
       onSubmit={handleSubmit(onSubmit)}
       submitDisabled={isSubmitting}
     >
-      {/* if error from response then show alert 
-       {Object.values(errors).length ? (
-        <Alert severity="error">{errors.root?.message}</Alert>
-      ) : null}  */}
       <Stack spacing={2}>
         <Controller
           name="name"
@@ -159,7 +204,7 @@ const MotorDialog: FC<MotorDialogProps> = ({
                 value={field.value}
                 onChange={(_event, value) => field.onChange(value)}
                 placeholder="Zadajte znacku motoru"
-                options={marks}
+                options={dataMarks ?? []}
                 renderInput={(params) => (
                   <TextField {...params} label="Znacka motoru" />
                 )}
@@ -182,8 +227,39 @@ const MotorDialog: FC<MotorDialogProps> = ({
             </FormControl>
           )}
         />
+        <Controller
+          name="image"
+          control={control}
+          render={({ field, fieldState }) => (
+            <FormControl size="small" error={!!fieldState.error}>
+              <div className="flex flex-col justify-center items-center gap-5">
+                <Image
+                  src={image ?? motor?.image ?? "/images/placeholder.png"}
+                  alt="test"
+                  width={400}
+                  height={400}
+                />
+                <CldUploadButton
+                  options={{ maxFiles: 1 }}
+                  onUpload={handleUpload}
+                  uploadPreset="x9zk83j9"
+                >
+                  <Chip
+                    className="flex flex-row gap-5"
+                    label="Nahrát obrázek"
+                    clickable
+                    icon={<CloudUploadOutlinedIcon />}
+                  />
+                </CldUploadButton>
+
+                {!!fieldState.error && (
+                  <FormHelperText>{fieldState.error?.message}</FormHelperText>
+                )}
+              </div>
+            </FormControl>
+          )}
+        />
       </Stack>
-      Zde bude input pro image
     </Dialog>
   );
 };

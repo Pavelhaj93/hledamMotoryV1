@@ -2,9 +2,12 @@ import clsx from "clsx";
 import AuthContext from "./context/AuthContext";
 
 import "./globals.css";
-import { Inter } from "next/font/google";
+import { Inter, Raleway } from "next/font/google";
+import { ReactQueryProvider } from "./context/ReactQueryProvider";
+import { SnackBarProvider } from "./context/SnackBarProvider";
+import { MaterialThemeProvider } from "./context/MaterialThemeProvider";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Raleway({ subsets: ["latin"] });
 
 export const metadata = {
   title: "Create Next App",
@@ -18,8 +21,16 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={clsx(`w-full`, inter.className)}>
-        <AuthContext>{children}</AuthContext>
+      <body className={clsx(`w-screen`, inter.className)}>
+        {/* <main className="border-box h-full w-full"> */}
+        <MaterialThemeProvider>
+          <SnackBarProvider>
+            <ReactQueryProvider>
+              <AuthContext>{children}</AuthContext>
+            </ReactQueryProvider>
+          </SnackBarProvider>
+        </MaterialThemeProvider>
+        {/* </main> */}
       </body>
     </html>
   );

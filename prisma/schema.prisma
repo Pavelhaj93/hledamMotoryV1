@@ -52,10 +52,24 @@ model Motor {
   mark Mark @relation(fields: [markName], references: [name], onDelete: Cascade)
 }
 
+model OldMotor {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  markName    String
+  name        String
+  description String?
+  image       String?
+  price       Float?
+  createdAt   DateTime? @default(now())
+  updatedAt   DateTime? @updatedAt
+
+  mark Mark @relation(fields: [markName], references: [name], onDelete: Cascade)
+}
+
 model Mark {
-  id        String    @id @default(auto()) @map("_id") @db.ObjectId
-  name      String    @unique
-  createdAt DateTime? @default(now())
-  updatedAt DateTime? @updatedAt
+  id        String     @id @default(auto()) @map("_id") @db.ObjectId
+  name      String     @unique
+  createdAt DateTime?  @default(now())
+  updatedAt DateTime?  @updatedAt
   Motor     Motor[]
+  OldMotor  OldMotor[]
 }

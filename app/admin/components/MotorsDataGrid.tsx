@@ -2,46 +2,54 @@
 
 import AdminDataGrid from "@/components/dataGrid/AdminDataGrid";
 import axios from "axios";
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useState } from "react";
 import { getColumns } from "./Motors.columns";
 
 import DeleteMotorDialog from "./dialogs/DeleteMotorDialog";
-import { Mark, Motor } from "@prisma/client";
+import { Motor } from "@prisma/client";
 import MotorDialog from "./dialogs/MotorDialog";
+import useMessage from "@/app/hooks/useMessage";
+import { useQuery } from "react-query";
 
 interface MotorsDataGridProps {
-  marks: Array<Mark["name"]>;
+  motorsVariant: "repas" | "old";
 }
 
-const MotorsDataGrid: FC<MotorsDataGridProps> = ({ marks }) => {
-  const [motors, setMotors] = useState([]);
-  const [loading, setLoading] = useState<boolean>(true);
+const MotorsDataGrid: FC<MotorsDataGridProps> = ({ motorsVariant }) => {
+  const message = useMessage();
+
   const [openUpdateModal, setOpenUpdateModal] = useState<Motor | null>(null);
   const [openDeleteModal, setOpenDeleteModal] = useState<Motor | null>(null);
 
-  useEffect(() => {
-    setLoading(true);
-    axios
-      .get("/api/admin/motors")
-      .then((res) => {
-        setMotors(res.data);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, []);
+  const { data, isLoading, error } = useQuery(
+    "motors",
+    async () => {
+      const { data } = await axios.get(`/api/admin/${motorsVariant}/motors`);
+      return data;
+    },
+    {
+      onError: (error) => {
+        message.error(error as string);
+        console.error(error);
+      },
+    }
+  );
 
-  if (!motors) {
+  if (!data) {
     return null;
+  }
+
+  if (isLoading) {
+    return <div>Loading...</div>;
   }
 
   return (
     <>
       <AdminDataGrid
         disableColumnMenu
-        rows={motors}
+        rows={data}
         columns={getColumns(setOpenUpdateModal, setOpenDeleteModal)}
-        loading={loading}
+        loading={isLoading}
         hideFooter
         autoHeight
       />
@@ -49,9 +57,9 @@ const MotorsDataGrid: FC<MotorsDataGridProps> = ({ marks }) => {
         <MotorDialog
           open={!!openUpdateModal}
           onClose={() => setOpenUpdateModal(null)}
-          marks={marks}
           motor={openUpdateModal}
           variant="edit"
+          motorsVariant={motorsVariant}
         />
       )}
 
@@ -59,6 +67,7 @@ const MotorsDataGrid: FC<MotorsDataGridProps> = ({ marks }) => {
         open={!!openDeleteModal}
         onClose={() => setOpenDeleteModal(null)}
         motor={openDeleteModal}
+        motorsVariant={motorsVariant}
       />
     </>
   );

@@ -1,7 +1,12 @@
 "use client";
 
 import clsx from "clsx";
-import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
+import {
+  FieldError,
+  FieldErrors,
+  FieldValues,
+  UseFormRegister,
+} from "react-hook-form";
 
 import React, { FC } from "react";
 
@@ -11,8 +16,9 @@ interface InputProps {
   type?: string;
   required?: boolean;
   register: UseFormRegister<FieldValues>;
-  errors: FieldErrors;
+  error: FieldError | undefined;
   disabled?: boolean;
+  className?: string;
 }
 
 const Input: FC<InputProps> = ({
@@ -21,14 +27,15 @@ const Input: FC<InputProps> = ({
   type,
   required,
   register,
-  errors,
+  error,
   disabled,
+  className,
 }) => {
   return (
     <div>
       <label
         htmlFor={id}
-        className="block text-sm font-medium leading-6 text-gray-700"
+        className="block text-xl font-normal mb-7 leading-6 text-gray-700 max-lg:hidden"
       >
         {label}
       </label>
@@ -36,6 +43,7 @@ const Input: FC<InputProps> = ({
         <input
           id={id}
           type={type}
+          placeholder={label}
           autoComplete={id}
           disabled={disabled}
           {...register(id, { required })}
@@ -44,26 +52,36 @@ const Input: FC<InputProps> = ({
           form-input
           block 
             w-full
-            rouned-md
+            max-lg:rounded-md
+            h-14
             border-0
+            mb-5
             py-1.5
+            bg-gray-50
             text-gray-900
-            shadow-sm
-            ring-1
-            ring-inset
-            ring-gray-300
+            shadow-sm                        
+            
+            
             placeholder:text-gray-400
-            focus:ring-2
-            focus:ring-inset
-            focus:ring-sky-600
-            sm:text-sm
+            placeholder:opacity-0
+            placeholder:max-lg:opacity-100
+            placeholder:text-center
+            max-lg:focus:ring-1
+            max-lg:focus:ring-gray-300
+            focus:ring-0
+            text-lg
             sm:leading-6
-          
           `,
-            errors[id] && "focus:ring-rose500",
-            disabled && "opacity-50 cursor-default"
+            error && "focus:ring-rose500",
+            disabled && "opacity-50 cursor-default",
+            className
           )}
         />
+        {error && (
+          <span className="text-red-500 text-sm max-lg:text-center">
+            {error.message}
+          </span>
+        )}
       </div>
     </div>
   );

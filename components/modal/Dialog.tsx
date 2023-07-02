@@ -5,7 +5,6 @@ import Close from "@mui/icons-material/Close";
 import {
   Box,
   Breakpoint,
-  Button,
   ButtonProps,
   Dialog as MuiDialog,
   DialogActions,
@@ -14,6 +13,7 @@ import {
   DialogTitle,
   IconButton,
 } from "@mui/material";
+import Button from "../Button";
 
 export const testIds = {
   cancel: "dialog-cancel",
@@ -87,8 +87,7 @@ const Dialog: React.FC<DialogProps> = ({
         <DialogActions sx={{ p: 3 }}>
           <Button
             onClick={onCancel ?? onClose}
-            color={secondaryColor}
-            autoFocus
+            color="secondary"
             data-testid={testIds.cancel}
           >
             {cancelTitle ?? "Zavřít"}
@@ -97,7 +96,7 @@ const Dialog: React.FC<DialogProps> = ({
             <Button
               onClick={onSubmit}
               disabled={submitDisabled}
-              color={color}
+              color="primary"
               data-testid={testIds.submit}
             >
               {submitTitle ?? "Potvrdit"}

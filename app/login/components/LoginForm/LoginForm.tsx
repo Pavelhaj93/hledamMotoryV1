@@ -67,7 +67,7 @@ const LoginForm = () => {
                 label="email"
                 type="email"
                 register={register}
-                errors={errors}
+                error={errors.email}
                 disabled={isLoading}
               />
               <Input
@@ -75,7 +75,7 @@ const LoginForm = () => {
                 label="Password"
                 type="password"
                 register={register}
-                errors={errors}
+                error={errors.password}
                 disabled={isLoading}
               />
             </>
