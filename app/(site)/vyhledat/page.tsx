@@ -1,7 +1,9 @@
-"use client";
+import SearchSection from "./components/SearchSection";
 
-const SearchPage = () => {
-  return <div>page</div>;
-};
-
-export default SearchPage;
+export default async function SearchPage() {
+  return (
+    <>
+      <SearchSection />
+    </>
+  );
+}

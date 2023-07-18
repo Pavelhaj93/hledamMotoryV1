@@ -4,7 +4,7 @@ import React from "react";
 
 const Section404 = () => {
   return (
-    <Container>
+    <Container className="h-screen">
       <div className="flex flex-col gap-10 justify-center items-center">
         <h1 className="text-7xl font-bold text-red-500 uppercase text-left">
           404

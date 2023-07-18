@@ -14,6 +14,7 @@ interface TextAreaProps {
   disabled?: boolean;
   className?: string;
   defaultValue?: string;
+  textCenter: "left" | "center" | "right";
 }
 
 const TextArea: FC<TextAreaProps> = ({
@@ -25,6 +26,7 @@ const TextArea: FC<TextAreaProps> = ({
   disabled,
   className,
   defaultValue,
+  textCenter = "center",
 }) => {
   return (
     <div>
@@ -44,29 +46,30 @@ const TextArea: FC<TextAreaProps> = ({
           {...register(id, { required })}
           className={clsx(
             `
-         form-input
-          block 
+            block 
             w-full
             max-lg:rounded-md
             h-14
             border-0
             mb-5
-            py-1.5
+            py-4
+            px-5
             bg-gray-50
             text-gray-900
             shadow-sm                        
             placeholder:text-gray-400
             placeholder:opacity-0
             placeholder:max-lg:opacity-100
-            placeholder:text-center
+            placeholder:text-${textCenter}
             max-lg:focus:ring-1
             max-lg:focus:ring-gray-300
             focus:ring-0
             text-lg
             sm:leading-6
+            outline-none
           `,
             error && "focus:ring-rose500",
-            disabled && "opacity-50 cursor-default",
+            disabled && "opacity-30 cursor-default",
             className
           )}
         />
