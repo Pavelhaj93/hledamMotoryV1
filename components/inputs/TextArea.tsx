@@ -6,15 +6,17 @@ import { FieldError, FieldValues, UseFormRegister } from "react-hook-form";
 import React, { FC } from "react";
 
 interface TextAreaProps {
-  label: string;
+  label?: string;
   id: string;
   required?: boolean;
-  register: UseFormRegister<FieldValues>;
-  error: FieldError | undefined;
+  register?: UseFormRegister<FieldValues>;
+  error?: FieldError;
   disabled?: boolean;
   className?: string;
   defaultValue?: string;
   textCenter: "left" | "center" | "right";
+  setValue?: (e: any) => void;
+  placeHolder?: string;
 }
 
 const TextArea: FC<TextAreaProps> = ({
@@ -27,23 +29,26 @@ const TextArea: FC<TextAreaProps> = ({
   className,
   defaultValue,
   textCenter = "center",
+  setValue,
+  placeHolder,
 }) => {
   return (
     <div>
-      <label
+      {label && <label
         htmlFor={id}
         className="block text-xl font-normal mb-7 leading-6 text-gray-700 max-lg:hidden"
       >
         {label}
-      </label>
+      </label>}
       <div className="mt-2">
         <textarea
           id={id}
+          onChange={(e) => setValue?.(e.target.value)}
           defaultValue={defaultValue}
-          placeholder={label}
+          placeholder={placeHolder ?? label}
           autoComplete={id}
           disabled={disabled}
-          {...register(id, { required })}
+          {...register?.(id, { required })}
           className={clsx(
             `
             block 
@@ -58,7 +63,6 @@ const TextArea: FC<TextAreaProps> = ({
             text-gray-900
             shadow-sm                        
             placeholder:text-gray-400
-            placeholder:opacity-0
             placeholder:max-lg:opacity-100
             placeholder:text-${textCenter}
             max-lg:focus:ring-1
@@ -68,6 +72,7 @@ const TextArea: FC<TextAreaProps> = ({
             sm:leading-6
             outline-none
           `,
+            !placeHolder && "placeholder-opacity-0",
             error && "focus:ring-rose500",
             disabled && "opacity-30 cursor-default",
             className

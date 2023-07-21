@@ -8,10 +8,12 @@ interface SelectorProps<T> {
   title: string;
   selected: boolean;
   onSelected: (itemName: string) => void;
-  disabled: boolean;
+  disabled?: boolean;
 }
 
-const SelectorGroup = <T extends { data: { name: string }[] }>({
+const SelectorGroup = <T extends {
+  name: string
+}>({
   data,
   title,
   selected,
@@ -45,7 +47,7 @@ const SelectorGroup = <T extends { data: { name: string }[] }>({
         </div>
       </div>
       {openCollapse && (
-        <div className="flex flex-col justify-between max-h-screen text-left">
+        <div className="flex flex-col justify-between text-left">
           <div className="flex flex-row justify-between border-b-2 ">
             <input
               type="text"
@@ -70,13 +72,11 @@ const SelectorGroup = <T extends { data: { name: string }[] }>({
             .slice(0, count)
             .map((item, index) => (
               <div
-                key={index}
+                key={`${item.name}-${index}`}
                 className="flex flex-row justify-between border-b-2 cursor-pointer"
                 onClick={() => {
-                  // setSelected(true);
                   setOpenCollapse(false);
                   onSelected(item?.name);
-                  // stepBack && stepBack(type);
                 }}
               >
                 <span className="w-11/12 h-20 font-semibold pt-6 pr-12 pb-6 pl-7 text-xl max-md:h-14 max-md:pt-4 max-md:pb-3 max-md:pr-10 max-md:pl3">
