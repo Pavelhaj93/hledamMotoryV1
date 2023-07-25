@@ -16,7 +16,8 @@ interface TextAreaProps {
   defaultValue?: string;
   textCenter: "left" | "center" | "right";
   setValue?: (e: any) => void;
-  placeHolder?: string;
+  placeholder?: string;
+  rounded?: boolean;
 }
 
 const TextArea: FC<TextAreaProps> = ({
@@ -30,22 +31,25 @@ const TextArea: FC<TextAreaProps> = ({
   defaultValue,
   textCenter = "center",
   setValue,
-  placeHolder,
+  placeholder,
+  rounded,
 }) => {
   return (
     <div>
-      {label && <label
-        htmlFor={id}
-        className="block text-xl font-normal mb-7 leading-6 text-gray-700 max-lg:hidden"
-      >
-        {label}
-      </label>}
+      {label && (
+        <label
+          htmlFor={id}
+          className="block text-xl font-normal mb-7 leading-6 text-gray-700 max-lg:hidden"
+        >
+          {label}
+        </label>
+      )}
       <div className="mt-2">
         <textarea
           id={id}
           onChange={(e) => setValue?.(e.target.value)}
           defaultValue={defaultValue}
-          placeholder={placeHolder ?? label}
+          placeholder={placeholder ?? label}
           autoComplete={id}
           disabled={disabled}
           {...register?.(id, { required })}
@@ -72,9 +76,11 @@ const TextArea: FC<TextAreaProps> = ({
             sm:leading-6
             outline-none
           `,
-            !placeHolder && "placeholder-opacity-0",
+            !placeholder && "placeholder-opacity-0",
             error && "focus:ring-rose500",
             disabled && "opacity-30 cursor-default",
+            rounded &&
+              "border-2 border-solid rounded-md border-gray-500 h-40 outline-none",
             className
           )}
         />

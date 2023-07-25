@@ -54,7 +54,7 @@ const HamburgerMenu: FC<HamburgerMenuProps> = ({ menu }) => {
                 )}
               >
                 <a
-                  className="text-2xl font-black text-center block"
+                  className="text-2xl font-black text-center block hover:underline"
                   href={href}
                 >
                   {title}

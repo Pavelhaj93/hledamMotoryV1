@@ -10,7 +10,7 @@ const siteMenu = [
   },
   {
     title: "Hledat další motor",
-    href: "/vyhledat",
+    href: "/search",
   },
   {
     title: "Starší motory",

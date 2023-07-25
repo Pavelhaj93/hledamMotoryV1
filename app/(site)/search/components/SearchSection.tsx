@@ -1,5 +1,6 @@
 import Container from "@/components/container/Container";
 import SelectorsWrap from "./SelectorsWrap";
+import { InquiryContextProvider } from "@/app/context/InquiryContext";
 
 interface SearchSectionProps {}
 
@@ -14,7 +15,9 @@ const SearchSection = () => {
           <div className="flex flex-row items-center justify-center w-full">
             <div className="flex flex-col items-center justify-center w-full">
               {/* parts wrap */}
-              <SelectorsWrap />
+              <InquiryContextProvider>
+                <SelectorsWrap />
+              </InquiryContextProvider>
             </div>
             {/* <div className="hidden">Schovany selected box</div> */}
           </div>

@@ -2,7 +2,7 @@ import clsx from "clsx";
 import AuthContext from "./context/AuthContext";
 
 import "./globals.css";
-import { Inter, Raleway } from "next/font/google";
+import { Raleway } from "next/font/google";
 import { ReactQueryProvider } from "./context/ReactQueryProvider";
 import { SnackBarProvider } from "./context/SnackBarProvider";
 import { MaterialThemeProvider } from "./context/MaterialThemeProvider";

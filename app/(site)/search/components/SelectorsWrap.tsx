@@ -1,6 +1,6 @@
 "use client";
 
-import React, { FC, useState } from "react";
+import React, { FC, useContext } from "react";
 
 import { useQuery } from "react-query";
 import useMessage from "@/app/hooks/useMessage";
@@ -8,32 +8,26 @@ import axios from "axios";
 import { marks } from "@/public/data/marks";
 import SelectorGroup from "./SelectorGroup";
 import TextArea from "@/components/inputs/TextArea";
-
-
 import Button from "@/components/Button";
-import { useLocalStorageValue } from "@react-hookz/web";
 import InquiryFooter from "./InquiryFooter";
+import { InquiryContext } from "@/app/context/InquiryContext";
+import { useRequestMotors } from "@/app/hooks/useRequestMotors";
 
 interface SelectorsWrapProps {}
 
-export type RequestMotor = {
-  mark: string | null;
-  model: string | null;
-  engineType: string | null;
-  textArea: string | null;
-};
-
 const SelectorsWrap: FC<SelectorsWrapProps> = () => {
   const message = useMessage();
-  const { set: setRequestMotors, value: requestMotors } =
-    useLocalStorageValue<RequestMotor[]>("requestMotors");
-
-  const [selectedMark, setSelectedMark] = useState<string | null>(null);
-  const [selectedModel, setSelectedModel] = useState<string | null>(null);
-  const [selectedEngineType, setSelectedEngineType] = useState<string | null>(
-    null
-  );
-  const [textArea, setTextArea] = useState<string | null>(null);
+  const {
+    handleSelectedMark,
+    handleSelectedModel,
+    textArea,
+    selectedMark,
+    selectedModel,
+    selectedEngineType,
+    setSelectedEngineType,
+    setTextArea,
+  } = useContext(InquiryContext);
+  const { setRequestMotors, requestMotors } = useRequestMotors();
 
   const handleSave = () => {
     setRequestMotors([
@@ -46,21 +40,6 @@ const SelectorsWrap: FC<SelectorsWrapProps> = () => {
       },
     ]);
     window.location.reload();
-  };
-
-  const handleSelectedMark = (itemName: string) => {
-    setSelectedMark(itemName);
-    if (selectedMark !== itemName) {
-      setSelectedModel(null);
-      setSelectedEngineType(null);
-    }
-  };
-
-  const handleSelectedModel = (itemName: string) => {
-    setSelectedModel(itemName);
-    if (selectedModel !== itemName) {
-      setSelectedEngineType(null);
-    }
   };
 
   const models = useQuery(
@@ -108,6 +87,7 @@ const SelectorsWrap: FC<SelectorsWrapProps> = () => {
             title={selectedMark ?? "Značka"}
             selected={!!selectedMark}
             onSelected={handleSelectedMark}
+            first
           />
         </div>
         <div className="w-full">
@@ -130,16 +110,16 @@ const SelectorsWrap: FC<SelectorsWrapProps> = () => {
         </div>
         <div className="w-full">
           <TextArea
-            className="border-2 border-solid rounded-md border-gray-500 h-40 outline-none"
-            placeHolder="Upřesněte vybráný motor, nejlépe označení motoru"
+            rounded
+            placeholder="Upřesněte vybráný motor, nejlépe označení motoru"
             textCenter="left"
             id="textArea"
             setValue={setTextArea}
             disabled={!selectedEngineType || !selectedMark || !selectedModel}
           />
         </div>
-        <div className="flex flex-row max-md:flex-col max-md:gap-0 gap-4 w-full">
-          <Button arrow color="primary" className="w-full mb-4">
+        <div className="flex flex-col md:max-lg:flex-row max-md:gap-0 gap-4 w-full">
+          <Button arrow color="primary" className="w-full mb-4 md:max=lg:w-1/2">
             Poptat motory
           </Button>
           <Button
@@ -157,11 +137,7 @@ const SelectorsWrap: FC<SelectorsWrapProps> = () => {
           </Button>
         </div>
       </div>
-      <InquiryFooter
-        selectedMark={selectedMark}
-        selectedModel={selectedModel}
-        selectedEngineType={selectedEngineType}
-      />
+      <InquiryFooter />
     </div>
   );
 };

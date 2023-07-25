@@ -1,7 +1,7 @@
 "use client";
 
 import clsx from "clsx";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 interface SelectorProps<T> {
   data: T[];
@@ -9,20 +9,28 @@ interface SelectorProps<T> {
   selected: boolean;
   onSelected: (itemName: string) => void;
   disabled?: boolean;
+  first?: boolean;
 }
 
-const SelectorGroup = <T extends {
-  name: string
-}>({
+const SelectorGroup = <
+  T extends {
+    name: string;
+  }
+>({
   data,
   title,
   selected,
   onSelected,
   disabled,
+  first,
 }: SelectorProps<T>) => {
   const [openCollapse, setOpenCollapse] = useState<boolean>(false);
   const [filter, setFilter] = useState<string>("");
   const [count, setCount] = useState<number>(10);
+
+  useEffect(() => {
+    data.length > 0 && !first && setOpenCollapse(true);
+  }, [data.length, first]);
 
   return (
     <>

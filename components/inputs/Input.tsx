@@ -11,24 +11,30 @@ import {
 import React, { FC } from "react";
 
 interface InputProps {
-  label: string;
+  label?: string;
+  placeholder?: string;
   id: string;
   type?: string;
   required?: boolean;
   register: UseFormRegister<FieldValues>;
   error: FieldError | undefined;
+  rounded?: boolean;
   disabled?: boolean;
   className?: string;
+  textCenter?: "left" | "center" | "right";
 }
 
 const Input: FC<InputProps> = ({
   label,
+  placeholder,
   id,
   type,
   required,
   register,
   error,
   disabled,
+  rounded,
+  textCenter = "left",
   className,
 }) => {
   return (
@@ -43,7 +49,7 @@ const Input: FC<InputProps> = ({
         <input
           id={id}
           type={type}
-          placeholder={label}
+          placeholder={placeholder ?? label}
           autoComplete={id}
           disabled={disabled}
           {...register(id, { required })}
@@ -60,20 +66,19 @@ const Input: FC<InputProps> = ({
             bg-gray-50
             text-gray-900
             shadow-sm                        
-            
-            
             placeholder:text-gray-400
-            placeholder:opacity-0
             placeholder:max-lg:opacity-100
-            placeholder:text-center
+            placeholder:${textCenter}
             max-lg:focus:ring-1
             max-lg:focus:ring-gray-300
             focus:ring-0
             text-lg
             sm:leading-6
           `,
+            !placeholder && "placeholder-opacity-0",
             error && "focus:ring-rose500",
             disabled && "opacity-50 cursor-default",
+            rounded && "rounded-md border-2 border-solid",
             className
           )}
         />

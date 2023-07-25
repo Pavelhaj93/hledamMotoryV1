@@ -86,6 +86,7 @@ const ContactForm: FC<ContactFormProps> = ({ motorId, motorName }) => {
             label="Zpráva"
             register={register as keyof typeof register}
             error={errors.message}
+            textCenter="left"
             defaultValue={
               motorId &&
               motorName &&
