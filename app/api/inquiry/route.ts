@@ -4,22 +4,20 @@ import { NextResponse } from "next/server";
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { name, email, message } = body;
+    const { email, name, surName, phone, city, note } = body;
 
-    if (!name || !email || !message) {
+    if (!email || !name || !surName || !phone) {
       return new NextResponse("Missing fields", { status: 400 });
     }
 
     await transporter.sendMail({
       ...mailOptions,
-      subject: `Nová zpráva od ${name}`,
-      text: message,
-      html: `<h2>Nová zpráva od ${name}</h2><br></br><p>${message}</p><br></br><p>Zpráva od ${email}</p>`,
+      subject: `Nová zpráva od ${name} ${surName}`,
+      text: note,
+      html: `<h2>Nová zpráva od ${name} ${surName} - email ${email} - město ${city}</h2><br></br><h3>Uživatel má zájem o motor</h3>{<br></br><p>${note}</p>`,
     });
-
-    return NextResponse.json(body);
   } catch (err) {
-    console.error(err);
+    console.log(err);
     return new NextResponse("Internal server error", { status: 500 });
   }
 }

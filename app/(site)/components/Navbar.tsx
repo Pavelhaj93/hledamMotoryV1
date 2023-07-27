@@ -9,7 +9,7 @@ const siteMenu = [
     href: "/",
   },
   {
-    title: "Hledat další motor",
+    title: "Hledat motor",
     href: "/search",
   },
   {
@@ -28,7 +28,7 @@ const siteMenu = [
 
 const Navbar = () => {
   return (
-    <header className="py-4 flex h-40">
+    <header className="py-2 flex h-28 shadow-xl sticky z-20 bg-white top-0">
       {/* <div className="w-screen bg-white z-20 h-40"> */}
       <Container className="w-full h-24 flex flex-row justify-between items-center mx-auto z-20">
         <a

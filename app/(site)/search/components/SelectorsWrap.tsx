@@ -119,7 +119,12 @@ const SelectorsWrap: FC<SelectorsWrapProps> = () => {
           />
         </div>
         <div className="flex flex-col md:max-lg:flex-row max-md:gap-0 gap-4 w-full">
-          <Button arrow color="primary" className="w-full mb-4 md:max=lg:w-1/2">
+          <Button
+            arrow
+            color="primary"
+            className="w-full mb-4 md:max=lg:w-1/2"
+            onClick={() => (window.location.href = "/inquiry")}
+          >
             Poptat motory
           </Button>
           <Button

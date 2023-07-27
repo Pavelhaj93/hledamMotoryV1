@@ -29,32 +29,14 @@ const ContactSection: FC<ContactSectionProps> = ({
           </span>
         </div>
         <div className="flex max-lg:flex-col flex-row">
-          <div className="max-lg:w-full w-1/2 flex flex-col">
-            <h3 className="max-lg:text-center max-lg:mb-7 mb-9 mt-5 font-bold text-2xl">
+          <div className="max-lg:w-full w-1/2 flex flex-col items-center gap-10 mt-5">
+            <h3 className="text-center font-bold text-2xl mb-20">
               Zavolejte nám
             </h3>
-            <div className="flex max-lg:flex-col flex-row">
-              <span className="mr-10 text-center max-lg:mx-auto">
-                <Image
-                  width={151}
-                  height={151}
-                  border-radius={50}
-                  src="/images/frontend/demo/person-2.png"
-                  alt="person-image-tomas-mihulka"
-                />
-              </span>
-              <span className="max-lg:w-full max-lg:max-w-full max-lg:text-center max-lg:mt-7 text-left flex flex-col  max-w-xs">
-                <h4 className="max-lg:text-2xl text-3xl mb-1 font-bold">
-                  Tomáš Mihulka
-                </h4>
-                <span className="mb-7 text-xl">Founder</span>
-                <p className="max-lg:text-base mt-30 italic leading-8">
-                  „Mám na starosti především komunikaci s prodejci motorů.
-                  Neváhejte mě kontaktovat i pokud nějaký motor sháníte nebo vám
-                  něco není jasné.“
-                </p>
-              </span>
-            </div>
+            <span className="text-4xl font-bold text-red-500">
+              +420 923 232 123
+            </span>
+            <span className="text-2xl">Se vším Vám rádi poradíme</span>
           </div>
           <ContactForm motorId={motorId} motorName={motorName} />
         </div>
