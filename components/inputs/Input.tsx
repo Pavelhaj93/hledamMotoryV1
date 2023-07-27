@@ -3,7 +3,6 @@
 import clsx from "clsx";
 import {
   FieldError,
-  FieldErrors,
   FieldErrorsImpl,
   FieldValues,
   Merge,
