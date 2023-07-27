@@ -1,6 +1,7 @@
 "use client";
 
 import clsx from "clsx";
+import Image from "next/image";
 import React, { useEffect, useState } from "react";
 
 interface SelectorProps<T> {
@@ -15,6 +16,7 @@ interface SelectorProps<T> {
 const SelectorGroup = <
   T extends {
     name: string;
+    id: string;
   }
 >({
   data,
@@ -31,6 +33,11 @@ const SelectorGroup = <
   useEffect(() => {
     data.length > 0 && !first && setOpenCollapse(true);
   }, [data.length, first]);
+
+  // const getMarkId = (markName: string) => {
+  //   const mark = data.find((m) => m.name === markName);
+  //   return mark?.id;
+  // };
 
   return (
     <>
@@ -90,6 +97,18 @@ const SelectorGroup = <
                 <span className="w-11/12 h-20 font-semibold pt-6 pr-12 pb-6 pl-7 text-xl max-md:h-14 max-md:pt-4 max-md:pb-3 max-md:pr-10 max-md:pl3">
                   {item?.name}
                 </span>
+                {/* {first && (
+                  <span className="h-full w-15 py-5 mt-5">
+                    <Image
+                      src={`/images/frontend/cars/PNG/${getMarkId(
+                        item.name
+                      )}.png?v=1`}
+                      alt={`car brand logo of ${item.name}`}
+                      width={100}
+                      height={50}
+                    />
+                  </span>
+                )} */}
                 <span
                   className={clsx(
                     "bg-[url('/images/frontend/icon-arrowRight.png')] h-5 w-10 bg-no-repeat align-self-center align-middle mt-8 mr-6 max-md:mt-5"

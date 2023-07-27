@@ -4,7 +4,9 @@ import clsx from "clsx";
 import {
   FieldError,
   FieldErrors,
+  FieldErrorsImpl,
   FieldValues,
+  Merge,
   UseFormRegister,
 } from "react-hook-form";
 
@@ -17,7 +19,7 @@ interface InputProps {
   type?: string;
   required?: boolean;
   register: UseFormRegister<FieldValues>;
-  error: FieldError | undefined;
+  error: FieldError | Merge<FieldError, FieldErrorsImpl<any>> | undefined;
   rounded?: boolean;
   disabled?: boolean;
   className?: string;
@@ -84,7 +86,7 @@ const Input: FC<InputProps> = ({
         />
         {error && (
           <span className="text-red-500 text-sm max-lg:text-center">
-            {error.message}
+            {error.message as string}
           </span>
         )}
       </div>

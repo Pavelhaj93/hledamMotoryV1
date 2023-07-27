@@ -202,7 +202,7 @@ const MotorDialog: FC<MotorDialogProps> = ({
             <FormControl size="small" error={!!fieldState.error}>
               <Autocomplete
                 value={field.value}
-                onChange={(_event, value) => field.onChange(value)}
+                onChange={(_event, value) => field.onChange(value as string)}
                 placeholder="Zadajte znacku motoru"
                 options={dataMarks ?? []}
                 renderInput={(params) => (

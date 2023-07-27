@@ -8,7 +8,7 @@ export default async function Motor({
 }: {
   params: { motorId: string };
 }) {
-  const motor = await prisma.motorOld.findUnique({
+  const motor = await prisma.oldMotor.findUnique({
     where: {
       id: params.motorId,
     },

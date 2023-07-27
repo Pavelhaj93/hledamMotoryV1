@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import prisma from "@/app/libs/prismadb";
 import { mailOptions, transporter } from "@/config/nodemailer";
+import { RequestMotor } from "@/app/hooks/useRequestMotors";
 
 export async function POST(req: Request) {
   try {
@@ -20,15 +21,15 @@ export async function POST(req: Request) {
       return new NextResponse("Missing fields", { status: 400 });
     }
 
-    const findMotorsInDb = requests.forEach(async (element) => {
+    const findMotorsInDb = requests.forEach(async (element: RequestMotor) => {
       const findMark = await prisma.mark.findUnique({
-        where: { name: element.mark },
+        where: { name: element.mark ?? "" },
       });
       const findModel = await prisma.model.findUnique({
-        where: { name: element.model },
+        where: { name: element.model ?? "" },
       });
       const findEngineType = await prisma.engineType.findUnique({
-        where: { name: element.engineType },
+        where: { name: element.engineType ?? "" },
       });
 
       if (!findMark || !findModel || !findEngineType) {
@@ -45,7 +46,7 @@ export async function POST(req: Request) {
       subject: `Nová zpráva od ${name} ${surName}`,
       text: note,
       html: `<h2>Nová zpráva od ${name}</h2><br></br><h3>Uživatel má zájem o motory:</h3><div>${requests.map(
-        (request) => {
+        (request: RequestMotor) => {
           return `<div>
              <h4>${request.mark}</h4>
               <h4>${request.model}</h4>
