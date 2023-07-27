@@ -6,6 +6,7 @@ import { Raleway } from "next/font/google";
 import { ReactQueryProvider } from "./context/ReactQueryProvider";
 import { SnackBarProvider } from "./context/SnackBarProvider";
 import { MaterialThemeProvider } from "./context/MaterialThemeProvider";
+import { Analytics } from "@vercel/analytics/react";
 
 const inter = Raleway({ subsets: ["latin"] });
 
@@ -30,6 +31,7 @@ export default function RootLayout({
             </ReactQueryProvider>
           </SnackBarProvider>
         </MaterialThemeProvider>
+        <Analytics />
         {/* </main> */}
       </body>
     </html>
