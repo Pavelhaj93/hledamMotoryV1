@@ -46,7 +46,12 @@ const HamburgerMenu: FC<HamburgerMenuProps> = ({ menu }) => {
       />
       <span className="text-xl font-bold max-sm:hidden z-0">Menu</span>
 
-      <Container className="fixed right-0 left-0 top-0 flex justify-end px-0">
+      <Container
+        className={clsx(
+          "fixed right-0 left-0 top-0 flex justify-end px-0",
+          imageSrc === "/images/frontend/icon-hamburger.png" && "hidden"
+        )}
+      >
         <nav
           className={clsx(
             "opacity-1 w-645 z-20 bg-white pt-28 pr-28 pb-12 pl-12 transition-all duration-300 ease-in-out max-md:right-0 max-md:fixed max-md:w-full max-md:h-full max-md:pr-12",
