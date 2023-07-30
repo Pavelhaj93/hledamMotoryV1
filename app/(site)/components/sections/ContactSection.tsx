@@ -24,19 +24,25 @@ const ContactSection: FC<ContactSectionProps> = ({
           <h3 className="text-4xl font-black mb-1">
             {title ?? "Nejste si jisti nebo potřebujete poradit?"}
           </h3>
-          <span className="text-xl mt-5 mb-7 max-lg:text-center text-left font-bold text-red-500">
-            info@hledám-motory.cz
-          </span>
         </div>
         <div className="flex max-lg:flex-col flex-row">
-          <div className="max-lg:w-full w-1/2 flex flex-col items-center gap-10 mt-5">
-            <h3 className="text-center font-bold text-2xl mb-20">
+          <div className="max-lg:w-full w-1/2 flex flex-col items-center justify-between gap-5 mt-5 h-1/2">
+            <h3 className="text-center font-bold text-2xl mb-10">
               Zavolejte nám
             </h3>
-            <span className="text-4xl font-bold text-red-500">
-              +420 923 232 123
+            <span className="text-4xl font-bold text-red-500 mb-10">
+              +420 725 825 199
             </span>
-            <span className="text-2xl">Se vším Vám rádi poradíme</span>
+            <h3 className="text-center font-bold text-2xl mb-10">
+              Napište nám na mail
+            </h3>
+            <a
+              className="text-4xl font-bold text-red-500 mb-10"
+              href="mailto:info@hledammotory.cz"
+            >
+              info@hledammotory.cz
+            </a>
+            <span className="text-2xl mb-10">Se vším rádi poradíme</span>
           </div>
           <ContactForm motorId={motorId} motorName={motorName} />
         </div>

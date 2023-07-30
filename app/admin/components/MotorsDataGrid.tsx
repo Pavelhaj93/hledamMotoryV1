@@ -21,7 +21,7 @@ const MotorsDataGrid: FC<MotorsDataGridProps> = ({ motorsVariant }) => {
   const [openUpdateModal, setOpenUpdateModal] = useState<Motor | null>(null);
   const [openDeleteModal, setOpenDeleteModal] = useState<Motor | null>(null);
 
-  const { data, isLoading, error } = useQuery(
+  const { data, isLoading } = useQuery(
     "motors",
     async () => {
       const { data } = await axios.get(`/api/admin/${motorsVariant}/motors`);
@@ -36,11 +36,7 @@ const MotorsDataGrid: FC<MotorsDataGridProps> = ({ motorsVariant }) => {
   );
 
   if (!data) {
-    return null;
-  }
-
-  if (isLoading) {
-    return <div>Loading...</div>;
+    return <h2 className="text-4xl font-black">Načítám motory...</h2>;
   }
 
   return (

@@ -11,8 +11,12 @@ interface MotorCardProps {
 
 const MotorCard: FC<MotorCardProps> = ({ motor, variant }) => {
   return (
-    <a href={`/motor/${variant}/${motor.id}`}>
-      <div className="flex flex-col items-center cursor-pointer group">
+    <a
+      href={`/${variant === "repas" ? "repasovany-motor" : "stary-motor"}/${
+        motor.id
+      }`}
+    >
+      <div className="flex flex-col items-center cursor-pointer group hover:scale-110 transition-all duration-300 ease-in-out">
         <Image
           src={motor.image ?? "/images/placeholder.png"}
           alt={motor.name}

@@ -18,10 +18,24 @@ export default async function Motor({
     return <>Motor nenalezen</>;
   }
 
+  function DisplayParagraph({ text }: { text: string }) {
+    const lines = text.split("\n");
+
+    return (
+      <div>
+        {lines.map((line, index) => (
+          <p className="font-bold text-md leading-loose" key={index}>
+            {line}
+          </p>
+        ))}
+      </div>
+    );
+  }
+
   return (
     <>
       <Container>
-        <div className="flex max-lg:flex-col flex-row items-center justify-evenly gap-20">
+        <div className="flex max-lg:flex-col flex-row items-center justify-evenly gap-20 mt-10">
           <Image
             src={motor.image ?? "/images/placeholder.png"}
             alt={motor.name}
@@ -29,7 +43,7 @@ export default async function Motor({
             height={800}
           />
           <div className="flex flex-col gap-10 ">
-            <h1 className="text-3xl font-bold text-black uppercase text-left">
+            <h1 className="text-4xl font-bold text-black uppercase text-left">
               {motor?.name}
             </h1>
             <div>
@@ -39,7 +53,7 @@ export default async function Motor({
               <span className="text-md font-semibold"> s DPH</span>
             </div>
             <div className="flex flex-col justify-center items-center">
-              <p className="text-lg font-semibold">{motor?.description}</p>
+              <DisplayParagraph text={motor.description ?? ""} />
             </div>
           </div>
         </div>

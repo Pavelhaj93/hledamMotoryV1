@@ -14,11 +14,11 @@ const siteMenu = [
   },
   {
     title: "Starší motory",
-    href: "/motory/stare",
+    href: "/stare-motory",
   },
   {
     title: "Repasované motory",
-    href: "/motory/repasovane",
+    href: "/repasovane-motory",
   },
   {
     title: "O nás a kontakt",

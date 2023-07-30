@@ -31,8 +31,10 @@ const DeleteMotorDialog: FC<DeleteMotorDialogProps> = ({
     },
     {
       onSuccess: (data) => {
-        message.success(`Motor s id ${data} byl úspěšně smazán.`),
-          queryClient.invalidateQueries("motors");
+        message.success(`Motor s id ${data} byl úspěšně smazán.`);
+        queryClient.invalidateQueries(
+          motorsVariant === "repas" ? "motors" : "oldMotors"
+        );
         onClose();
       },
       onError: (error) => {
