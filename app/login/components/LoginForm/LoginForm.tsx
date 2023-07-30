@@ -99,7 +99,7 @@ const LoginForm = () => {
           )}
         </form>
         {session.status === "authenticated" && (
-          <Button onClick={() => router.push("/admin")}>
+          <Button onClick={() => (window.location.href = "/admin")}>
             Go to admin page
           </Button>
         )}

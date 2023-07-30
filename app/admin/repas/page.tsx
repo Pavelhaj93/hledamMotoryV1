@@ -8,9 +8,17 @@ import MotorDialog from "../components/dialogs/MotorDialog";
 
 import Button from "@/components/Button";
 import Container from "@/components/container/Container";
+import { redirect } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 const RepasPage = () => {
   const [openMotorModal, setOpenMotorModal] = useState<boolean>(false);
+  const session = useSession({
+    required: true,
+    onUnauthenticated() {
+      redirect("/login");
+    },
+  });
 
   return (
     <>
