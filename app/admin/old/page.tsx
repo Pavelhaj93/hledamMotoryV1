@@ -9,7 +9,7 @@ import MotorDialog from "../components/dialogs/MotorDialog";
 import Button from "@/components/Button";
 import Container from "@/components/container/Container";
 import { useSession } from "next-auth/react";
-import { redirect } from "next/navigation;
+import { redirect } from "next/navigation";
 
 const OldMotorsPage = () => {
   const [openMotorModal, setOpenMotorModal] = useState<boolean>(false);
