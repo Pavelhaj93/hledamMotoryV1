@@ -50,9 +50,6 @@ const SelectorsWrap: FC<SelectorsWrapProps> = () => {
     },
     {
       enabled: !!selectedMark,
-      onSuccess: () => {
-        message.success("Models fetched successfully");
-      },
       onError: () => {
         message.error("Models fetching failed");
       },
@@ -69,9 +66,6 @@ const SelectorsWrap: FC<SelectorsWrapProps> = () => {
     },
     {
       enabled: !!selectedModel,
-      onSuccess: () => {
-        message.success("Engine types fetched successfully");
-      },
       onError: () => {
         message.error("Engine types fetching failed");
       },

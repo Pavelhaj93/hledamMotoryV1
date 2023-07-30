@@ -33,12 +33,16 @@ const InquiryFooter: FC<InquiryFooterProps> = () => {
     if (amount > 1 && amount < 5) {
       return `Máte <b>${amount} motory</b> připraveny k poptání`;
     }
-    return `Míte <b>${amount} motorů</b> připraveno k poptání`;
+    return `Máte <b>${amount} motorů</b> připraveno k poptání`;
   };
 
-  return (
-    <>
-      <div className="max-lg:w-full max-lg:fixed bottom-0 h-32 bg-black bg-opacity-60 py-6 px-7 text-center flex flex-col justify-between items-center w-1/2 lg:hidden">
+  const renderMobileFooter = () => {
+    if (!reqMotors) {
+      return null;
+    }
+
+    return (
+      <div className="max-lg:w-full max-lg:fixed left-0 bottom-0 h-32 bg-black bg-opacity-60 py-6 px-7 text-center flex flex-col justify-between items-center w-1/2 lg:hidden">
         <p
           className="text-xl text-white "
           dangerouslySetInnerHTML={{
@@ -56,6 +60,12 @@ const InquiryFooter: FC<InquiryFooterProps> = () => {
           </Button>
         </div>
       </div>
+    );
+  };
+
+  return (
+    <>
+      {renderMobileFooter()}
       <div className="w-5/12 max-lg:hidden">
         <div className="shadow-2xl h-800 p-4 mx-5 mb-5 flex flex-col">
           <h2 className="text-4xl font-bold text-center">Váš výběr</h2>
