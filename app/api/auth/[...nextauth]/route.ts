@@ -23,7 +23,7 @@ const authOptions: AuthOptions = {
           where: { email: credentials.email },
         });
 
-        if (!user || !user?.hashedPassword) {
+        if (!user?.hashedPassword) {
           throw new Error("Invalid credentials");
         }
 
