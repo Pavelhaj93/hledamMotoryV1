@@ -111,7 +111,9 @@ const MotorDialog: FC<MotorDialogProps> = ({
     {
       onSuccess: () => {
         message.success("Motor byl úspěšně vytvořen");
-        queryClient.invalidateQueries("motors");
+        queryClient.invalidateQueries(
+          motorsVariant === "repas" ? "motors" : "oldMotors"
+        );
       },
       onError: (error) => {
         message.error(error as string);
@@ -136,7 +138,9 @@ const MotorDialog: FC<MotorDialogProps> = ({
     {
       onSuccess: () => {
         message.success("Motor byl úspěšně upraven");
-        queryClient.invalidateQueries("motors");
+        queryClient.invalidateQueries(
+          motorsVariant === "repas" ? "motors" : "oldMotors"
+        );
       },
       onError: (error) => {
         message.error(error as string);
@@ -188,6 +192,10 @@ const MotorDialog: FC<MotorDialogProps> = ({
                 {...field}
                 multiline
                 rows={6}
+                onChange={(e) => {
+                  const updatedValue = e.target.value.replace(/\r?\n/g, "\n");
+                  field.onChange(updatedValue);
+                }}
               />
               {!!fieldState.error && (
                 <FormHelperText>{fieldState.error?.message}</FormHelperText>
