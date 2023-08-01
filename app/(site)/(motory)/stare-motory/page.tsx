@@ -9,7 +9,7 @@ export default async function StareMotoryPage() {
   return (
     <>
       <Container>
-        <div className="flex min-h-screen flex-col items-center justify-between p-5">
+        <div className="flex flex-col items-center justify-between p-5">
           <h1 className="text-4xl font-bold text-center my-10">
             Starší motory
           </h1>

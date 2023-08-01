@@ -9,7 +9,7 @@ export default async function RepasovaneMotoryPage() {
   return (
     <>
       <Container>
-        <div className="flex min-h-screen flex-col items-center ">
+        <div className="flex flex-col items-center ">
           <h1 className="text-4xl font-bold text-center my-10">
             Repasované motory
           </h1>
