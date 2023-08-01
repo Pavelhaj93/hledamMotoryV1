@@ -11,16 +11,18 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { marks } from "@/public/data/marks";
 
 import { FC } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
-import { Mark, Motor } from "@prisma/client";
+import { Motor } from "@prisma/client";
 import useMessage from "@/app/hooks/useMessage";
 import { CldUploadButton } from "next-cloudinary";
 import Image from "next/image";
 import CloudUploadOutlinedIcon from "@mui/icons-material/CloudUploadOutlined";
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
+import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 
 interface MotorDialogProps {
   open: boolean;
@@ -29,6 +31,15 @@ interface MotorDialogProps {
   motor?: Motor;
   motorsVariant: "repas" | "old";
 }
+
+type FormValues = {
+  id: string | undefined;
+  name: string | undefined;
+  description: string | undefined;
+  markName: string | undefined;
+  price: number | undefined;
+  images: string[] | undefined;
+};
 
 const formSchema = z.object({
   id: z.string().optional(),
@@ -43,10 +54,10 @@ const formSchema = z.object({
     Number,
     z.number({ invalid_type_error: "Cena musí obsahovat čísla" })
   ),
-  image: z.string().optional(),
+  images: z.array(z.string()).nonempty("Nahrajte alespoň jeden obrázek"),
 });
 
-type FormValues = z.infer<typeof formSchema>;
+// type FormValues = z.infer<typeof formSchema>;
 
 const MotorDialog: FC<MotorDialogProps> = ({
   open,
@@ -58,21 +69,7 @@ const MotorDialog: FC<MotorDialogProps> = ({
   const message = useMessage();
   const queryClient = useQueryClient();
 
-  const { data } = useQuery<Mark[]>(
-    "marks",
-    async () => {
-      const { data } = await axios.get("/api/marks");
-      return data;
-    },
-    {
-      onError: (error) => {
-        message.error(error as string);
-        console.error(error);
-      },
-    }
-  );
-
-  const dataMarks = data?.map((mark) => mark.name);
+  const dataMarks = marks?.map((mark) => mark.name);
 
   const {
     control,
@@ -89,16 +86,26 @@ const MotorDialog: FC<MotorDialogProps> = ({
       description: motor?.description ?? undefined,
       markName: motor?.markName ?? undefined,
       price: motor?.price ?? undefined,
-      image: motor?.image ?? undefined,
+      images: motor?.images ?? undefined,
     },
   });
 
-  const image = watch("image");
+  const watchImages = watch("images");
 
   const handleUpload = (result: any) => {
-    setValue("image", result?.info?.secure_url, {
-      shouldValidate: true,
-    });
+    const imageUrl = result?.info?.secure_url;
+
+    if (imageUrl) {
+      // Get the current value of the "images" field
+
+      // Combine the current images with the new image URL and store as an array
+      const updatedImages = [...(watchImages ?? []), imageUrl];
+
+      // Update the value of the "images" field
+      setValue("images", updatedImages, {
+        shouldValidate: true,
+      });
+    }
   };
 
   const createMutation = useMutation(
@@ -151,6 +158,16 @@ const MotorDialog: FC<MotorDialogProps> = ({
       },
     }
   );
+
+  const handleDeleteImage = (image: string) => {
+    setValue(
+      "images",
+      watchImages?.map((img) => img).filter((img) => img !== image),
+      {
+        shouldValidate: true,
+      }
+    );
+  };
 
   const onSubmit: SubmitHandler<FormValues> = async (formValues) => {
     if (variant === "create") {
@@ -236,25 +253,30 @@ const MotorDialog: FC<MotorDialogProps> = ({
           )}
         />
         <Controller
-          name="image"
+          name="images"
           control={control}
           render={({ field, fieldState }) => (
             <FormControl size="small" error={!!fieldState.error}>
               <div className="flex flex-col justify-center items-center gap-5">
-                <Image
-                  src={image ?? motor?.image ?? "/images/placeholder.png"}
-                  alt="test"
-                  width={400}
-                  height={400}
-                />
+                {watchImages?.map((img) => (
+                  <div key={img} className="flex flex-col items-end">
+                    <Chip
+                      icon={<DeleteIcon />}
+                      label="Smazat fotku"
+                      color="error"
+                      onClick={() => handleDeleteImage(img)}
+                    />
+                    <Image src={img} alt="test" width={400} height={400} />
+                  </div>
+                ))}
                 <CldUploadButton
-                  options={{ maxFiles: 1 }}
+                  options={{ maxFiles: 5 }}
                   onUpload={handleUpload}
                   uploadPreset="x9zk83j9"
                 >
                   <Chip
                     className="flex flex-row gap-5"
-                    label="Nahrát obrázek"
+                    label="Nahrát obrázky"
                     clickable
                     icon={<CloudUploadOutlinedIcon />}
                   />

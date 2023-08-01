@@ -2,6 +2,7 @@ import ContactSection from "@/app/(site)/components/sections/ContactSection";
 import prisma from "@/app/libs/prismadb";
 import Container from "@/components/container/Container";
 import Image from "next/image";
+import ImageGallery from "../../components/ImageGallery";
 
 export default async function Motor({
   params,
@@ -22,7 +23,7 @@ export default async function Motor({
     const lines = text.split("\n");
 
     return (
-      <div>
+      <div className="w-full">
         {lines.map((line, index) => (
           <p className="font-bold text-md leading-loose" key={index}>
             {line}
@@ -36,14 +37,9 @@ export default async function Motor({
     <>
       <Container>
         <div className="flex max-lg:flex-col flex-row items-center justify-evenly gap-20 mt-10">
-          <Image
-            src={motor.image ?? "/images/placeholder.png"}
-            alt={motor.name}
-            width={550}
-            height={800}
-          />
-          <div className="flex flex-col gap-10 ">
-            <h1 className="text-4xl font-bold text-black uppercase text-left">
+          <ImageGallery motor={motor} />
+          <div className="flex flex-col gap-10 w-7/12 max-lg:w-full max-lg:px-5">
+            <h1 className="text-3xl font-bold text-black uppercase text-left">
               {motor?.name}
             </h1>
             <div>

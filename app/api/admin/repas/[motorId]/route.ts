@@ -35,7 +35,7 @@ export async function PUT(
   try {
     const { motorId } = params;
     const body = await req.json();
-    const { name, description, price, image, markName } = body;
+    const { name, description, price, images, markName } = body;
 
     if (!motorId || !name || !description || !price || !markName) {
       return new NextResponse("Missing fields", { status: 400 });
@@ -50,7 +50,7 @@ export async function PUT(
         description,
         price,
         markName,
-        image
+        images,
       },
     });
 

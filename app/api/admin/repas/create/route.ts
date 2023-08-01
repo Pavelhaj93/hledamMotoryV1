@@ -5,9 +5,9 @@ import prisma from "@/app/libs/prismadb";
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { name, description, price, image, markName } = body;
+    const { name, description, price, images, markName } = body;
 
-    if (!name || !markName || !description || !price || !image) {
+    if (!name || !markName || !description || !price || !images) {
       return new NextResponse("Missing fields", { status: 400 });
     }
 
@@ -17,7 +17,7 @@ export async function POST(req: Request) {
         description,
         markName,
         price,
-        image,
+        images,
       },
     });
 

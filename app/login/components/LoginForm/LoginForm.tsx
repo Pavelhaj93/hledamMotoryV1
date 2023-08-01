@@ -47,6 +47,8 @@ const LoginForm = () => {
       });
   };
 
+  console.log(session.status);
+
   // const testRegister = () => {
   //   setIsLoading(true);
 

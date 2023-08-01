@@ -2,8 +2,9 @@ import ContactSection from "@/app/(site)/components/sections/ContactSection";
 import prisma from "@/app/libs/prismadb";
 import Container from "@/components/container/Container";
 import Image from "next/image";
+import ImageGallery from "../../components/ImageGallery";
 
-export default async function Motor({
+export default async function OldMotor({
   params,
 }: {
   params: { motorId: string };
@@ -18,17 +19,26 @@ export default async function Motor({
     return <>Motor nenalezen</>;
   }
 
+  function DisplayParagraph({ text }: { text: string }) {
+    const lines = text.split("\n");
+
+    return (
+      <div>
+        {lines.map((line, index) => (
+          <p className="font-bold text-md leading-loose" key={index}>
+            {line}
+          </p>
+        ))}
+      </div>
+    );
+  }
+
   return (
     <>
       <Container>
-        <div className="flex max-lg:flex-row flex-col items-center justify-evenly gap-20">
-          <Image
-            src={motor.image ?? "/images/placeholder.png"}
-            alt={motor.name}
-            width={550}
-            height={800}
-          />
-          <div className="flex flex-col gap-10 ">
+        <div className="flex max-lg:flex-col flex-row items-center justify-evenly gap-20 mt-10">
+          <ImageGallery motor={motor} />
+          <div className="flex flex-col gap-10 w-7/12 max-lg:w-full max-lg:px-5">
             <h1 className="text-3xl font-bold text-black uppercase text-left">
               {motor?.name}
             </h1>
@@ -39,7 +49,7 @@ export default async function Motor({
               <span className="text-md font-semibold"> s DPH</span>
             </div>
             <div className="flex flex-col justify-center items-center">
-              <p className="text-lg font-semibold">{motor?.description}</p>
+              <DisplayParagraph text={motor.description ?? ""} />
             </div>
           </div>
         </div>

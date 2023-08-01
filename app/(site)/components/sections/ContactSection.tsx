@@ -37,7 +37,7 @@ const ContactSection: FC<ContactSectionProps> = ({
               Napište nám na mail
             </h3>
             <a
-              className="text-4xl font-bold text-red-500 mb-10"
+              className="text-4xl font-bold text-red-500 mb-10 max-lg:text-2xl max-md-xl"
               href="mailto:info@hledammotory.cz"
             >
               info@hledammotory.cz
