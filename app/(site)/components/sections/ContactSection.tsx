@@ -1,5 +1,4 @@
 import Container from "@/components/container/Container";
-import Image from "next/image";
 import React, { FC } from "react";
 import ContactForm from "../ContactForm";
 

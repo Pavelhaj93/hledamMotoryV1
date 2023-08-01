@@ -1,7 +1,6 @@
 "use client";
 
 import clsx from "clsx";
-import Image from "next/image";
 import React, { useEffect, useState } from "react";
 
 interface SelectorProps<T> {
@@ -15,8 +14,8 @@ interface SelectorProps<T> {
 
 const SelectorGroup = <
   T extends {
+    id: number;
     name: string;
-    id: string;
   }
 >({
   data,

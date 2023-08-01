@@ -3,7 +3,6 @@ import React, { ReactNode } from "react";
 import Close from "@mui/icons-material/Close";
 
 import {
-  Box,
   Breakpoint,
   ButtonProps,
   Dialog as MuiDialog,

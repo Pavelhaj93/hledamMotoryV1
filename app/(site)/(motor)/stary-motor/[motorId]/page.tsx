@@ -1,7 +1,6 @@
 import ContactSection from "@/app/(site)/components/sections/ContactSection";
 import prisma from "@/app/libs/prismadb";
 import Container from "@/components/container/Container";
-import Image from "next/image";
 import ImageGallery from "../../components/ImageGallery";
 
 export default async function OldMotor({

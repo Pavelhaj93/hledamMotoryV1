@@ -56,8 +56,6 @@ const SelectorsWrap: FC<SelectorsWrapProps> = () => {
     }
   );
 
-  console.log("selectedMark", selectedMark);
-
   const engineTypes = useQuery(
     ["engineTypes", selectedModel],
     async () => {

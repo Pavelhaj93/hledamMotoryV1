@@ -57,8 +57,6 @@ const formSchema = z.object({
   images: z.array(z.string()).nonempty("Nahrajte alespoň jeden obrázek"),
 });
 
-// type FormValues = z.infer<typeof formSchema>;
-
 const MotorDialog: FC<MotorDialogProps> = ({
   open,
   onClose,

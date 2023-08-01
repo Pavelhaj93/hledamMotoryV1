@@ -49,15 +49,6 @@ const LoginForm = () => {
 
   console.log(session.status);
 
-  // const testRegister = () => {
-  //   setIsLoading(true);
-
-  //   axios.post("/api/register", {
-  //     email: "pavelhajduch93@gmail.com",
-  //     password: "Hajtolomej123",
-  //   });
-  // };
-
   return (
     <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
       <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
