@@ -6,11 +6,11 @@ import ImageGallery from "../../components/ImageGallery";
 export default async function OldMotor({
   params,
 }: {
-  params: { motorId: string };
+  params: { motorSlug: string };
 }) {
   const motor = await prisma.oldMotor.findUnique({
     where: {
-      id: params.motorId,
+      slug: params.motorSlug,
     },
   });
 

@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 
 import prisma from "@/app/libs/prismadb";
+import { generateSlug } from "@/app/utils/utils";
 
 export async function POST(req: Request) {
   try {
@@ -16,6 +17,7 @@ export async function POST(req: Request) {
         name,
         description,
         markName,
+        slug: generateSlug(name),
         price,
         images,
       },

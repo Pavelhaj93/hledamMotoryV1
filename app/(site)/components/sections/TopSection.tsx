@@ -31,7 +31,7 @@ const TopSection = () => {
             </a>
 
             <Button color="primary" arrow>
-              <a href="/vyhledat">Hledat motor</a>
+              <a href="/search">Hledat motor</a>
             </Button>
           </div>
         </div>

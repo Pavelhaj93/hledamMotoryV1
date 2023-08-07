@@ -43,6 +43,7 @@ model Account {
 model Motor {
   id          String    @id @default(auto()) @map("_id") @db.ObjectId
   markName    String
+  slug        String    @unique
   name        String
   description String?
   price       Float?
@@ -56,6 +57,7 @@ model Motor {
 model OldMotor {
   id          String    @id @default(auto()) @map("_id") @db.ObjectId
   markName    String
+  slug        String    @unique
   name        String
   description String?
   price       Float?
