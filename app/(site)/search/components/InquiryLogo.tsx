@@ -4,8 +4,8 @@ import React, { FC } from "react";
 
 interface InquiryLogoProps {
   selectedItem: string;
-  image?: boolean
-  title: string
+  image?: boolean;
+  title: string;
 }
 
 const InquiryLogo: FC<InquiryLogoProps> = ({ selectedItem, image, title }) => {
@@ -16,13 +16,17 @@ const InquiryLogo: FC<InquiryLogoProps> = ({ selectedItem, image, title }) => {
 
   return (
     <>
-      {image &&<Image
-        src={`/images/frontend/cars/PNG/${getMarkId(selectedItem)}.png?v=1`}
-        alt={`car brand logo of ${selectedItem}`}
-        width={150}
-        height={150}
-      />}
-      <span className="font-bold">{title}: <span className="font-light">{selectedItem}</span></span>
+      {image && (
+        <Image
+          src={`/images/frontend/cars/PNG/${getMarkId(selectedItem)}.png`}
+          alt={`car brand logo of ${selectedItem}`}
+          width={150}
+          height={150}
+        />
+      )}
+      <span className="font-bold">
+        {title}: <span className="font-light">{selectedItem}</span>
+      </span>
     </>
   );
 };

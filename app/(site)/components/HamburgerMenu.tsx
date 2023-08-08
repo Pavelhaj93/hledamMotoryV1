@@ -28,9 +28,9 @@ const HamburgerMenu: FC<HamburgerMenuProps> = ({ menu, admin }) => {
 
   const { value: requestMotors } =
     useLocalStorageValue<RequestMotor[]>("requestMotors");
-  const [reqMotors, setReqMotors] = useState<
-    RequestMotor | RequestMotor[] | undefined
-  >(undefined);
+  const [reqMotors, setReqMotors] = useState<RequestMotor[] | undefined>(
+    undefined
+  );
 
   useEffect(() => {
     setReqMotors(requestMotors);
@@ -80,7 +80,7 @@ const HamburgerMenu: FC<HamburgerMenuProps> = ({ menu, admin }) => {
             );
           })}
 
-          {reqMotors && !admin && (
+          {reqMotors?.length && !admin ? (
             <span
               className={clsx(
                 "block border-t-2 border-gray-100 border-opacity-80 py-6",
@@ -94,7 +94,7 @@ const HamburgerMenu: FC<HamburgerMenuProps> = ({ menu, admin }) => {
                 Rekapitulace poptávky
               </a>
             </span>
-          )}
+          ) : null}
 
           {admin && (
             <span
