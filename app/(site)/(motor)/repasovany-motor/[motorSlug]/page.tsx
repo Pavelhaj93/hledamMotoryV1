@@ -2,6 +2,27 @@ import ContactSection from "@/app/(site)/components/sections/ContactSection";
 import prisma from "@/app/libs/prismadb";
 import Container from "@/components/container/Container";
 import ImageGallery from "../../components/ImageGallery";
+import { Metadata } from "next";
+
+type Props = {
+  params: {
+    motorSlug: string;
+  };
+};
+
+export const generateMetadata = async (props: Props): Promise<Metadata> => {
+  const { params } = props;
+  const motor = await prisma.motor.findUnique({
+    where: {
+      slug: params.motorSlug,
+    },
+  });
+
+  return {
+    title: `${motor?.name} | hledammotory.cz`,
+    description: motor?.description ?? "",
+  };
+};
 
 export default async function Motor({
   params,

@@ -10,6 +10,12 @@ import Button from "@/components/Button";
 import Container from "@/components/container/Container";
 import { redirect } from "next/navigation";
 import { useSession } from "next-auth/react";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Admin | Repasované motory | hledammotory.cz",
+  description: "Repasované motory",
+};
 
 const RepasPage = () => {
   const [openMotorModal, setOpenMotorModal] = useState<boolean>(false);

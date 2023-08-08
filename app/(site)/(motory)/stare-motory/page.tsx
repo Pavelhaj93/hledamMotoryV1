@@ -2,9 +2,16 @@ import React from "react";
 import prisma from "@/app/libs/prismadb";
 import Container from "@/components/container/Container";
 import MotorsList from "../components/MotorsList";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Staré motory | hledammotory.cz",
+  description:
+    "Hledáte starý motor? Nebo repasovaný motor? Na Hledammotory.cz najdete repasované motory, staré motory, ojeté motory a další. Všechny repasované motory jsou s garancí. ",
+};
 
 export default async function StareMotoryPage() {
-  const data = await prisma.oldMotor.findMany({});
+  const data = await prisma.oldMotor.findMany();
 
   return (
     <>
