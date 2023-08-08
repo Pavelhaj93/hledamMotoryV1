@@ -12,11 +12,6 @@ import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 import { Metadata } from "next";
 
-export const metadata: Metadata = {
-  title: "Admin | Staré motory | hledammotory.cz",
-  description: "Staré motory",
-};
-
 const OldMotorsPage = () => {
   const [openMotorModal, setOpenMotorModal] = useState<boolean>(false);
   const session = useSession({
