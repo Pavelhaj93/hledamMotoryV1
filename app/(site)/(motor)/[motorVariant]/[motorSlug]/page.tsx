@@ -7,16 +7,34 @@ import { Metadata } from "next";
 type Props = {
   params: {
     motorSlug: string;
+    motorVariant: string;
   };
 };
 
+async function fetchMotor(params: Props["params"]) {
+  let motor;
+
+  if (params.motorVariant === "stary-motor") {
+    motor = await prisma.oldMotor.findUnique({
+      where: {
+        slug: params.motorSlug,
+      },
+    });
+  } else if (params.motorVariant === "repasovany-motor") {
+    motor = await prisma.motor.findUnique({
+      where: {
+        slug: params.motorSlug,
+      },
+    });
+  }
+
+  return motor;
+}
+
 export const generateMetadata = async (props: Props): Promise<Metadata> => {
   const { params } = props;
-  const motor = await prisma.oldMotor.findUnique({
-    where: {
-      slug: params.motorSlug,
-    },
-  });
+
+  const motor = await fetchMotor(params);
 
   return {
     title: `${motor?.name} | hledammotory.cz`,
@@ -24,16 +42,12 @@ export const generateMetadata = async (props: Props): Promise<Metadata> => {
   };
 };
 
-export default async function OldMotor({
+export default async function Motor({
   params,
 }: {
-  params: { motorSlug: string };
+  params: { motorSlug: string; motorVariant: string };
 }) {
-  const motor = await prisma.oldMotor.findUnique({
-    where: {
-      slug: params.motorSlug,
-    },
-  });
+  const motor = await fetchMotor(params);
 
   if (!motor) {
     return <>Motor nenalezen</>;
@@ -43,7 +57,7 @@ export default async function OldMotor({
     const lines = text.split("\n");
 
     return (
-      <div>
+      <div className="w-full">
         {lines.map((line, index) => (
           <p className="font-bold text-md leading-loose" key={index}>
             {line}
@@ -68,7 +82,7 @@ export default async function OldMotor({
               </span>
               <span className="text-md font-semibold"> s DPH</span>
             </div>
-            <div className="flex flex-col justify-center items-center">
+            <div className="flex flex-col justify-center max-lg:items-center">
               <DisplayParagraph text={motor.description ?? ""} />
             </div>
           </div>
