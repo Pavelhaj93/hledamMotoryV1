@@ -3,11 +3,6 @@ import { authOptions } from "../api/auth/[...nextauth]/options";
 import Container from "@/components/container/Container";
 import { Metadata } from "next";
 
-export const metadata: Metadata = {
-  title: "Admin | hledammotory.cz",
-  description: "Admin",
-};
-
 export default async function AdminHome() {
   const session = await getServerSession(authOptions);
   return (
