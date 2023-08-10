@@ -1,17 +1,19 @@
 "use client";
 
-import { RequestMotor, useRequestMotors } from "@/app/hooks/useRequestMotors";
+import { RequestMotor } from "@/app/hooks/useRequestMotors";
 import Container from "@/components/container/Container";
 import { useLocalStorageValue } from "@react-hookz/web";
 import clsx from "clsx";
+import { signOut } from "next-auth/react";
 import Image from "next/image";
 import { FC, useEffect, useState } from "react";
 
 interface HamburgerMenuProps {
   menu: { title: string; href: string }[];
+  admin?: boolean;
 }
 
-const HamburgerMenu: FC<HamburgerMenuProps> = ({ menu }) => {
+const HamburgerMenu: FC<HamburgerMenuProps> = ({ menu, admin }) => {
   const [imageSrc, setImageSrc] = useState(
     "/images/frontend/icon-hamburger.png"
   );
@@ -26,9 +28,9 @@ const HamburgerMenu: FC<HamburgerMenuProps> = ({ menu }) => {
 
   const { value: requestMotors } =
     useLocalStorageValue<RequestMotor[]>("requestMotors");
-  const [reqMotors, setReqMotors] = useState<
-    RequestMotor | RequestMotor[] | undefined
-  >(undefined);
+  const [reqMotors, setReqMotors] = useState<RequestMotor[] | undefined>(
+    undefined
+  );
 
   useEffect(() => {
     setReqMotors(requestMotors);
@@ -78,7 +80,7 @@ const HamburgerMenu: FC<HamburgerMenuProps> = ({ menu }) => {
             );
           })}
 
-          {reqMotors && (
+          {reqMotors?.length && !admin ? (
             <span
               className={clsx(
                 "block border-t-2 border-gray-100 border-opacity-80 py-6",
@@ -90,6 +92,22 @@ const HamburgerMenu: FC<HamburgerMenuProps> = ({ menu }) => {
                 href="/inquiry"
               >
                 Rekapitulace poptávky
+              </a>
+            </span>
+          ) : null}
+
+          {admin && (
+            <span
+              className={clsx(
+                "block border-t-2 border-gray-100 border-opacity-80 py-6",
+                imageSrc === "/images/frontend/icon-hamburger.png" && "hidden"
+              )}
+            >
+              <a
+                className="text-2xl font-black text-center block hover:underline"
+                onClick={() => signOut()}
+              >
+                Odhlásit se
               </a>
             </span>
           )}

@@ -2,7 +2,7 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
   binaryTargets = ["native", "darwin-arm64"]
 }
 
@@ -43,12 +43,13 @@ model Account {
 model Motor {
   id          String    @id @default(auto()) @map("_id") @db.ObjectId
   markName    String
+  slug        String    @unique
   name        String
   description String?
-  image       String?
   price       Float?
   createdAt   DateTime? @default(now())
   updatedAt   DateTime? @updatedAt
+  images      String[]
 
   mark Mark @relation(fields: [markName], references: [name], onDelete: Cascade)
 }
@@ -56,12 +57,13 @@ model Motor {
 model OldMotor {
   id          String    @id @default(auto()) @map("_id") @db.ObjectId
   markName    String
+  slug        String    @unique
   name        String
   description String?
-  image       String?
   price       Float?
   createdAt   DateTime? @default(now())
   updatedAt   DateTime? @updatedAt
+  images      String[]
 
   mark Mark @relation(fields: [markName], references: [name], onDelete: Cascade)
 }

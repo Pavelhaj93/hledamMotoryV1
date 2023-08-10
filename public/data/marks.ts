@@ -1,126 +1,502 @@
 export const marks = [
-  { id: "1", name: "AC" },
-  { id: "2", name: "Alfa Romeo" },
-  { id: "3", name: "Artega" },
-  { id: "4", name: "Asia" },
-  { id: "5", name: "Aston Martin" },
-  { id: "6", name: "Audi" },
-  { id: "7", name: "Autobianchi" },
-  { id: "8", name: "Austin" },
-  { id: "9", name: "Bentley" },
-  { id: "10", name: "Bitter" },
-  { id: "11", name: "BMW" },
-  { id: "12", name: "BMW Alpina" },
-  { id: "13", name: "Bristol" },
-  { id: "14", name: "Bugatti" },
-  { id: "15", name: "Buick" },
-  { id: "16", name: "Cadillac" },
-  { id: "17", name: "Caterham" },
-  { id: "18", name: "Chevrolet USA" },
-  { id: "19", name: "Chrysler" },
-  { id: "20", name: "Chrysler (Spain)" },
-  { id: "21", name: "Citroën" },
-  { id: "22", name: "Cizeta" },
-  { id: "23", name: "Dacia" },
-  { id: "24", name: "Daewoo" },
-  { id: "25", name: "Chevrolet Korea" },
-  { id: "26", name: "Daihatsu" },
-  { id: "27", name: "De Lorean" },
-  { id: "28", name: "Dodge" },
-  { id: "29", name: "Donkervoort" },
-  { id: "30", name: "Felber" },
-  { id: "31", name: "Ferrari" },
-  { id: "32", name: "Fiat" },
-  { id: "33", name: "Fisker" },
-  { id: "34", name: "Ford" },
-  { id: "35", name: "FSM" },
-  { id: "36", name: "FSO" },
-  { id: "37", name: "GAZ" },
-  { id: "38", name: "Ginetta" },
-  { id: "39", name: "GTA" },
-  { id: "40", name: "Gumpert" },
-  { id: "41", name: "Honda" },
-  { id: "42", name: "Hummer" },
-  { id: "43", name: "Hyundai" },
-  { id: "44", name: "Infiniti" },
-  { id: "45", name: "Innocenti" },
-  { id: "46", name: "Isdera" },
-  { id: "47", name: "Iso" },
-  { id: "48", name: "Isuzu" },
-  { id: "49", name: "Iveco" },
-  { id: "50", name: "Izh" },
-  { id: "51", name: "Jaguar" },
-  { id: "52", name: "Jeep" },
-  { id: "53", name: "Jensen" },
-  { id: "54", name: "Kia" },
-  { id: "55", name: "Koenigsegg" },
-  { id: "56", name: "KTM" },
-  { id: "57", name: "Lada" },
-  { id: "58", name: "Lamborghini" },
-  { id: "59", name: "Lancia" },
-  { id: "60", name: "Land Rover" },
-  { id: "61", name: "Lexus" },
-  { id: "62", name: "Lotus" },
-  { id: "63", name: "LuAZ" },
-  { id: "64", name: "Lynx" },
-  { id: "65", name: "Maserati" },
-  { id: "66", name: "Maybach" },
-  { id: "67", name: "Mazda" },
-  { id: "68", name: "McLaren" },
-  { id: "69", name: "Mercedes" },
-  { id: "70", name: "MG" },
-  { id: "71", name: "Mini" },
-  { id: "72", name: "Mitsubishi" },
-  { id: "73", name: "Monteverdi" },
-  { id: "74", name: "Morgan" },
-  { id: "75", name: "Moskwitch" },
-  { id: "76", name: "Nissan" },
-  { id: "77", name: "Oltcit" },
-  { id: "78", name: "Opel / Vauxhall" },
-  { id: "79", name: "Opel" },
-  { id: "80", name: "Otosan" },
-  { id: "81", name: "Pagani" },
-  { id: "82", name: "Panther" },
-  { id: "83", name: "Peugeot" },
-  { id: "84", name: "Pontiac" },
-  { id: "85", name: "Porsche" },
-  { id: "86", name: "Proton" },
-  { id: "87", name: "Reliant" },
-  { id: "88", name: "Renault" },
-  { id: "89", name: "Rolls-Royce" },
-  { id: "90", name: "Rover" },
-  { id: "91", name: "Saab" },
-  { id: "92", name: "Saleen" },
-  { id: "93", name: "Samsung" },
-  { id: "94", name: "Santana" },
-  { id: "95", name: "Seat" },
-  { id: "96", name: "Simca" },
-  { id: "97", name: "Skoda" },
-  { id: "98", name: "Smart" },
-  { id: "99", name: "SsangYong" },
-  { id: "100", name: "Subaru" },
-  { id: "101", name: "Sunbeam" },
-  { id: "102", name: "Suzuki-Santana" },
-  { id: "103", name: "Suzuki" },
-  { id: "104", name: "Talbot" },
-  { id: "105", name: "Tata" },
-  { id: "106", name: "Tatra" },
-  { id: "107", name: "Tesla" },
-  { id: "108", name: "Tofas" },
-  { id: "109", name: "Toyota" },
-  { id: "110", name: "Trabant" },
-  { id: "111", name: "Triumph" },
-  { id: "112", name: "TVR" },
-  { id: "113", name: "UAZ" },
-  { id: "114", name: "Vanden Plas" },
-  { id: "115", name: "Venturi" },
-  { id: "116", name: "Volkswagen" },
-  { id: "117", name: "Volvo" },
-  { id: "118", name: "Wartburg" },
-  { id: "119", name: "Wiesmann" },
-  { id: "120", name: "ZAZ" },
-  { id: "121", name: "Zastava" },
-  { id: "122", name: "ZIL" },
+  {
+    id: 1,
+    name: "AC",
+  },
+  {
+    id: 2,
+    name: "ARO",
+  },
+  {
+    id: 3,
+    name: "Alfa Romeo",
+  },
+  {
+    id: 4,
+    name: "Alpine",
+  },
+  {
+    id: 5,
+    name: "Artega",
+  },
+  {
+    id: 6,
+    name: "Asia",
+  },
+  {
+    id: 7,
+    name: "Aston Martin",
+  },
+  {
+    id: 8,
+    name: "Audi",
+  },
+  {
+    id: 9,
+    name: "Austin",
+  },
+  {
+    id: 10,
+    name: "Autobianchi",
+  },
+  {
+    id: 11,
+    name: "BMW",
+  },
+  {
+    id: 12,
+    name: "BMW Alpina",
+  },
+  {
+    id: 13,
+    name: "Bentley",
+  },
+  {
+    id: 14,
+    name: "Bitter",
+  },
+  {
+    id: 15,
+    name: "Bristol",
+  },
+  {
+    id: 16,
+    name: "Bugatti",
+  },
+  {
+    id: 17,
+    name: "Buick",
+  },
+  {
+    id: 18,
+    name: "Cadillac",
+  },
+  {
+    id: 19,
+    name: "Caterham",
+  },
+  {
+    id: 20,
+    name: "Chevrolet Korea",
+  },
+  {
+    id: 21,
+    name: "Chevrolet USA",
+  },
+  {
+    id: 22,
+    name: "Chrysler",
+  },
+  {
+    id: 23,
+    name: "Chrysler (Spain)",
+  },
+  {
+    id: 24,
+    name: "Citroën",
+  },
+  {
+    id: 25,
+    name: "Cizeta",
+  },
+  {
+    id: 26,
+    name: "DS Automobiles",
+  },
+  {
+    id: 27,
+    name: "Dacia",
+  },
+  {
+    id: 28,
+    name: "Daewoo",
+  },
+  {
+    id: 29,
+    name: "Daihatsu",
+  },
+  {
+    id: 30,
+    name: "De Lorean",
+  },
+  {
+    id: 31,
+    name: "De Tomaso",
+  },
+  {
+    id: 32,
+    name: "Dodge",
+  },
+  {
+    id: 33,
+    name: "Donkervoort",
+  },
+  {
+    id: 34,
+    name: "FSM",
+  },
+  {
+    id: 35,
+    name: "FSO",
+  },
+  {
+    id: 36,
+    name: "Felber",
+  },
+  {
+    id: 37,
+    name: "Ferrari",
+  },
+  {
+    id: 38,
+    name: "Fiat",
+  },
+  {
+    id: 39,
+    name: "Fisker",
+  },
+  {
+    id: 40,
+    name: "Ford",
+  },
+  {
+    id: 41,
+    name: "GAZ",
+  },
+  {
+    id: 42,
+    name: "GTA",
+  },
+  {
+    id: 43,
+    name: "Ginetta",
+  },
+  {
+    id: 44,
+    name: "Gumpert",
+  },
+  {
+    id: 45,
+    name: "Hillman",
+  },
+  {
+    id: 46,
+    name: "Honda",
+  },
+  {
+    id: 47,
+    name: "Humber",
+  },
+  {
+    id: 48,
+    name: "Hummer",
+  },
+  {
+    id: 49,
+    name: "Hyundai",
+  },
+  {
+    id: 50,
+    name: "Infiniti",
+  },
+  {
+    id: 51,
+    name: "Innocenti",
+  },
+  {
+    id: 52,
+    name: "Isdera",
+  },
+  {
+    id: 53,
+    name: "Iso",
+  },
+  {
+    id: 54,
+    name: "Isuzu",
+  },
+  {
+    id: 55,
+    name: "Iveco",
+  },
+  {
+    id: 56,
+    name: "Izh",
+  },
+  {
+    id: 57,
+    name: "Jaguar",
+  },
+  {
+    id: 58,
+    name: "Jeep",
+  },
+  {
+    id: 59,
+    name: "Jensen",
+  },
+  {
+    id: 60,
+    name: "KTM",
+  },
+  {
+    id: 61,
+    name: "Kia",
+  },
+  {
+    id: 62,
+    name: "Koenigsegg",
+  },
+  {
+    id: 63,
+    name: "Lada",
+  },
+  {
+    id: 64,
+    name: "Lamborghini",
+  },
+  {
+    id: 65,
+    name: "Lancia",
+  },
+  {
+    id: 66,
+    name: "Land Rover",
+  },
+  {
+    id: 67,
+    name: "Lexus",
+  },
+  {
+    id: 68,
+    name: "Lotus",
+  },
+  {
+    id: 69,
+    name: "LuAZ",
+  },
+  {
+    id: 70,
+    name: "Lynx",
+  },
+  {
+    id: 71,
+    name: "MG",
+  },
+  {
+    id: 72,
+    name: "Maserati",
+  },
+  {
+    id: 73,
+    name: "Maybach",
+  },
+  {
+    id: 74,
+    name: "Mazda",
+  },
+  {
+    id: 75,
+    name: "McLaren",
+  },
+  {
+    id: 76,
+    name: "Mercedes",
+  },
+  {
+    id: 77,
+    name: "Mini",
+  },
+  {
+    id: 78,
+    name: "Mitsubishi",
+  },
+  {
+    id: 79,
+    name: "Monteverdi",
+  },
+  {
+    id: 80,
+    name: "Morgan",
+  },
+  {
+    id: 81,
+    name: "Morris",
+  },
+  {
+    id: 82,
+    name: "Moskwitch",
+  },
+  {
+    id: 83,
+    name: "Nissan",
+  },
+  {
+    id: 84,
+    name: "Oltcit",
+  },
+  {
+    id: 85,
+    name: "Opel",
+  },
+  {
+    id: 86,
+    name: "Otosan",
+  },
+  {
+    id: 87,
+    name: "Pagani",
+  },
+  {
+    id: 88,
+    name: "Panther",
+  },
+  {
+    id: 89,
+    name: "Peugeot",
+  },
+  {
+    id: 90,
+    name: "Pontiac",
+  },
+  {
+    id: 91,
+    name: "Porsche",
+  },
+  {
+    id: 92,
+    name: "Proton",
+  },
+  {
+    id: 93,
+    name: "Reliant",
+  },
+  {
+    id: 94,
+    name: "Renault",
+  },
+  {
+    id: 95,
+    name: "Rolls-Royce",
+  },
+  {
+    id: 96,
+    name: "Rover",
+  },
+  {
+    id: 97,
+    name: "Saab",
+  },
+  {
+    id: 98,
+    name: "Saleen",
+  },
+  {
+    id: 99,
+    name: "Samsung",
+  },
+  {
+    id: 100,
+    name: "Seat",
+  },
+  {
+    id: 101,
+    name: "Simca",
+  },
+  {
+    id: 102,
+    name: "Skoda",
+  },
+  {
+    id: 103,
+    name: "Smart",
+  },
+  {
+    id: 104,
+    name: "SsangYong",
+  },
+  {
+    id: 105,
+    name: "Subaru",
+  },
+  {
+    id: 106,
+    name: "Sunbeam",
+  },
+  {
+    id: 107,
+    name: "Suzuki",
+  },
+  {
+    id: 108,
+    name: "TVR",
+  },
+  {
+    id: 109,
+    name: "Talbot",
+  },
+  {
+    id: 110,
+    name: "Tatra",
+  },
+  {
+    id: 111,
+    name: "Tesla",
+  },
+  {
+    id: 112,
+    name: "Tofas",
+  },
+  {
+    id: 113,
+    name: "Toyota",
+  },
+  {
+    id: 114,
+    name: "Trabant",
+  },
+  {
+    id: 115,
+    name: "Triumph",
+  },
+  {
+    id: 116,
+    name: "UAZ",
+  },
+  {
+    id: 117,
+    name: "Vanden Plas",
+  },
+  {
+    id: 118,
+    name: "Venturi",
+  },
+  {
+    id: 119,
+    name: "Volkswagen",
+  },
+  {
+    id: 120,
+    name: "Volvo",
+  },
+  {
+    id: 121,
+    name: "Wartburg",
+  },
+  {
+    id: 122,
+    name: "Wiesmann",
+  },
+  {
+    id: 123,
+    name: "ZAZ",
+  },
+  {
+    id: 124,
+    name: "ZIL",
+  },
+  {
+    id: 125,
+    name: "Zastava",
+  },
 ];
-
-export default marks;

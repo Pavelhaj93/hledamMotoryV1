@@ -10,6 +10,7 @@ import Button from "@/components/Button";
 import Container from "@/components/container/Container";
 import { redirect } from "next/navigation";
 import { useSession } from "next-auth/react";
+import { Metadata } from "next";
 
 const RepasPage = () => {
   const [openMotorModal, setOpenMotorModal] = useState<boolean>(false);

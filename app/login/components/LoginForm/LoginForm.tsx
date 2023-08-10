@@ -47,14 +47,7 @@ const LoginForm = () => {
       });
   };
 
-  // const testRegister = () => {
-  //   setIsLoading(true);
-
-  //   axios.post("/api/register", {
-  //     email: "pavelhajduch93@gmail.com",
-  //     password: "Hajtolomej123",
-  //   });
-  // };
+  console.log(session.status);
 
   return (
     <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">

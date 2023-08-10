@@ -1,16 +1,37 @@
 import ContactSection from "@/app/(site)/components/sections/ContactSection";
 import prisma from "@/app/libs/prismadb";
 import Container from "@/components/container/Container";
-import Image from "next/image";
+import ImageGallery from "../../components/ImageGallery";
+import { Metadata } from "next";
 
-export default async function Motor({
+type Props = {
+  params: {
+    motorSlug: string;
+  };
+};
+
+export const generateMetadata = async (props: Props): Promise<Metadata> => {
+  const { params } = props;
+  const motor = await prisma.oldMotor.findUnique({
+    where: {
+      slug: params.motorSlug,
+    },
+  });
+
+  return {
+    title: `${motor?.name} | hledammotory.cz`,
+    description: motor?.description ?? "",
+  };
+};
+
+export default async function OldMotor({
   params,
 }: {
-  params: { motorId: string };
+  params: { motorSlug: string };
 }) {
-  const motor = await prisma.motor.findUnique({
+  const motor = await prisma.oldMotor.findUnique({
     where: {
-      id: params.motorId,
+      slug: params.motorSlug,
     },
   });
 
@@ -36,14 +57,9 @@ export default async function Motor({
     <>
       <Container>
         <div className="flex max-lg:flex-col flex-row items-center justify-evenly gap-20 mt-10">
-          <Image
-            src={motor.image ?? "/images/placeholder.png"}
-            alt={motor.name}
-            width={550}
-            height={800}
-          />
-          <div className="flex flex-col gap-10 ">
-            <h1 className="text-4xl font-bold text-black uppercase text-left">
+          <ImageGallery motor={motor} />
+          <div className="flex flex-col gap-10 w-7/12 max-lg:w-full max-lg:px-5">
+            <h1 className="text-3xl font-bold text-black uppercase text-left">
               {motor?.name}
             </h1>
             <div>

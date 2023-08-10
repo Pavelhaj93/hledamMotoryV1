@@ -19,7 +19,6 @@ const SearchSection = () => {
                 <SelectorsWrap />
               </InquiryContextProvider>
             </div>
-            {/* <div className="hidden">Schovany selected box</div> */}
           </div>
         </div>
       </Container>

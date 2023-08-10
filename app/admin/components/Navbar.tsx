@@ -16,10 +16,6 @@ const siteMenu = [
     title: "Zpět na HledamMotory.cz",
     href: "/",
   },
-  {
-    title: "Odhlásit se",
-    href: "/login",
-  },
 ];
 
 const Navbar = () => {
@@ -38,7 +34,7 @@ const Navbar = () => {
           />
         </a>
         <span className="flex flex-row gap-10 items-center z-10">
-          <HamburgerMenu menu={siteMenu} />
+          <HamburgerMenu menu={siteMenu} admin />
         </span>
       </Container>
     </header>

@@ -3,7 +3,6 @@ import React, { ReactNode } from "react";
 import Close from "@mui/icons-material/Close";
 
 import {
-  Box,
   Breakpoint,
   ButtonProps,
   Dialog as MuiDialog,
@@ -66,7 +65,7 @@ const Dialog: React.FC<DialogProps> = ({
       fullWidth={fullWidth}
     >
       <DialogTitle variant="h4">
-        <Box sx={{ marginRight: "40px" }}>{title}</Box>
+        <h4 className="mr-10 text-3xl font-bold">{title}</h4>
 
         <IconButton
           onClick={onClose}

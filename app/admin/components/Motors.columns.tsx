@@ -13,7 +13,7 @@ export const getColumns = (
   {
     field: "id",
     headerName: "ID",
-    flex: 0.5,
+    flex: 1,
   },
   {
     field: "name",
@@ -23,23 +23,23 @@ export const getColumns = (
   {
     field: "description",
     headerName: "Popis",
-    flex: 2,
+    flex: 1,
   },
   {
     field: "markName",
     headerName: "Značka",
-    flex: 1,
+    flex: 0.5,
   },
   {
     field: "price",
     headerName: "Cena",
-    flex: 1,
+    flex: 0.5,
   },
   {
     field: "actions",
     headerName: "Actions",
     type: "actions",
-    flex: 1,
+    flex: 0.3,
     align: "right",
     headerAlign: "right",
     getActions: ({ row }) => {

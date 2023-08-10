@@ -1,7 +1,17 @@
-import AdminPage from "./containers/AdminPage";
+"use client";
 
-const page = () => {
-  //TODO: Add authentication and export authOptions to external file then import it to nextAuth route
+import { Metadata } from "next";
+import AdminPage from "./containers/AdminPage";
+import { useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
+
+const AdminPageTop = () => {
+  const session = useSession({
+    required: true,
+    onUnauthenticated() {
+      redirect("/login");
+    },
+  });
   return (
     <>
       <AdminPage />
@@ -9,4 +19,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default AdminPageTop;
