@@ -37,7 +37,7 @@ const InquiryFooter: FC<InquiryFooterProps> = () => {
   };
 
   const renderMobileFooter = () => {
-    if (!reqMotors) {
+    if (!reqMotors?.length) {
       return null;
     }
 
