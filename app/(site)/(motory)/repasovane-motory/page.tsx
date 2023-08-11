@@ -14,7 +14,7 @@ export default async function RepasovaneMotoryPage() {
   const data = await prisma.motor.findMany();
 
   return (
-    <>
+    <main>
       <Container>
         <div className="flex flex-col items-center ">
           <h1 className="text-4xl font-bold text-center my-10">
@@ -23,6 +23,6 @@ export default async function RepasovaneMotoryPage() {
           <MotorsList data={data} variant="repas" />
         </div>
       </Container>
-    </>
+    </main>
   );
 }

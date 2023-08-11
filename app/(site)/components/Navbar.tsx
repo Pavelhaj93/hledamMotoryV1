@@ -22,7 +22,7 @@ const siteMenu = [
   },
   {
     title: "O nás a kontakt",
-    href: "/o-nas-a-kontakt",
+    href: "/contact",
   },
 ];
 

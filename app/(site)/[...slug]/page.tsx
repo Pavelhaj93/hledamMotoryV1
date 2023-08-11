@@ -8,8 +8,8 @@ export const metadata: Metadata = {
 
 export default async function NotFoundPage() {
   return (
-    <>
+    <main className="flex items-center">
       <Section404 />
-    </>
+    </main>
   );
 }
