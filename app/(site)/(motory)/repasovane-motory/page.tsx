@@ -10,8 +10,18 @@ export const metadata: Metadata = {
     "Hledáte repasovaný motor? Nebo starý motor? Na Hledammotory.cz najdete repasované motory, staré motory, ojeté motory a další. Všechny repasované motory jsou s garancí. ",
 };
 
+async function fetchMotors() {
+  const res = await fetch("/api/motors/repas");
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch motors");
+  }
+
+  return res.json();
+}
+
 export default async function RepasovaneMotoryPage() {
-  const data = await prisma.motor.findMany();
+  const data = await fetchMotors();
 
   return (
     <main>
