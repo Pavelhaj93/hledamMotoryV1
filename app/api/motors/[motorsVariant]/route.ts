@@ -2,7 +2,10 @@ import { NextResponse } from "next/server";
 
 import prisma from "@/app/libs/prismadb";
 
-export async function GET({ params }: { params: { motorsVariant: string } }) {
+export async function GET(
+  req: Request,
+  { params }: { params: { motorsVariant: string } }
+) {
   try {
     const { motorsVariant } = params;
 
