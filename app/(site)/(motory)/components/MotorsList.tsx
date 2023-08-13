@@ -6,8 +6,20 @@ import { Grid } from "@mui/material";
 import { FC } from "react";
 import Button from "@/components/Button";
 
+export type SafeMotor = {
+  id: string;
+  markName: string;
+  slug: string;
+  name: string;
+  description: string | null;
+  price: number | null;
+  createdAt: Date | null;
+  updatedAt: Date | null;
+  images: string[];
+};
+
 interface MotorsListProps {
-  data: Motor[] | OldMotor[];
+  data: SafeMotor[];
   variant: "repas" | "old";
 }
 

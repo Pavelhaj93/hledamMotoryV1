@@ -1,7 +1,7 @@
 import React from "react";
 import prisma from "@/app/libs/prismadb";
 import Container from "@/components/container/Container";
-import MotorsList from "../../components/MotorsList";
+import MotorsList, { SafeMotor } from "../../components/MotorsList";
 import { Metadata } from "next";
 
 type Props = {
@@ -46,7 +46,7 @@ export default async function StareMotoryPage({
           <h1 className="text-4xl font-bold text-center my-10">
             Starší motory
           </h1>
-          <MotorsList data={data} variant="old" />
+          <MotorsList data={data as SafeMotor[]} variant="old" />
         </div>
       </Container>
     </main>
