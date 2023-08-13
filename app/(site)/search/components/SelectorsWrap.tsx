@@ -13,6 +13,11 @@ import InquiryFooter from "./InquiryFooter";
 import { InquiryContext } from "@/app/context/InquiryContext";
 import { useRequestMotors } from "@/app/hooks/useRequestMotors";
 
+enum handleSaveVariant {
+  searchNext = "searchNext",
+  requestMotors = "requestMotors",
+}
+
 interface SelectorsWrapProps {}
 
 const SelectorsWrap: FC<SelectorsWrapProps> = () => {
@@ -29,8 +34,8 @@ const SelectorsWrap: FC<SelectorsWrapProps> = () => {
   } = useContext(InquiryContext);
   const { setRequestMotors, requestMotors } = useRequestMotors();
 
-  const handleSave = () => {
-    setRequestMotors([
+  const handleSave = async () => {
+    await setRequestMotors([
       ...(requestMotors ?? []),
       {
         mark: selectedMark,
@@ -39,7 +44,6 @@ const SelectorsWrap: FC<SelectorsWrapProps> = () => {
         textArea,
       },
     ]);
-    window.location.reload();
   };
 
   const models = useQuery(
@@ -115,14 +119,20 @@ const SelectorsWrap: FC<SelectorsWrapProps> = () => {
             arrow
             color="primary"
             className="w-full mb-4 md:max=lg:w-1/2"
-            onClick={() => (window.location.href = "/inquiry")}
+            onClick={() => handleSave()}
+            disabled={
+              !selectedMark ||
+              !selectedModel ||
+              !selectedEngineType ||
+              !textArea
+            }
           >
             Poptat motory
           </Button>
           <Button
             color="secondary"
             className="w-full"
-            onClick={handleSave}
+            onClick={() => handleSave()}
             disabled={
               !selectedMark ||
               !selectedModel ||
