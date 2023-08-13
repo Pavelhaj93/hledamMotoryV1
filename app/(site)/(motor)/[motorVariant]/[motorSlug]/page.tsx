@@ -78,7 +78,7 @@ export default async function Motor({
             </h1>
             <div>
               <span className="text-3xl text-red-500 font-bold">
-                {motor?.price} €
+                {motor?.price} CZK
               </span>
               <span className="text-md font-semibold"> s DPH</span>
             </div>

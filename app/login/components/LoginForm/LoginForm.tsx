@@ -7,6 +7,7 @@ import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import useMessage from "@/app/hooks/useMessage";
+import axios from "axios";
 
 const LoginForm = () => {
   const message = useMessage();
@@ -46,6 +47,13 @@ const LoginForm = () => {
         setIsLoading(false);
       });
   };
+
+  // const testRegister = async () => {
+  //   const { data } = await axios.post("/api/register", {
+  //     email: "info@hledammotory.cz",
+  //     password: "Neuro164",
+  //   });
+  // };
 
   console.log(session.status);
 
