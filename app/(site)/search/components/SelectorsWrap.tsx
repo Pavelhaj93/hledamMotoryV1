@@ -35,7 +35,7 @@ const SelectorsWrap: FC<SelectorsWrapProps> = () => {
   const { setRequestMotors, requestMotors } = useRequestMotors();
 
   const handleSave = async () => {
-    await setRequestMotors([
+    setRequestMotors([
       ...(requestMotors ?? []),
       {
         mark: selectedMark,
@@ -119,7 +119,10 @@ const SelectorsWrap: FC<SelectorsWrapProps> = () => {
             arrow
             color="primary"
             className="w-full mb-4 md:max=lg:w-1/2"
-            onClick={() => handleSave()}
+            onClick={() => {
+              handleSave();
+              window.location.href = "/inquiry";
+            }}
             disabled={
               !selectedMark ||
               !selectedModel ||
