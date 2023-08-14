@@ -140,7 +140,10 @@ const SelectorsWrap: FC<SelectorsWrapProps> = ({ brand }) => {
           <Button
             color="secondary"
             className="w-full"
-            onClick={() => handleSave()}
+            onClick={() => {
+              handleSave();
+              window.location.reload();
+            }}
             disabled={!selectedMark || !selectedModel || !selectedEngineType}
           >
             Uložit a hledat další

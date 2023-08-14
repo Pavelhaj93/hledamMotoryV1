@@ -15,6 +15,7 @@ const formSchema = z.object({
   name: z.string().nonempty("Zadejte jméno"),
   email: z.string().nonempty("Zadejte email"),
   message: z.string().nonempty("Zadejte zprávu"),
+  motorVariant: z.string(),
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -22,9 +23,16 @@ type FormValues = z.infer<typeof formSchema>;
 interface ContactFormProps {
   motorId?: string;
   motorName?: string;
+  motorSlug?: string;
+  motorVariant?: string;
 }
 
-const ContactForm: FC<ContactFormProps> = ({ motorId, motorName }) => {
+const ContactForm: FC<ContactFormProps> = ({
+  motorId,
+  motorName,
+  motorSlug,
+  motorVariant,
+}) => {
   const message = useMessage();
   const {
     register,
@@ -32,12 +40,18 @@ const ContactForm: FC<ContactFormProps> = ({ motorId, motorName }) => {
     formState: { errors, isSubmitting },
   } = useForm<FormValues>({
     resolver: zodResolver(formSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      message: "",
+      motorVariant,
+    },
   });
 
   const mutation = useMutation(
     async (formValues: FormValues) => {
       const { data } = await axios.post(
-        motorId ? `/api/contact/${motorId}` : "/api/contact",
+        motorId ? `/api/contact/${motorSlug}` : "/api/contact",
         {
           ...formValues,
         }

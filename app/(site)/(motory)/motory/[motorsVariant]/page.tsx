@@ -45,7 +45,7 @@ export default async function StareMotoryPage({
         <div className="flex flex-col items-center justify-between p-5">
           <h1 className="text-4xl font-bold text-center my-10">
             {params.motorsVariant === "stare-motory"
-              ? "Staší motory"
+              ? "Starší motory"
               : "Repasované motory"}
           </h1>
           <MotorsList data={data as SafeMotor[]} variant="old" />
