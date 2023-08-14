@@ -24,7 +24,7 @@ const YourChoiceLogo: FC<YourChoiceLogoProps> = ({
       {image && (
         <Image
           src={`/images/frontend/cars/PNG/${getMarkId(selectedItem)}.png`}
-          alt={`car brand logo of ${decodeURIComponent(selectedItem)}`}
+          alt={`car brand logo of ${selectedItem}`}
           width={150}
           height={150}
         />

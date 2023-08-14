@@ -133,12 +133,7 @@ const SelectorsWrap: FC<SelectorsWrapProps> = ({ brand }) => {
               handleSave();
               window.location.href = "/inquiry";
             }}
-            disabled={
-              !selectedMark ||
-              !selectedModel ||
-              !selectedEngineType ||
-              !textArea
-            }
+            disabled={!selectedMark || !selectedModel || !selectedEngineType}
           >
             Poptat motory
           </Button>
@@ -146,12 +141,7 @@ const SelectorsWrap: FC<SelectorsWrapProps> = ({ brand }) => {
             color="secondary"
             className="w-full"
             onClick={() => handleSave()}
-            disabled={
-              !selectedMark ||
-              !selectedModel ||
-              !selectedEngineType ||
-              !textArea
-            }
+            disabled={!selectedMark || !selectedModel || !selectedEngineType}
           >
             Uložit a hledat další
           </Button>
