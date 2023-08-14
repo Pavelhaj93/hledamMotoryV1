@@ -38,7 +38,10 @@ const SelectorsWrap: FC<SelectorsWrapProps> = ({ brand }) => {
   const { setRequestMotors, requestMotors } = useRequestMotors();
 
   useEffect(() => {
-    handleSelectedMark(decodeURIComponent(brand ?? ""));
+    if (!brand) {
+      return;
+    }
+    handleSelectedMark(decodeURIComponent(brand));
   }, []);
 
   const handleSave = async () => {

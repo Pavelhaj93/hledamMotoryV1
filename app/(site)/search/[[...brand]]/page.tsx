@@ -28,7 +28,7 @@ export default async function SearchPage({
               <div className="flex flex-col items-center justify-center w-full">
                 {/* parts wrap */}
                 <InquiryContextProvider>
-                  <SelectorsWrap brand={brand[0] ?? ""} />
+                  <SelectorsWrap brand={brand} />
                 </InquiryContextProvider>
               </div>
             </div>
