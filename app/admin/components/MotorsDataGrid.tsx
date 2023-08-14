@@ -32,6 +32,7 @@ const MotorsDataGrid: FC<MotorsDataGridProps> = ({ motorsVariant }) => {
         message.error(error as string);
         console.error(error);
       },
+      staleTime: 10000,
     }
   );
 

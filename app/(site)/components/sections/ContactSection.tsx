@@ -6,12 +6,16 @@ interface ContactSectionProps {
   title?: string;
   motorId?: string;
   motorName?: string;
+  motorSlug?: string;
+  motorVariant?: string;
 }
 
 const ContactSection: FC<ContactSectionProps> = ({
   title,
   motorId,
   motorName,
+  motorSlug,
+  motorVariant,
 }) => {
   return (
     <section className="pt-10 pb-15">
@@ -43,7 +47,12 @@ const ContactSection: FC<ContactSectionProps> = ({
             </a>
             <span className="text-2xl mb-10">Se vším rádi poradíme</span>
           </div>
-          <ContactForm motorId={motorId} motorName={motorName} />
+          <ContactForm
+            motorId={motorId}
+            motorName={motorName}
+            motorSlug={motorSlug}
+            motorVariant={motorVariant}
+          />
         </div>
       </Container>
     </section>

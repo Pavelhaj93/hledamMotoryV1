@@ -1,15 +1,23 @@
 "use client";
 
 import useMessage from "@/app/hooks/useMessage";
+import { RequestMotor, useRequestMotors } from "@/app/hooks/useRequestMotors";
 import Button from "@/components/Button";
 import Input from "@/components/inputs/Input";
 import TextArea from "@/components/inputs/TextArea";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useMutation } from "react-query";
 import { z } from "zod";
+
+const RequestMotorsSchema = z.object({
+  mark: z.string().nullable(),
+  model: z.string().nullable(),
+  engineType: z.string().nullable(),
+  textArea: z.string().nullable(),
+});
 
 const formSchema = z.object({
   email: z.string().email("Zadejte platný email"),
@@ -21,23 +29,36 @@ const formSchema = z.object({
     .regex(/^\d+$/, "Pole nesmí obsahovat písmena ale jen číslice"),
   city: z.string(),
   note: z.string(),
+  requests: z.array(RequestMotorsSchema),
 });
 
 type FormValues = z.infer<typeof formSchema>;
 
 const InquiryForm = () => {
+  const { requestMotors, setRequestMotors } = useRequestMotors();
+
   const message = useMessage();
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors, isSubmitting },
   } = useForm<FormValues>({
     resolver: zodResolver(formSchema),
+    defaultValues: {
+      email: "",
+      name: "",
+      surName: "",
+      phone: "",
+      city: "",
+      note: "",
+      requests: requestMotors ?? [],
+    },
   });
 
   const mutation = useMutation(
     async (formValues: FormValues) => {
-      const { data } = await axios.post("/api/inquiry", {
+      const { data } = await axios.post("/api/searchMotor", {
         ...formValues,
       });
 
@@ -50,6 +71,10 @@ const InquiryForm = () => {
       },
       onSuccess: (data) => {
         message.success("Zpráva byla úspěšně odeslána");
+      },
+      onSettled: () => {
+        reset();
+        setRequestMotors([]);
       },
     }
   );

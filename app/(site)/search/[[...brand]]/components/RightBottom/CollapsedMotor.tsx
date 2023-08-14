@@ -2,12 +2,12 @@ import { RequestMotor, useRequestMotors } from "@/app/hooks/useRequestMotors";
 import clsx from "clsx";
 import React, { FC, useState } from "react";
 
-interface CollapsedInquiryProps {
+interface CollapsedMotorProps {
   motor: RequestMotor;
   index: number;
 }
 
-const CollapsedRequestMotor: FC<CollapsedInquiryProps> = ({ motor, index }) => {
+const CollapsedMotor: FC<CollapsedMotorProps> = ({ motor, index }) => {
   const [openCollapse, setOpenCollapse] = useState<boolean>(true);
 
   const { handleDeleteMotor } = useRequestMotors();
@@ -51,4 +51,4 @@ const CollapsedRequestMotor: FC<CollapsedInquiryProps> = ({ motor, index }) => {
   );
 };
 
-export default CollapsedRequestMotor;
+export default CollapsedMotor;

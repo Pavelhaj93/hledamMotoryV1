@@ -6,64 +6,64 @@ export type BrandImage = {
 
 export const brandImages: BrandImage[] = [
   {
-    id: 1,
+    id: 101,
     name: "Skoda",
-    src: "/images/frontend/cars/PNG/102.png",
+    src: "/images/frontend/cars/PNG/101.png",
   },
   {
-    id: 2,
+    id: 118,
     name: "Volkswagen",
-    src: "/images/frontend/cars/PNG/119.png",
+    src: "/images/frontend/cars/PNG/118.png",
   },
   {
-    id: 3,
+    id: 37,
     name: "Fiat",
-    src: "/images/frontend/cars/PNG/38.png",
+    src: "/images/frontend/cars/PNG/37.png",
   },
   {
-    id: 4,
-    name: "Citroen",
-    src: "/images/frontend/cars/PNG/24.png",
+    id: 23,
+    name: "Citroën",
+    src: "/images/frontend/cars/PNG/23.png",
   },
   {
-    id: 5,
+    id: 88,
     name: "Peugeot",
-    src: "/images/frontend/cars/PNG/89.png",
+    src: "/images/frontend/cars/PNG/88.png",
   },
   {
-    id: 6,
+    id: 75,
     name: "Mercedes",
-    src: "/images/frontend/cars/PNG/76.png",
+    src: "/images/frontend/cars/PNG/75.png",
   },
   {
-    id: 7,
+    id: 8,
     name: "Audi",
     src: "/images/frontend/cars/PNG/8.png",
   },
   {
-    id: 8,
+    id: 11,
     name: "BMW",
     src: "/images/frontend/cars/PNG/11.png",
   },
   {
-    id: 9,
+    id: 39,
     name: "Ford",
-    src: "/images/frontend/cars/PNG/40.png",
+    src: "/images/frontend/cars/PNG/39.png",
   },
   {
-    id: 10,
+    id: 93,
     name: "Renault",
-    src: "/images/frontend/cars/PNG/94.png",
+    src: "/images/frontend/cars/PNG/93.png",
   },
   {
-    id: 11,
+    id: 73,
     name: "Mazda",
-    src: "/images/frontend/cars/PNG/74.png",
+    src: "/images/frontend/cars/PNG/73.png",
   },
   {
-    id: 12,
+    id: 20,
     name: "Chevrolet",
-    src: "/images/frontend/cars/PNG/21.png",
+    src: "/images/frontend/cars/PNG/20.png",
   },
 ];
 

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { FC, useContext } from "react";
+import React, { FC, useContext, useEffect } from "react";
 
 import { useQuery } from "react-query";
 import useMessage from "@/app/hooks/useMessage";
@@ -9,18 +9,21 @@ import { marks } from "@/public/data/marks";
 import SelectorGroup from "./SelectorGroup";
 import TextArea from "@/components/inputs/TextArea";
 import Button from "@/components/Button";
-import InquiryFooter from "./InquiryFooter";
+
 import { InquiryContext } from "@/app/context/InquiryContext";
 import { useRequestMotors } from "@/app/hooks/useRequestMotors";
+import InquiryFooter from "../RightSide/YourChoice";
 
 enum handleSaveVariant {
   searchNext = "searchNext",
   requestMotors = "requestMotors",
 }
 
-interface SelectorsWrapProps {}
+interface SelectorsWrapProps {
+  brand?: string;
+}
 
-const SelectorsWrap: FC<SelectorsWrapProps> = () => {
+const SelectorsWrap: FC<SelectorsWrapProps> = ({ brand }) => {
   const message = useMessage();
   const {
     handleSelectedMark,
@@ -33,6 +36,13 @@ const SelectorsWrap: FC<SelectorsWrapProps> = () => {
     setTextArea,
   } = useContext(InquiryContext);
   const { setRequestMotors, requestMotors } = useRequestMotors();
+
+  useEffect(() => {
+    if (!brand) {
+      return;
+    }
+    handleSelectedMark(decodeURIComponent(brand));
+  }, []);
 
   const handleSave = async () => {
     setRequestMotors([
@@ -123,25 +133,18 @@ const SelectorsWrap: FC<SelectorsWrapProps> = () => {
               handleSave();
               window.location.href = "/inquiry";
             }}
-            disabled={
-              !selectedMark ||
-              !selectedModel ||
-              !selectedEngineType ||
-              !textArea
-            }
+            disabled={!selectedMark || !selectedModel || !selectedEngineType}
           >
             Poptat motory
           </Button>
           <Button
             color="secondary"
             className="w-full"
-            onClick={() => handleSave()}
-            disabled={
-              !selectedMark ||
-              !selectedModel ||
-              !selectedEngineType ||
-              !textArea
-            }
+            onClick={() => {
+              handleSave();
+              window.location.reload();
+            }}
+            disabled={!selectedMark || !selectedModel || !selectedEngineType}
           >
             Uložit a hledat další
           </Button>

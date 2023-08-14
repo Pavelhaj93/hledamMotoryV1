@@ -92,6 +92,8 @@ export default async function Motor({
         title="Máte zájem o tento motor?"
         motorId={motor.id}
         motorName={motor.name}
+        motorSlug={motor.slug}
+        motorVariant={params.motorVariant}
       />
     </main>
   );

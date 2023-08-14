@@ -6,18 +6,9 @@ import { RequestMotor } from "@/app/hooks/useRequestMotors";
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { requests, message, email, name, surName, phone, city, note } = body;
+    const { requests, email, name, surName, phone, city, note } = body;
 
-    if (
-      !requests ||
-      !message ||
-      !email ||
-      !name ||
-      !surName ||
-      !phone ||
-      !city ||
-      !note
-    ) {
+    if (!requests || !email || !name || !surName || !phone) {
       return new NextResponse("Missing fields", { status: 400 });
     }
 
@@ -43,18 +34,23 @@ export async function POST(req: Request) {
 
     await transporter.sendMail({
       ...mailOptions,
-      subject: `Nová zpráva od ${name} ${surName}`,
+      subject: `Nová zpráva od ${name} ${surName} - email ${email}`,
       text: note,
-      html: `<h2>Nová zpráva od ${name}</h2><br></br><h3>Uživatel má zájem o motory:</h3><div>${requests.map(
+      html: `<h2>Nová zpráva od ${name} ${surName} - email ${email} ${
+        city && "z města" + city
+      }  </h2><br></br><h3>Uživatel má zájem o motory:</h3><div>${requests.map(
         (request: RequestMotor) => {
           return `<div>
-             <h4>${request.mark}</h4>
-              <h4>${request.model}</h4>
-              <h4>${request.engineType}</h4>
+             <h4>Značka: ${request.mark}</h4>
+              <h4>Model: ${request.model}</h4>
+              <h4>Motorizace: ${request.engineType}</h4>
+              <h4>Dodatečná zpráva k motoru: ${request.textArea}</h4>
           </div>`;
         }
-      )}</div><br></br><p>${message}</p>`,
+      )}</div><br></br><p>${note}</p>`,
     });
+
+    return new NextResponse("Zpráva úspěsně odeslána", { status: 200 });
   } catch (err) {
     console.error(err);
     return new NextResponse("Internal server error", { status: 500 });
