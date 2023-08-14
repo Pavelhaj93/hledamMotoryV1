@@ -2,15 +2,20 @@ import { marks } from "@/public/data/marks";
 import Image from "next/image";
 import React, { FC } from "react";
 
-interface InquiryLogoProps {
+interface YourChoiceLogoProps {
   selectedItem: string;
   image?: boolean;
   title: string;
 }
 
-const InquiryLogo: FC<InquiryLogoProps> = ({ selectedItem, image, title }) => {
+const YourChoiceLogo: FC<YourChoiceLogoProps> = ({
+  selectedItem,
+  image,
+  title,
+}) => {
   const getMarkId = (markName: string) => {
     const mark = marks.find((m) => m.name === markName);
+
     return mark?.id;
   };
 
@@ -19,7 +24,7 @@ const InquiryLogo: FC<InquiryLogoProps> = ({ selectedItem, image, title }) => {
       {image && (
         <Image
           src={`/images/frontend/cars/PNG/${getMarkId(selectedItem)}.png`}
-          alt={`car brand logo of ${selectedItem}`}
+          alt={`car brand logo of ${decodeURIComponent(selectedItem)}`}
           width={150}
           height={150}
         />
@@ -31,4 +36,4 @@ const InquiryLogo: FC<InquiryLogoProps> = ({ selectedItem, image, title }) => {
   );
 };
 
-export default InquiryLogo;
+export default YourChoiceLogo;

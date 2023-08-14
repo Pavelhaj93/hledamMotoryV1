@@ -2,7 +2,7 @@ import { Metadata } from "next";
 
 import Container from "@/components/container/Container";
 import InquiryForm from "./components/InquiryForm";
-import InquiryRecapitulation from "../search/components/InquiryRecapitulation";
+import InquiryRecapitulation from "../search/[[...brand]]/components/RightBottom/InquiryContainer";
 
 export const metadata: Metadata = {
   title: "Rekapitulace poptávky | hledammotory.cz",

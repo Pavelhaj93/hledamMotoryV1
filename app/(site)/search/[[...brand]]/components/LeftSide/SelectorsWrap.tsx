@@ -1,6 +1,6 @@
 "use client";
 
-import React, { FC, useContext } from "react";
+import React, { FC, useContext, useEffect } from "react";
 
 import { useQuery } from "react-query";
 import useMessage from "@/app/hooks/useMessage";
@@ -9,18 +9,21 @@ import { marks } from "@/public/data/marks";
 import SelectorGroup from "./SelectorGroup";
 import TextArea from "@/components/inputs/TextArea";
 import Button from "@/components/Button";
-import InquiryFooter from "./InquiryFooter";
+
 import { InquiryContext } from "@/app/context/InquiryContext";
 import { useRequestMotors } from "@/app/hooks/useRequestMotors";
+import InquiryFooter from "../RightSide/YourChoice";
 
 enum handleSaveVariant {
   searchNext = "searchNext",
   requestMotors = "requestMotors",
 }
 
-interface SelectorsWrapProps {}
+interface SelectorsWrapProps {
+  brand?: string;
+}
 
-const SelectorsWrap: FC<SelectorsWrapProps> = () => {
+const SelectorsWrap: FC<SelectorsWrapProps> = ({ brand }) => {
   const message = useMessage();
   const {
     handleSelectedMark,
@@ -33,6 +36,10 @@ const SelectorsWrap: FC<SelectorsWrapProps> = () => {
     setTextArea,
   } = useContext(InquiryContext);
   const { setRequestMotors, requestMotors } = useRequestMotors();
+
+  useEffect(() => {
+    handleSelectedMark(decodeURIComponent(brand ?? ""));
+  }, []);
 
   const handleSave = async () => {
     setRequestMotors([

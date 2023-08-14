@@ -77,426 +77,422 @@ export const marks = [
   },
   {
     id: 20,
-    name: "Chevrolet Korea",
+    name: "Chevrolet",
   },
   {
     id: 21,
-    name: "Chevrolet USA",
-  },
-  {
-    id: 22,
     name: "Chrysler",
   },
   {
-    id: 23,
+    id: 22,
     name: "Chrysler (Spain)",
   },
   {
-    id: 24,
+    id: 23,
     name: "Citroën",
   },
   {
-    id: 25,
+    id: 24,
     name: "Cizeta",
   },
   {
-    id: 26,
+    id: 25,
     name: "DS Automobiles",
   },
   {
-    id: 27,
+    id: 26,
     name: "Dacia",
   },
   {
-    id: 28,
+    id: 27,
     name: "Daewoo",
   },
   {
-    id: 29,
+    id: 28,
     name: "Daihatsu",
   },
   {
-    id: 30,
+    id: 29,
     name: "De Lorean",
   },
   {
-    id: 31,
+    id: 30,
     name: "De Tomaso",
   },
   {
-    id: 32,
+    id: 31,
     name: "Dodge",
   },
   {
-    id: 33,
+    id: 32,
     name: "Donkervoort",
   },
   {
-    id: 34,
+    id: 33,
     name: "FSM",
   },
   {
-    id: 35,
+    id: 34,
     name: "FSO",
   },
   {
-    id: 36,
+    id: 35,
     name: "Felber",
   },
   {
-    id: 37,
+    id: 36,
     name: "Ferrari",
   },
   {
-    id: 38,
+    id: 37,
     name: "Fiat",
   },
   {
-    id: 39,
+    id: 38,
     name: "Fisker",
   },
   {
-    id: 40,
+    id: 39,
     name: "Ford",
   },
   {
-    id: 41,
+    id: 40,
     name: "GAZ",
   },
   {
-    id: 42,
+    id: 41,
     name: "GTA",
   },
   {
-    id: 43,
+    id: 42,
     name: "Ginetta",
   },
   {
-    id: 44,
+    id: 43,
     name: "Gumpert",
   },
   {
-    id: 45,
+    id: 44,
     name: "Hillman",
   },
   {
-    id: 46,
+    id: 45,
     name: "Honda",
   },
   {
-    id: 47,
+    id: 46,
     name: "Humber",
   },
   {
-    id: 48,
+    id: 47,
     name: "Hummer",
   },
   {
-    id: 49,
+    id: 48,
     name: "Hyundai",
   },
   {
-    id: 50,
+    id: 49,
     name: "Infiniti",
   },
   {
-    id: 51,
+    id: 50,
     name: "Innocenti",
   },
   {
-    id: 52,
+    id: 51,
     name: "Isdera",
   },
   {
-    id: 53,
+    id: 52,
     name: "Iso",
   },
   {
-    id: 54,
+    id: 53,
     name: "Isuzu",
   },
   {
-    id: 55,
+    id: 54,
     name: "Iveco",
   },
   {
-    id: 56,
+    id: 55,
     name: "Izh",
   },
   {
-    id: 57,
+    id: 56,
     name: "Jaguar",
   },
   {
-    id: 58,
+    id: 57,
     name: "Jeep",
   },
   {
-    id: 59,
+    id: 58,
     name: "Jensen",
   },
   {
-    id: 60,
+    id: 59,
     name: "KTM",
   },
   {
-    id: 61,
+    id: 60,
     name: "Kia",
   },
   {
-    id: 62,
+    id: 61,
     name: "Koenigsegg",
   },
   {
-    id: 63,
+    id: 62,
     name: "Lada",
   },
   {
-    id: 64,
+    id: 63,
     name: "Lamborghini",
   },
   {
-    id: 65,
+    id: 64,
     name: "Lancia",
   },
   {
-    id: 66,
+    id: 65,
     name: "Land Rover",
   },
   {
-    id: 67,
+    id: 66,
     name: "Lexus",
   },
   {
-    id: 68,
+    id: 67,
     name: "Lotus",
   },
   {
-    id: 69,
+    id: 68,
     name: "LuAZ",
   },
   {
-    id: 70,
+    id: 69,
     name: "Lynx",
   },
   {
-    id: 71,
+    id: 70,
     name: "MG",
   },
   {
-    id: 72,
+    id: 71,
     name: "Maserati",
   },
   {
-    id: 73,
+    id: 72,
     name: "Maybach",
   },
   {
-    id: 74,
+    id: 73,
     name: "Mazda",
   },
   {
-    id: 75,
+    id: 74,
     name: "McLaren",
   },
   {
-    id: 76,
+    id: 75,
     name: "Mercedes",
   },
   {
-    id: 77,
+    id: 76,
     name: "Mini",
   },
   {
-    id: 78,
+    id: 77,
     name: "Mitsubishi",
   },
   {
-    id: 79,
+    id: 78,
     name: "Monteverdi",
   },
   {
-    id: 80,
+    id: 79,
     name: "Morgan",
   },
   {
-    id: 81,
+    id: 80,
     name: "Morris",
   },
   {
-    id: 82,
+    id: 81,
     name: "Moskwitch",
   },
   {
-    id: 83,
+    id: 82,
     name: "Nissan",
   },
   {
-    id: 84,
+    id: 83,
     name: "Oltcit",
   },
   {
-    id: 85,
+    id: 84,
     name: "Opel",
   },
   {
-    id: 86,
+    id: 85,
     name: "Otosan",
   },
   {
-    id: 87,
+    id: 86,
     name: "Pagani",
   },
   {
-    id: 88,
+    id: 87,
     name: "Panther",
   },
   {
-    id: 89,
+    id: 88,
     name: "Peugeot",
   },
   {
-    id: 90,
+    id: 89,
     name: "Pontiac",
   },
   {
-    id: 91,
+    id: 90,
     name: "Porsche",
   },
   {
-    id: 92,
+    id: 91,
     name: "Proton",
   },
   {
-    id: 93,
+    id: 92,
     name: "Reliant",
   },
   {
-    id: 94,
+    id: 93,
     name: "Renault",
   },
   {
-    id: 95,
+    id: 94,
     name: "Rolls-Royce",
   },
   {
-    id: 96,
+    id: 95,
     name: "Rover",
   },
   {
-    id: 97,
+    id: 96,
     name: "Saab",
   },
   {
-    id: 98,
+    id: 97,
     name: "Saleen",
   },
   {
-    id: 99,
+    id: 98,
     name: "Samsung",
   },
   {
-    id: 100,
+    id: 99,
     name: "Seat",
   },
   {
-    id: 101,
+    id: 100,
     name: "Simca",
   },
   {
-    id: 102,
+    id: 101,
     name: "Skoda",
   },
   {
-    id: 103,
+    id: 102,
     name: "Smart",
   },
   {
-    id: 104,
+    id: 103,
     name: "SsangYong",
   },
   {
-    id: 105,
+    id: 104,
     name: "Subaru",
   },
   {
-    id: 106,
+    id: 105,
     name: "Sunbeam",
   },
   {
-    id: 107,
+    id: 106,
     name: "Suzuki",
   },
   {
-    id: 108,
+    id: 107,
     name: "TVR",
   },
   {
-    id: 109,
+    id: 108,
     name: "Talbot",
   },
   {
-    id: 110,
+    id: 109,
     name: "Tatra",
   },
   {
-    id: 111,
+    id: 110,
     name: "Tesla",
   },
   {
-    id: 112,
+    id: 111,
     name: "Tofas",
   },
   {
-    id: 113,
+    id: 112,
     name: "Toyota",
   },
   {
-    id: 114,
+    id: 113,
     name: "Trabant",
   },
   {
-    id: 115,
+    id: 114,
     name: "Triumph",
   },
   {
-    id: 116,
+    id: 115,
     name: "UAZ",
   },
   {
-    id: 117,
+    id: 116,
     name: "Vanden Plas",
   },
   {
-    id: 118,
+    id: 117,
     name: "Venturi",
   },
   {
-    id: 119,
+    id: 118,
     name: "Volkswagen",
   },
   {
-    id: 120,
+    id: 119,
     name: "Volvo",
   },
   {
-    id: 121,
+    id: 120,
     name: "Wartburg",
   },
   {
-    id: 122,
+    id: 121,
     name: "Wiesmann",
   },
   {
-    id: 123,
+    id: 122,
     name: "ZAZ",
   },
   {
-    id: 124,
+    id: 123,
     name: "ZIL",
   },
   {
-    id: 125,
+    id: 124,
     name: "Zastava",
   },
 ];

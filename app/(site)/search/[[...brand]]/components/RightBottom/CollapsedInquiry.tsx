@@ -4,14 +4,14 @@ import { RequestMotor, useRequestMotors } from "@/app/hooks/useRequestMotors";
 import Button from "@/components/Button";
 
 import { FC, useEffect, useState } from "react";
-import CollapsedRequestMotor from "./CollapsedRequestMotor";
+import CollapsedMotor from "./CollapsedMotor";
 
-interface InquiryRecapitulationProps {
+interface CollapsedInquiryProps {
   searchNext?: boolean;
   sendInquiry?: boolean;
 }
 
-const CollapsedInquiry: FC<InquiryRecapitulationProps> = ({
+const CollapsedInquiry: FC<CollapsedInquiryProps> = ({
   searchNext,
   sendInquiry,
 }) => {
@@ -28,7 +28,7 @@ const CollapsedInquiry: FC<InquiryRecapitulationProps> = ({
   return (
     <div className="flex flex-col justify-between text-left">
       {reqMotors?.map((motor, index) => (
-        <CollapsedRequestMotor key={index} motor={motor} index={index} />
+        <CollapsedMotor key={index} motor={motor} index={index} />
       ))}
 
       <div className="w-full flex flex-col items-center px-10 mt-5">

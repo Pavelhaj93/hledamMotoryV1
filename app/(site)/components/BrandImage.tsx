@@ -8,7 +8,7 @@ const BrandImage = ({ item }: any) => {
   const { set } = useSessionStorageValue("brand");
   return (
     <a
-      href={"/search"}
+      href={`/search/${item.name}`}
       key={item.id}
       onClick={() => set(item.name)}
       className="border-2 border-gray-300 h-28 items-center justify-center flex min-w-36 hover:border-red-500 cursor-pointer"
