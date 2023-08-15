@@ -48,7 +48,10 @@ export default async function StareMotoryPage({
               ? "Starší motory"
               : "Repasované motory"}
           </h1>
-          <MotorsList data={data as SafeMotor[]} variant="old" />
+          <MotorsList
+            data={data as SafeMotor[]}
+            variant={params.motorsVariant === "stare-motory" ? "old" : "repas"}
+          />
         </div>
       </Container>
     </main>

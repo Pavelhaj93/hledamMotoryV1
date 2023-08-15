@@ -1,10 +1,12 @@
 import { RequestMotor } from "../hooks/useRequestMotors";
 
-export const generateSlug = (str: string) => {
-  return str
+export const generateSlug = (str: string, id: string) => {
+  const slug = str
     .toLowerCase()
     .replace(/[^\w ]+/g, "")
     .replace(/ +/g, "-");
+
+  return `${slug}-${id}`;
 };
 
 export const getInquiryFooterAmount = (requestMotors: RequestMotor[]) => {
