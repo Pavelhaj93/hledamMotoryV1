@@ -17,10 +17,18 @@ export async function POST(req: Request) {
         name,
         description,
         markName,
-        slug: generateSlug(name),
         price,
         images,
+        slug: "",
       },
+    });
+
+    const slug = generateSlug(name, motor.id); // Assuming motor object has an 'id' property
+
+    // Update the motor's slug in the database
+    await prisma.motor.update({
+      where: { id: motor.id },
+      data: { slug },
     });
 
     return NextResponse.json(motor);

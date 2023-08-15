@@ -50,7 +50,7 @@ export default async function Motor({
   const motor = await fetchMotor(params);
 
   if (!motor) {
-    return <>Motor nenalezen</>;
+    return <main>Motor nenalezen</main>;
   }
 
   function DisplayParagraph({ text }: { text: string }) {
