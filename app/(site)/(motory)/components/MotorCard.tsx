@@ -16,7 +16,7 @@ const MotorCard: FC<MotorCardProps> = ({ motor, variant }) => {
         motor.slug
       }`}
     >
-      <div className="flex flex-col items-center cursor-pointer group hover:scale-110 transition-all duration-300 ease-in-out">
+      <div className="flex flex-col items-center justify-between cursor-pointer group hover:scale-110 transition-all duration-300 ease-in-out">
         <Image
           src={motor.images?.[0] ?? "/images/placeholder.png"}
           alt={motor.name}

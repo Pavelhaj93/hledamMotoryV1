@@ -26,7 +26,8 @@ const ImageGallery: FC<ImageGalleryProps> = ({ motor }) => {
             src={img}
             alt={motor.name}
             width={80}
-            height={80}
+            height={100}
+            style={{ height: "auto", maxHeight: "100px" }}
             key={img}
             onMouseEnter={() => setIndex(idx)}
           />
