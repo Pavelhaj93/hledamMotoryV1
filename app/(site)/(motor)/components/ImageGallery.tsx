@@ -16,8 +16,12 @@ const ImageGallery: FC<ImageGalleryProps> = ({ motor }) => {
         <Image
           src={motor.images?.[index] ?? "/images/placeholder.png"}
           alt={motor.name}
-          width={400}
-          height={650}
+          width={384}
+          height={480}
+          style={{
+            maxHeight: "480px",
+            width: "auto",
+          }}
         />
       </div>
       <div className="flex flex-row gap-5 mt-5">
