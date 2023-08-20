@@ -6,7 +6,7 @@ const Benefits = () => {
   return (
     <section className="w-full h-full overflow-hidden bg-[url('/images/frontend/benefitsBg.png')] bg-cover">
       <Container>
-        <div>
+        <div className="mt-10">
           <h2 className="text-2xl font-semibold text-center mb-1 text-red-500">
             Proč?
           </h2>

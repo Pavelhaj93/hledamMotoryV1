@@ -12,7 +12,7 @@ const ImageGallery: FC<ImageGalleryProps> = ({ motor }) => {
   const [index, setIndex] = useState(0);
   return (
     <div className="w-5/12 max-lg:w-full max-lg:flex max-lg:flex-col max-lg:items-center max-lg:justify-center">
-      <div className="h-480 w-96">
+      <div className="h-480 w-96 flex justify-center">
         <Image
           src={motor.images?.[index] ?? "/images/placeholder.png"}
           alt={motor.name}
@@ -21,6 +21,7 @@ const ImageGallery: FC<ImageGalleryProps> = ({ motor }) => {
           style={{
             maxHeight: "480px",
             width: "auto",
+            minHeight: "480px",
           }}
         />
       </div>

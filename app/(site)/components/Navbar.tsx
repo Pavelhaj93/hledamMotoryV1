@@ -9,7 +9,7 @@ const siteMenu = [
     href: "/",
   },
   {
-    title: "Hledat motor",
+    title: "Poptat motor",
     href: "/search",
   },
   {

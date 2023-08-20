@@ -5,7 +5,7 @@ import React from "react";
 
 const HowItWorksSection = () => {
   return (
-    <section className="w-full h-full overflow-hidden">
+    <section className="w-full h-full overflow-hidden mt-10">
       <Container className="max-md:text-center">
         <div className="text-center">
           <h3 className="text-2xl font-semibold text-center mb-1 text-red-500">
