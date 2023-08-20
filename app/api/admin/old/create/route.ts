@@ -23,6 +23,7 @@ export async function POST(req: Request) {
       },
     });
 
+    // Generate the motor's slug
     const slug = generateSlug(name, motor.id);
 
     // Update the motor's slug in the database
