@@ -34,7 +34,7 @@ const ContactSection: FC<ContactSectionProps> = ({
               Zavolejte nám
             </h3>
             <span className="text-4xl font-bold text-red-500 mb-10">
-              +420 725 825 199
+              +420 724 704 764
             </span>
             <h3 className="text-center font-bold text-2xl mb-10">
               Napište nám na mail
