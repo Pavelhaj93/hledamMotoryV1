@@ -77,7 +77,7 @@ const ContactForm: FC<ContactFormProps> = ({
   return (
     <div className="max-lg:w-full w-1/2">
       <h3 className="max-lg:text-center max-lg:mb-7 mb-9 mt-5 font-bold text-2xl">
-        Nebo nám napište přes formulář
+        Nebo využijte náš formulář a my se vám ozveme
       </h3>
       <div className="flex flex-col gap-4">
         <form onSubmit={handleSubmit(onSubmit)}>

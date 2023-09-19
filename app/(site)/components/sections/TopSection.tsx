@@ -8,7 +8,7 @@ import BrandImagesList from "../BrandImagesList";
 
 const TopSection = () => {
   return (
-    <section className="flex-wrap pt-40 h-full bg-[url('/images/frontend/background.png')] bg-cover relative -top-40 overflow-hidden z-10">
+    <section className="flex-wrap h-full bg-[url('/images/frontend/background.png')] bg-cover relative">
       <Container className="flex flex-col w-full lg:flex-row">
         <div className="inline-block align-middle w-full h-full pr-4 pt-12 lg:w-full max-lg:flex flex-col items-center">
           <h2 className="text-2xl font-black text-red-500 w-7/12 max-lg:text-center lg:w-full lg:text-4xl">

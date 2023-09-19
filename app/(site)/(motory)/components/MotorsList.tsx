@@ -64,7 +64,7 @@ const MotorsList: FC<MotorsListProps> = ({ data, variant }) => {
     );
   }
   return (
-    <Grid container spacing={3}>
+    <Grid container spacing={3} className="mb-10">
       {data.map((motor) => {
         return (
           <Grid item xs={12} sm={6} md={3} key={motor.id}>

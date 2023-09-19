@@ -1,8 +1,10 @@
 import React from "react";
 import prisma from "@/app/libs/prismadb";
-import Container from "@/components/container/Container";
-import MotorsList, { SafeMotor } from "../../components/MotorsList";
+import { SafeMotor } from "../../components/MotorsList";
 import { Metadata } from "next";
+import MotorsContainer from "../../components/MotorsContainer";
+import TopSection from "@/app/(site)/components/sections/TopSection";
+import ContactSection from "@/app/(site)/components/sections/ContactSection";
 
 type Props = {
   params: {
@@ -41,19 +43,9 @@ export default async function StareMotoryPage({
 
   return (
     <main>
-      <Container>
-        <div className="flex flex-col items-center justify-between p-5">
-          <h1 className="text-4xl font-bold text-center my-10">
-            {params.motorsVariant === "stare-motory"
-              ? "Starší motory"
-              : "Repasované motory"}
-          </h1>
-          <MotorsList
-            data={data as SafeMotor[]}
-            variant={params.motorsVariant === "stare-motory" ? "old" : "repas"}
-          />
-        </div>
-      </Container>
+      <MotorsContainer params={params} data={data as SafeMotor[]} />;
+      <TopSection />
+      <ContactSection />
     </main>
   );
 }
