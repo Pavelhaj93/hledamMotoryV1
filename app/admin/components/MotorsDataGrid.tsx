@@ -9,7 +9,7 @@ import DeleteMotorDialog from "./dialogs/DeleteMotorDialog";
 import { Motor } from "@prisma/client";
 import MotorDialog from "./dialogs/MotorDialog";
 import useMessage from "@/app/hooks/useMessage";
-import { useQuery, useQueryClient } from "react-query";
+import { useQuery } from "react-query";
 
 interface MotorsDataGridProps {
   motorsVariant: "repas" | "old";
@@ -32,7 +32,8 @@ const MotorsDataGrid: FC<MotorsDataGridProps> = ({ motorsVariant }) => {
         message.error(error as string);
         console.error(error);
       },
-      cacheTime: 0,
+      staleTime: 3000, // 3 seconds
+      cacheTime: 10000, // 10 seconds
     }
   );
 
@@ -44,7 +45,7 @@ const MotorsDataGrid: FC<MotorsDataGridProps> = ({ motorsVariant }) => {
     <>
       <AdminDataGrid
         disableColumnMenu
-        rows={data}
+        rows={data ?? []}
         columns={getColumns(setOpenUpdateModal, setOpenDeleteModal)}
         loading={isLoading}
         hideFooter
