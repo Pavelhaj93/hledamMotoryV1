@@ -9,7 +9,7 @@ import DeleteMotorDialog from "./dialogs/DeleteMotorDialog";
 import { Motor } from "@prisma/client";
 import MotorDialog from "./dialogs/MotorDialog";
 import useMessage from "@/app/hooks/useMessage";
-import { useQuery } from "react-query";
+import { useQuery, useQueryClient } from "react-query";
 
 interface MotorsDataGridProps {
   motorsVariant: "repas" | "old";
@@ -22,7 +22,7 @@ const MotorsDataGrid: FC<MotorsDataGridProps> = ({ motorsVariant }) => {
   const [openDeleteModal, setOpenDeleteModal] = useState<Motor | null>(null);
 
   const { data, isLoading } = useQuery(
-    "motors",
+    motorsVariant === "repas" ? "motors" : "oldMotors",
     async () => {
       const { data } = await axios.get(`/api/admin/${motorsVariant}/motors`);
       return data;
@@ -32,7 +32,6 @@ const MotorsDataGrid: FC<MotorsDataGridProps> = ({ motorsVariant }) => {
         message.error(error as string);
         console.error(error);
       },
-      staleTime: 0,
     }
   );
 

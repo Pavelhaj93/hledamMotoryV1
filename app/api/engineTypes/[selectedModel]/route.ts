@@ -5,7 +5,6 @@ export async function POST(
   req: Request,
   { params }: { params: { selectedModel: string } }
 ) {
-  console.log(params.selectedModel);
   try {
     const models = await prisma.engineType.findMany({
       where: { modelName: params.selectedModel },
