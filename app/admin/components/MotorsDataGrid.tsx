@@ -21,10 +21,10 @@ const MotorsDataGrid: FC<MotorsDataGridProps> = ({ motorsVariant }) => {
   const [openUpdateModal, setOpenUpdateModal] = useState<Motor | null>(null);
   const [openDeleteModal, setOpenDeleteModal] = useState<Motor | null>(null);
 
-  const { data, isLoading } = useQuery(
+  const { data, isLoading, isError } = useQuery(
     motorsVariant === "repas" ? "motors" : "oldMotors",
     async () => {
-      const { data } = await axios.get(`/api/admin/${motorsVariant}/motors`);
+      const { data } = await axios.get<Motor[]>(`/api/motors/${motorsVariant}`);
       return data;
     },
     {
@@ -32,8 +32,6 @@ const MotorsDataGrid: FC<MotorsDataGridProps> = ({ motorsVariant }) => {
         message.error(error as string);
         console.error(error);
       },
-      staleTime: 3000, // 3 seconds
-      cacheTime: 10000, // 10 seconds
     }
   );
 
