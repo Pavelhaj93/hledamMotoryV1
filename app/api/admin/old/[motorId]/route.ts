@@ -8,7 +8,6 @@ export async function DELETE(
 ) {
   try {
     const { motorId } = params;
-    console.log(motorId);
 
     if (!motorId) {
       return new NextResponse("Missing fields, id", { status: 400 });
@@ -20,7 +19,6 @@ export async function DELETE(
       },
     });
 
-    console.log(motor);
     return NextResponse.json(motorId);
   } catch (err) {
     console.error(err);
@@ -54,7 +52,6 @@ export async function PUT(
       },
     });
 
-    console.log(motor);
     return NextResponse.json(motor);
   } catch (err) {
     console.error(err);

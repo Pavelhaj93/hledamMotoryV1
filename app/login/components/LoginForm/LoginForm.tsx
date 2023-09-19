@@ -7,7 +7,6 @@ import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import useMessage from "@/app/hooks/useMessage";
-import axios from "axios";
 
 const LoginForm = () => {
   const message = useMessage();
@@ -54,8 +53,6 @@ const LoginForm = () => {
   //     password: "Neuro164",
   //   });
   // };
-
-  console.log(session.status);
 
   return (
     <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">

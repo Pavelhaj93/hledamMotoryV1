@@ -5,7 +5,6 @@ export async function POST(
   req: Request,
   { params }: { params: { selectedMark: string } }
 ) {
-  console.log(params.selectedMark);
   try {
     const models = await prisma.model.findMany({
       where: { markName: params.selectedMark },

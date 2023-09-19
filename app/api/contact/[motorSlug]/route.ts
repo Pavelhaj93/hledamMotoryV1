@@ -15,8 +15,6 @@ export async function POST(
       return new NextResponse("Missing fields", { status: 400 });
     }
 
-    console.log("motorSlug", params.motorSlug);
-
     let motor;
     if (motorVariant === "stary-motor") {
       motor = await prisma?.oldMotor.findUnique({
