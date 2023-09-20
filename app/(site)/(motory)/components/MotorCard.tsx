@@ -31,7 +31,6 @@ const MotorCard: FC<MotorCardProps> = ({ motor, variant }) => {
             <span className="text-2xl text-black font-bold">
               {motor.price} CZK
             </span>
-            <span className="text-sm"> s DPH</span>
           </div>
         </div>
       </div>
