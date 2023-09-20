@@ -80,7 +80,6 @@ export default async function Motor({
               <span className="text-3xl text-red-500 font-bold">
                 {motor?.price} CZK
               </span>
-              <span className="text-md font-semibold"> s DPH</span>
             </div>
             <div className="flex flex-col justify-center max-lg:items-center">
               <DisplayParagraph text={motor.description ?? ""} />
