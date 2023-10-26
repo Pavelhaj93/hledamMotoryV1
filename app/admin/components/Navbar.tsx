@@ -1,7 +1,9 @@
+"use client";
+
 import HamburgerMenu from "@/app/(site)/components/HamburgerMenu";
+import useClickOutside from "@/app/hooks/useClickOutside";
 import Container from "@/components/container/Container";
 import Image from "next/image";
-import React from "react";
 
 const siteMenu = [
   {
@@ -19,6 +21,8 @@ const siteMenu = [
 ];
 
 const Navbar = () => {
+  const { isOpen, toggleOpen, ref } = useClickOutside();
+
   return (
     <header className="py-4 flex h-40">
       <Container className="w-full h-24 flex flex-row justify-between items-center mx-auto z-20">
@@ -34,7 +38,14 @@ const Navbar = () => {
           />
         </a>
         <span className="flex flex-row gap-10 items-center z-10">
-          <HamburgerMenu menu={siteMenu} admin />
+          <div ref={ref}>
+            <HamburgerMenu
+              menu={siteMenu}
+              admin
+              isOpen={isOpen}
+              handleMenuOpen={toggleOpen}
+            />
+          </div>
         </span>
       </Container>
     </header>
