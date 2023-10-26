@@ -2,7 +2,6 @@
 
 import Container from "@/components/container/Container";
 import Image from "next/image";
-import React, { RefObject, useEffect, useRef, useState } from "react";
 import HamburgerMenu from "./HamburgerMenu";
 import useClickOutside from "@/app/hooks/useClickOutside";
 import Link from "next/link";
@@ -31,7 +30,7 @@ const siteMenu = [
 ];
 
 const Navbar = () => {
-  const { isOpen, toggleOpen, close, ref } = useClickOutside();
+  const { isOpen, toggleOpen, ref } = useClickOutside();
 
   return (
     <header className="py-2 flex h-28 shadow-xl sticky z-20 bg-white top-0">
