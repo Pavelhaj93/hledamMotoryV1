@@ -1,7 +1,9 @@
+"use client";
+
 import HamburgerMenu from "@/app/(site)/components/HamburgerMenu";
 import Container from "@/components/container/Container";
 import Image from "next/image";
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 const siteMenu = [
   {

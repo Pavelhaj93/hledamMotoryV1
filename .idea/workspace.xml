@@ -5,7 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c93a40a6-979a-46a7-8485-c1712256c857" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/app/(site)/components/sections/ContactSection.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(site)/components/sections/ContactSection.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(site)/components/HamburgerMenu.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(site)/components/HamburgerMenu.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(site)/components/Navbar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(site)/components/Navbar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(site)/contact/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(site)/contact/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/admin/components/Navbar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/admin/components/Navbar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

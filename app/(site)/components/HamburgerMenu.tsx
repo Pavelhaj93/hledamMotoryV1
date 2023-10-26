@@ -11,20 +11,27 @@ import { FC, useEffect, useState } from "react";
 interface HamburgerMenuProps {
   menu: { title: string; href: string }[];
   admin?: boolean;
+  isOpen?: boolean;
+  handleMenuOpen?: () => void;
 }
 
-const HamburgerMenu: FC<HamburgerMenuProps> = ({ menu, admin }) => {
+const HamburgerMenu: FC<HamburgerMenuProps> = ({
+  menu,
+  admin,
+  isOpen,
+  handleMenuOpen,
+}) => {
   const [imageSrc, setImageSrc] = useState(
     "/images/frontend/icon-hamburger.png"
   );
 
-  const handleImageChange = () => {
-    if (imageSrc === "/images/frontend/icon-hamburger.png") {
+  useEffect(() => {
+    if (isOpen) {
       setImageSrc("/images/frontend/icon-cross.png");
     } else {
       setImageSrc("/images/frontend/icon-hamburger.png");
     }
-  };
+  }, [isOpen]);
 
   const { value: requestMotors } =
     useLocalStorageValue<RequestMotor[]>("requestMotors");
@@ -37,20 +44,22 @@ const HamburgerMenu: FC<HamburgerMenuProps> = ({ menu, admin }) => {
   }, [requestMotors]);
 
   return (
-    <span className="flex flex-row gap-5 items-center z-10 max-sm:mr-5 cursor-pointer">
+    <span
+      className="flex flex-row gap-5 items-center z-10 max-sm:mr-5 cursor-pointer"
+      onClick={handleMenuOpen}
+    >
       <Image
         src={imageSrc}
         alt="icon-hamburger"
         width={34}
         height={28}
         className="z-30"
-        onClick={handleImageChange}
       />
       <span className="text-xl font-bold max-sm:hidden z-0">Menu</span>
 
       <Container
         className={clsx(
-          "fixed right-0 left-0 top-0 flex justify-end px-0",
+          "fixed right-0 left-0 top-0 flex justify-end px-0 cursor-default",
           imageSrc === "/images/frontend/icon-hamburger.png" && "hidden"
         )}
       >
