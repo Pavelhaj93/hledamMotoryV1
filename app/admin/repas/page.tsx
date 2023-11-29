@@ -10,7 +10,6 @@ import Button from "@/components/Button";
 import Container from "@/components/container/Container";
 import { redirect } from "next/navigation";
 import { useSession } from "next-auth/react";
-import { Metadata } from "next";
 
 const RepasPage = () => {
   const [openMotorModal, setOpenMotorModal] = useState<boolean>(false);
@@ -27,8 +26,8 @@ const RepasPage = () => {
         <div className="w-full flex flex-row justify-between">
           <h1 className="text-3xl font-bold">Repasované motory</h1>
           <Button color="primary" onClick={() => setOpenMotorModal(true)}>
-            Nový motor
-            <span className="bg-[url('/images/frontend/icon-rightArrow.png')]"></span>
+            <span>Nový motor</span>
+            <span className="bg-[url('/images/frontend/icon-rightArrow.png')]" />
           </Button>
         </div>
 

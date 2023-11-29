@@ -3,6 +3,7 @@ import prisma from "@/app/libs/prismadb";
 import Container from "@/components/container/Container";
 import ImageGallery from "../../components/ImageGallery";
 import { Metadata } from "next";
+import { formatPrice } from "@/app/utils/utils";
 
 type Props = {
   params: {
@@ -44,16 +45,16 @@ export const generateMetadata = async (props: Props): Promise<Metadata> => {
 
 export default async function Motor({
   params,
-}: {
+}: Readonly<{
   params: { motorSlug: string; motorVariant: string };
-}) {
+}>) {
   const motor = await fetchMotor(params);
 
   if (!motor) {
     return <main>Motor nenalezen</main>;
   }
 
-  function DisplayParagraph({ text }: { text: string }) {
+  function DisplayParagraph({ text }: Readonly<{ text: string }>) {
     const lines = text.split("\n");
 
     return (
@@ -78,7 +79,7 @@ export default async function Motor({
             </h1>
             <div>
               <span className="text-3xl text-red-500 font-bold">
-                {motor?.price} CZK
+                {formatPrice(motor?.price ?? 0)} CZK
               </span>
             </div>
             <div className="flex flex-col justify-center max-lg:items-center">
