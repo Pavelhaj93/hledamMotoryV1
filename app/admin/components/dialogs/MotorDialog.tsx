@@ -23,6 +23,7 @@ import Image from "next/image";
 import CloudUploadOutlinedIcon from "@mui/icons-material/CloudUploadOutlined";
 import { useMutation, useQueryClient } from "react-query";
 import DeleteIcon from "@mui/icons-material/DeleteOutlined";
+import EditOutlined from "@mui/icons-material/EditOutlined";
 
 interface MotorDialogProps {
   open: boolean;
@@ -167,6 +168,20 @@ const MotorDialog: FC<MotorDialogProps> = ({
     );
   };
 
+  const handleSelectPrimaryImage = (image: string) => {
+    setValue(
+      "images",
+      [
+        image,
+        ...(watchImages?.map((img) => img).filter((img) => img !== image) ??
+          []),
+      ],
+      {
+        shouldValidate: true,
+      }
+    );
+  };
+
   const onSubmit: SubmitHandler<FormValues> = async (formValues) => {
     if (variant === "create") {
       createMutation.mutate(formValues);
@@ -190,7 +205,11 @@ const MotorDialog: FC<MotorDialogProps> = ({
           control={control}
           render={({ field, fieldState }) => (
             <FormControl size="small" error={!!fieldState.error}>
-              <TextField placeholder="Zadajte název motoru" {...field} />
+              <TextField
+                placeholder="Zadejte název motoru"
+                label="Název motoru"
+                {...field}
+              />
               {!!fieldState.error && (
                 <FormHelperText>{fieldState.error?.message}</FormHelperText>
               )}
@@ -204,6 +223,7 @@ const MotorDialog: FC<MotorDialogProps> = ({
             <FormControl size="small" error={!!fieldState.error}>
               <TextField
                 placeholder="Zadajte popis motoru"
+                label="Popis motoru"
                 {...field}
                 multiline
                 rows={6}
@@ -226,10 +246,10 @@ const MotorDialog: FC<MotorDialogProps> = ({
               <Autocomplete
                 value={field.value}
                 onChange={(_event, value) => field.onChange(value as string)}
-                placeholder="Zadajte znacku motoru"
+                placeholder="Zadajte značku motoru"
                 options={dataMarks ?? []}
                 renderInput={(params) => (
-                  <TextField {...params} label="Znacka motoru" />
+                  <TextField {...params} label="Značka motoru" />
                 )}
               />
               {!!fieldState.error && (
@@ -243,13 +263,36 @@ const MotorDialog: FC<MotorDialogProps> = ({
           control={control}
           render={({ field, fieldState }) => (
             <FormControl size="small" error={!!fieldState.error}>
-              <TextField placeholder="Zadajte cenu motoru" {...field} />
+              <TextField
+                placeholder="Zadajte cenu motoru"
+                label="Cena motoru"
+                {...field}
+              />
               {!!fieldState.error && (
                 <FormHelperText>{fieldState.error?.message}</FormHelperText>
               )}
             </FormControl>
           )}
         />
+        <div className="flex flex-col">
+          <h3 className="font-bold">Fotky: </h3>
+          <CldUploadButton
+            options={{ maxFiles: 5 }}
+            onUpload={handleUpload}
+            uploadPreset="x9zk83j9"
+          >
+            <Chip
+              className="flex flex-row gap-5"
+              label={
+                watchImages && watchImages.length === 0
+                  ? "Nahrát fotky"
+                  : "Nahrát další fotky"
+              }
+              clickable
+              icon={<CloudUploadOutlinedIcon />}
+            />
+          </CldUploadButton>
+        </div>
         <Controller
           name="images"
           control={control}
@@ -257,28 +300,31 @@ const MotorDialog: FC<MotorDialogProps> = ({
             <FormControl size="small" error={!!fieldState.error}>
               <div className="flex flex-col justify-center items-center gap-5">
                 {watchImages?.map((img) => (
-                  <div key={img} className="flex flex-col items-end">
-                    <Chip
-                      icon={<DeleteIcon />}
-                      label="Smazat fotku"
-                      color="error"
-                      onClick={() => handleDeleteImage(img)}
-                    />
+                  <div
+                    key={img}
+                    className="flex flex-col items-end border-2 border-rgb(59 130 246 / 0.5) rounded-lg p-5"
+                  >
                     <Image src={img} alt="test" width={400} height={400} />
+                    <div className="flex gap-5 mt-3">
+                      <Chip
+                        icon={<EditOutlined />}
+                        label={
+                          watchImages?.[0] === img
+                            ? "Hlavní fotka"
+                            : "Nastavit jako hlavní fotku"
+                        }
+                        color={watchImages?.[0] === img ? "primary" : "default"}
+                        onClick={() => handleSelectPrimaryImage(img)}
+                      />
+                      <Chip
+                        icon={<DeleteIcon />}
+                        label="Smazat fotku"
+                        color="error"
+                        onClick={() => handleDeleteImage(img)}
+                      />
+                    </div>
                   </div>
                 ))}
-                <CldUploadButton
-                  options={{ maxFiles: 5 }}
-                  onUpload={handleUpload}
-                  uploadPreset="x9zk83j9"
-                >
-                  <Chip
-                    className="flex flex-row gap-5"
-                    label="Nahrát obrázky"
-                    clickable
-                    icon={<CloudUploadOutlinedIcon />}
-                  />
-                </CldUploadButton>
 
                 {!!fieldState.error && (
                   <FormHelperText>{fieldState.error?.message}</FormHelperText>
