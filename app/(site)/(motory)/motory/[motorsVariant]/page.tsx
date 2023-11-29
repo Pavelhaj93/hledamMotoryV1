@@ -36,9 +36,9 @@ export const generateMetadata = async (props: Props): Promise<Metadata> => {
 
 export default async function StareMotoryPage({
   params,
-}: {
+}: Readonly<{
   params: { motorsVariant: string };
-}) {
+}>) {
   const data = await fetchMotors(params);
 
   return (

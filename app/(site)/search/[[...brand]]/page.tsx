@@ -11,9 +11,9 @@ export const metadata: Metadata = {
 
 export default async function SearchPage({
   params,
-}: {
+}: Readonly<{
   params: { brand: string };
-}) {
+}>) {
   const { brand } = params;
 
   return (

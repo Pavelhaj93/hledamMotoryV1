@@ -12,9 +12,9 @@ const inter = Raleway({ subsets: ["latin"] });
 
 export default function RootLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode;
-}) {
+}>) {
   return (
     <html lang="en">
       <body className={clsx(`w-screen`, inter.className)}>

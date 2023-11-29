@@ -42,7 +42,7 @@ const SelectorsWrap: FC<SelectorsWrapProps> = ({ brand }) => {
       return;
     }
     handleSelectedMark(decodeURIComponent(brand));
-  }, []);
+  }, [brand, handleSelectedMark]);
 
   const handleSave = async () => {
     setRequestMotors([
