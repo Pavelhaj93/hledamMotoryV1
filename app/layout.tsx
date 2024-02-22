@@ -1,12 +1,12 @@
+import { Analytics } from "@vercel/analytics/react";
 import clsx from "clsx";
-import AuthContext from "./context/AuthContext";
-
-import "./globals.css";
 import { Raleway } from "next/font/google";
+import Script from "next/script";
+import AuthContext from "./context/AuthContext";
+import { MaterialThemeProvider } from "./context/MaterialThemeProvider";
 import { ReactQueryProvider } from "./context/ReactQueryProvider";
 import { SnackBarProvider } from "./context/SnackBarProvider";
-import { MaterialThemeProvider } from "./context/MaterialThemeProvider";
-import { Analytics } from "@vercel/analytics/react";
+import "./globals.css";
 
 const inter = Raleway({ subsets: ["latin"] });
 
@@ -17,6 +17,20 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <Script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=G-ND4D88XRC9"
+          strategy="lazyOnload"
+          crossOrigin="anonymous"
+        />
+        <Script id="google-analytics">
+          {`window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-ND4D88XRC9');`}
+        </Script>
+      </head>
       <body className={clsx(`w-screen`, inter.className)}>
         {/* <main className="border-box h-full w-full"> */}
         <MaterialThemeProvider>

@@ -10,7 +10,7 @@ const TopSection = () => {
   return (
     <section className="flex-wrap h-full bg-[url('/images/frontend/background.png')] bg-cover relative">
       <Container className="flex flex-col w-full lg:flex-row">
-        <div className="inline-block align-middle w-full h-full pr-4 pt-12 lg:w-full max-lg:flex flex-col items-center">
+        <div className="inline-block align-middle w-full h-full max-lg:pr-0 pr-4 pt-12 lg:w-full max-lg:flex flex-col items-center">
           <h2 className="text-2xl font-black text-red-500 w-7/12 max-lg:text-center lg:w-full lg:text-4xl">
             Hledáte motor a nenašli jste ho v naší nabídce?
           </h2>
@@ -35,7 +35,7 @@ const TopSection = () => {
             </Button>
           </div>
         </div>
-        <div className="max-lg:w-full inline-block align-middle w-4/12 h-full px-6 pt-12 mt-20">
+        <div className="max-lg:w-full inline-block align-middle w-4/12 h-full px-6 pt-12 max-lg:mt-0 mt-20">
           <div className="max-lg:w-full max-lg:flex max-lg:flex-row max-lg:items-center max-lg:justify-center relative w-screen h-full">
             <div className="max-lg:w-full relative top-0 h-full w-screen mt-12">
               <Image
@@ -45,7 +45,7 @@ const TopSection = () => {
                 height={400}
               />
             </div>
-            <div className="max-lg:w-8/12  absolute w-1/3 top-0 h-full">
+            <div className="max-lg:w-10/12 absolute w-1/3 top-0 h-full">
               <Image
                 className="mt-20 max-lg:mt-0"
                 src="/images/frontend/partsImage.png"
