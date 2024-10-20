@@ -35,6 +35,7 @@ const Navbar = () => {
             alt="logo"
             width={180}
             height={78}
+            priority
           />
         </a>
         <span className="flex flex-row gap-10 items-center z-10">
