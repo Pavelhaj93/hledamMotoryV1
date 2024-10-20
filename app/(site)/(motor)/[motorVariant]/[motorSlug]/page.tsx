@@ -73,7 +73,7 @@ export default async function Motor({
       <Container>
         <div className="flex max-lg:flex-col flex-row items-center justify-evenly gap-20 mt-10">
           <ImageGallery motor={motor} />
-          <div className="flex flex-col gap-10 w-7/12 max-lg:w-full max-lg:px-5">
+          <div className="flex flex-col gap-10 w-7/12 max-lg:w-full">
             <h1 className="text-3xl font-bold text-black uppercase text-left">
               {motor?.name}
             </h1>

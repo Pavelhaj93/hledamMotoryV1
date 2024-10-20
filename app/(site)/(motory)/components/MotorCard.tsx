@@ -23,6 +23,13 @@ const MotorCard: FC<MotorCardProps> = ({ motor, variant }) => {
           alt={motor.name}
           width={300}
           height={430}
+          style={{
+            maxHeight: "430px",
+            width: "auto",
+            minHeight: "430px",
+            objectFit: "cover",
+            borderRadius: "8px",
+          }}
         />
         <div className="flex flex-col justify-center items-center mt-3">
           <h2 className="text-center text-lg font-semibold text-red-500 uppercase group-hover:text-black">
