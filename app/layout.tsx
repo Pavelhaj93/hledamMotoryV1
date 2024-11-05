@@ -18,6 +18,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <Script src="//ssp.seznam.cz/static/js/ssp.js" />
         <Script
           async
           src="https://www.googletagmanager.com/gtag/js?id=G-ND4D88XRC9"
@@ -32,16 +33,16 @@ export default function RootLayout({
         </Script>
       </head>
       <body className={clsx(`w-screen`, inter.className)}>
-        {/* <main className="border-box h-full w-full"> */}
-        <MaterialThemeProvider>
-          <SnackBarProvider>
-            <ReactQueryProvider>
-              <AuthContext>{children}</AuthContext>
-            </ReactQueryProvider>
-          </SnackBarProvider>
-        </MaterialThemeProvider>
-        <Analytics />
-        {/* </main> */}
+        <main className="h-full w-full">
+          <MaterialThemeProvider>
+            <SnackBarProvider>
+              <ReactQueryProvider>
+                <AuthContext>{children}</AuthContext>
+              </ReactQueryProvider>
+            </SnackBarProvider>
+          </MaterialThemeProvider>
+          <Analytics />
+        </main>
       </body>
     </html>
   );

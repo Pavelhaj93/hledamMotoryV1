@@ -1,10 +1,10 @@
-import TopSection from "./components/sections/TopSection";
-import HowItWorksSection from "./components/sections/HowItWorksSection";
-import Benefits from "./components/sections/Benefits";
-import ContactSection from "./components/sections/ContactSection";
+import TopSection from "./_components/sections/TopSection";
+import HowItWorksSection from "./_components/sections/HowItWorksSection";
+import Benefits from "./_components/sections/Benefits";
+import ContactSection from "./_components/sections/ContactSection";
 import { Metadata } from "next";
-import RepasSection from "./components/sections/RepasSection";
-import OldSection from "./components/sections/OldSection";
+import RepasSection from "./_components/sections/RepasSection";
+import OldSection from "./_components/sections/OldSection";
 
 export const metadata: Metadata = {
   title:
@@ -15,13 +15,13 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <main>
+    <>
       <RepasSection />
       <OldSection />
       <TopSection />
       <HowItWorksSection />
       <Benefits />
       <ContactSection />
-    </main>
+    </>
   );
 }

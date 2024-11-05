@@ -1,4 +1,4 @@
-import ContactSection from "@/app/(site)/components/sections/ContactSection";
+import ContactSection from "@/app/(site)/_components/sections/ContactSection";
 import prisma from "@/app/libs/prismadb";
 import Container from "@/components/container/Container";
 import ImageGallery from "../../components/ImageGallery";
@@ -69,7 +69,7 @@ export default async function Motor({
   }
 
   return (
-    <main>
+    <>
       <Container>
         <div className="flex max-lg:flex-col flex-row items-center justify-evenly gap-20 mt-10">
           <ImageGallery motor={motor} />
@@ -88,13 +88,15 @@ export default async function Motor({
           </div>
         </div>
       </Container>
-      <ContactSection
-        title="Máte zájem o tento motor?"
-        motorId={motor.id}
-        motorName={motor.name}
-        motorSlug={motor.slug}
-        motorVariant={params.motorVariant}
-      />
-    </main>
+      <Container>
+        <ContactSection
+          title="Máte zájem o tento motor?"
+          motorId={motor.id}
+          motorName={motor.name}
+          motorSlug={motor.slug}
+          motorVariant={params.motorVariant}
+        />
+      </Container>
+    </>
   );
 }

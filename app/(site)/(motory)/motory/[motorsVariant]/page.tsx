@@ -3,8 +3,8 @@ import prisma from "@/app/libs/prismadb";
 import { SafeMotor } from "../../components/MotorsList";
 import { Metadata } from "next";
 import MotorsContainer from "../../components/MotorsContainer";
-import TopSection from "@/app/(site)/components/sections/TopSection";
-import ContactSection from "@/app/(site)/components/sections/ContactSection";
+import TopSection from "@/app/(site)/_components/sections/TopSection";
+import ContactSection from "@/app/(site)/_components/sections/ContactSection";
 
 type Props = {
   params: {
@@ -42,10 +42,10 @@ export default async function StareMotoryPage({
   const data = await fetchMotors(params);
 
   return (
-    <main>
+    <>
       <MotorsContainer params={params} data={data as SafeMotor[]} />;
       <TopSection />
       <ContactSection />
-    </main>
+    </>
   );
 }
