@@ -37,4 +37,6 @@ function withStyles(
   return render;
 }
 
-export const IconCookie = withStyles(IconCookieSVG);
+export const IconCookie = withStyles(
+  IconCookieSVG as React.FC<React.SVGProps<SVGSVGElement>>
+);
