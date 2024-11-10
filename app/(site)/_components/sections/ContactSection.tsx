@@ -52,7 +52,7 @@ const ContactSection: FC<ContactSectionProps> = ({
             </div>
             <div className="text-center flex flex-col gap-6 mb-10">
               <h3 className="font-bold text-2xl">Firemní údaje</h3>
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-col text-gray-800 gap-2">
                 <p className="text-lg">NEURO s.r.o,</p>
                 <p className="text-lg">Prachnerova 642/10,</p>
                 <p className="text-lg">Praha 5 150 00</p>
