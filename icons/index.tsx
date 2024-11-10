@@ -11,6 +11,7 @@ const iconVariants = cva("flex-shrink-0", {
       8: "w-8 h-8",
       9: "w-9 h-9",
       10: "w-10 h-10",
+      12: "w-12 h-12",
     },
   },
   defaultVariants: {

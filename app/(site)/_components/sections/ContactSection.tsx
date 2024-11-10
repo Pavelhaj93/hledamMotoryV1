@@ -29,23 +29,36 @@ const ContactSection: FC<ContactSectionProps> = ({
           </h3>
         </div>
         <div className="flex max-lg:flex-col flex-row">
-          <div className="max-lg:w-full w-1/2 flex flex-col items-center justify-between gap-5 mt-5 h-1/2">
-            <h3 className="text-center font-bold text-2xl mb-10">
-              Zavolejte nám
-            </h3>
-            <span className="text-4xl font-bold text-red-500 mb-10">
-              +420 724 704 764
-            </span>
-            <h3 className="text-center font-bold text-2xl mb-10">
-              Napište nám na mail
-            </h3>
-            <a
-              className="text-4xl font-bold text-red-500 mb-10 max-lg:text-2xl max-md-xl"
-              href="mailto:info@hledammotory.cz"
-            >
-              info@hledammotory.cz
-            </a>
-            <span className="text-2xl mb-10">Se vším rádi poradíme</span>
+          <div className="max-lg:w-full w-1/2 flex flex-col justify-between gap-10">
+            <div className="flex flex-col items-center gap-4">
+              <h3 className="text-center font-bold text-2xl mb-7 xl:mb-9 mt-5">
+                Zavolejte nám
+              </h3>
+              <div className="flex flex-col items-center gap-4">
+                <span className="text-4xl font-bold text-red-500">
+                  +420 724 704 764
+                </span>
+                <h3 className="text-center font-bold text-2xl">
+                  Napište nám na mail
+                </h3>
+                <a
+                  className="text-4xl font-bold text-red-500 max-lg:text-2xl max-md-xl"
+                  href="mailto:info@hledammotory.cz"
+                >
+                  info@hledammotory.cz
+                </a>
+                <span className="text-2xl ">Se vším rádi poradíme</span>
+              </div>
+            </div>
+            <div className="text-center flex flex-col gap-6 mb-10">
+              <h3 className="font-bold text-2xl">Firemní údaje</h3>
+              <div className="flex flex-col gap-2">
+                <p className="text-lg">NEURO s.r.o,</p>
+                <p className="text-lg">Prachnerova 642/10,</p>
+                <p className="text-lg">Praha 5 150 00</p>
+                <p className="text-lg">DIČ: CZ19679041</p>
+              </div>
+            </div>
           </div>
           <ContactForm
             motorId={motorId}
