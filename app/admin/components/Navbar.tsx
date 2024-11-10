@@ -1,6 +1,6 @@
 "use client";
 
-import HamburgerMenu from "@/app/(site)/components/HamburgerMenu";
+import HamburgerMenu from "@/app/(site)/_components/HamburgerMenu";
 import useClickOutside from "@/app/hooks/useClickOutside";
 import Container from "@/components/container/Container";
 import Image from "next/image";
