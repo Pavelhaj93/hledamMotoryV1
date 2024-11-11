@@ -8,6 +8,7 @@ interface ContactSectionProps {
   motorName?: string;
   motorSlug?: string;
   motorVariant?: string;
+  className?: string;
 }
 
 const ContactSection: FC<ContactSectionProps> = ({
@@ -16,9 +17,10 @@ const ContactSection: FC<ContactSectionProps> = ({
   motorName,
   motorSlug,
   motorVariant,
+  className,
 }) => {
   return (
-    <section className="pt-10 pb-15">
+    <section className={`pt-10 pb-15 ${className}`}>
       <Container>
         <div className="flex flex-col w-full max-lg:text-center text-left mb-5">
           <h2 className="text-2xl font-semibold mb-1 text-red-500">
