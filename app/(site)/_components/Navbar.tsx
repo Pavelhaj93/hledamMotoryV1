@@ -24,7 +24,11 @@ const siteMenu = [
     href: "/motory/repasovane-motory",
   },
   {
-    title: "O nás a kontakt",
+    title: "O nás",
+    href: "/about-us",
+  },
+  {
+    title: "Kontakt",
     href: "/contact",
   },
 ];
