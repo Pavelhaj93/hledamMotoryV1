@@ -16,6 +16,11 @@ const formSchema = z.object({
   email: z.string().nonempty("Zadejte email"),
   message: z.string().nonempty("Zadejte zprávu"),
   motorVariant: z.string(),
+  acceptPrivacyPolicy: z.literal(true, {
+    errorMap: () => ({
+      message: "Musíte souhlasit s podmínkami ochrany osobních údajů.",
+    }),
+  }),
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -108,6 +113,38 @@ const ContactForm: FC<ContactFormProps> = ({
             }
             className="h-32"
           />
+
+          {/* Privacy policy checkbox */}
+          <div className="flex flex-col my-8">
+            <div className="flex items-center gap-6">
+              <input
+                type="checkbox"
+                id="acceptPrivacyPolicy"
+                {...register("acceptPrivacyPolicy")}
+                className="w-6 h-6 ml-6 text-red-600 border-gray-30 checked:bg-red-600 rounded focus:ring-red-500"
+              />
+              <label
+                htmlFor="acceptPrivacyPolicy"
+                className="lg:text-lg text-gray-700"
+              >
+                Souhlasím s{" "}
+                <a
+                  href="/ochrana-osobnich-udaju"
+                  className="text-red-600 text-lg underline"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  podmínkami ochrany osobních údajů
+                </a>
+              </label>
+            </div>
+            {errors.acceptPrivacyPolicy && (
+              <p className="text-red-600 text-sm max-lg:text-center">
+                {errors.acceptPrivacyPolicy.message}
+              </p>
+            )}
+          </div>
+
           <Button
             className="max-lg:w-full w-1/2 ml-0"
             type="submit"
