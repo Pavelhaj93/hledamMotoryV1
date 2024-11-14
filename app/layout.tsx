@@ -16,9 +16,27 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="cs">
       <head>
-        <Script src="//ssp.seznam.cz/static/js/ssp.js" />
+        <Script
+          type="text/javascript"
+          src="https://c.seznam.cz/js/rc.js"
+          strategy="afterInteractive"
+        />
+        <Script id="seznam-analytics" strategy="afterInteractive">
+          {`
+          window.sznIVA.IS.updateIdentities({
+            eid: null
+          });
+
+          var retargetingConf = {
+          rtgId: 1558266,
+          consent: null
+          };
+
+          window.rc.retargetingHit(retargetingConf);
+          `}
+        </Script>
         <Script
           async
           src="https://www.googletagmanager.com/gtag/js?id=G-ND4D88XRC9"
