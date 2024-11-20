@@ -21,15 +21,15 @@ const RequestMotorsSchema = z.object({
 
 const formSchema = z.object({
   email: z.string().email("Zadejte platný email"),
-  name: z.string().nonempty("Zadejte jméno"),
-  surName: z.string().nonempty("Zadejte příjmení"),
   phone: z
     .string()
     .nonempty("Zadejte telefon")
     .regex(/^\d+$/, "Pole nesmí obsahovat písmena ale jen číslice"),
-  city: z.string(),
-  note: z.string(),
+  note: z.string().optional(),
   requests: z.array(RequestMotorsSchema),
+  acceptPrivacyPolicy: z.boolean().refine((value) => value === true, {
+    message: "Musíte souhlasit s podmínkami ochrany osobních údajů",
+  }),
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -47,12 +47,10 @@ const InquiryForm = () => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       email: "",
-      name: "",
-      surName: "",
       phone: "",
-      city: "",
       note: "",
       requests: requestMotors ?? [],
+      acceptPrivacyPolicy: false,
     },
   });
 
@@ -97,24 +95,6 @@ const InquiryForm = () => {
             error={errors.email}
           />
           <Input
-            id="name"
-            type="text"
-            placeholder="Jméno"
-            required
-            rounded
-            register={register as keyof typeof register}
-            error={errors.name}
-          />
-          <Input
-            id="surName"
-            type="text"
-            placeholder="Příjmení"
-            required
-            rounded
-            register={register as keyof typeof register}
-            error={errors.surName}
-          />
-          <Input
             id="phone"
             type="text"
             placeholder="Telefon"
@@ -122,15 +102,6 @@ const InquiryForm = () => {
             rounded
             register={register as keyof typeof register}
             error={errors.phone}
-          />
-          <Input
-            id="city"
-            type="text"
-            placeholder="Město"
-            required
-            rounded
-            register={register as keyof typeof register}
-            error={errors.city}
           />
           <TextArea
             id="note"
@@ -142,10 +113,35 @@ const InquiryForm = () => {
           />
         </div>
         <div className="w-full flex flex-col items-center gap-2">
-          <p className="my-4">
-            Odesláním formuláře beru na vědomí zásady zpracování osobních údajů
-            a také podmínky použití.
-          </p>
+          <div className="flex flex-col my-8">
+            <div className="flex items-center gap-6">
+              <input
+                type="checkbox"
+                id="acceptPrivacyPolicy"
+                {...register("acceptPrivacyPolicy")}
+                className="w-6 h-6 ml-6 text-red-600 border-gray-30 checked:bg-red-600 rounded focus:ring-red-500"
+              />
+              <label
+                htmlFor="acceptPrivacyPolicy"
+                className="lg:text-lg text-gray-700"
+              >
+                Souhlasím s{" "}
+                <a
+                  href="/ochrana-osobnich-udaju"
+                  className="text-red-600 text-lg underline"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  podmínkami ochrany osobních údajů
+                </a>
+              </label>
+            </div>
+            {errors.acceptPrivacyPolicy && (
+              <p className="text-red-600 text-sm max-lg:text-center">
+                {errors.acceptPrivacyPolicy.message}
+              </p>
+            )}
+          </div>
           <Button
             color="primary"
             type="submit"

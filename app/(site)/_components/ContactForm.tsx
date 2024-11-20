@@ -5,7 +5,6 @@ import Button from "@/components/Button";
 import Input from "@/components/inputs/Input";
 import TextArea from "@/components/inputs/TextArea";
 import { zodResolver } from "@hookform/resolvers/zod";
-import axios from "axios";
 import React, { FC } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useMutation } from "react-query";
@@ -46,7 +45,7 @@ const ContactForm: FC<ContactFormProps> = ({
     defaultValues: {
       name: "",
       email: "",
-      message: "",
+      message: motorName ? `Mám zájem o motor ${motorName}` : "",
       motorVariant,
       acceptPrivacyPolicy: false,
     },
@@ -58,9 +57,7 @@ const ContactForm: FC<ContactFormProps> = ({
         motorId ? `/api/contact/${motorSlug}` : "/api/contact",
         {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+
           body: JSON.stringify(formValues),
         }
       );
