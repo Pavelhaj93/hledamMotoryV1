@@ -48,6 +48,7 @@ const ContactForm: FC<ContactFormProps> = ({
       email: "",
       message: "",
       motorVariant,
+      acceptPrivacyPolicy: false,
     },
   });
 
