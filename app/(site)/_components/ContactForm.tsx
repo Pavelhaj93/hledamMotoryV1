@@ -54,18 +54,27 @@ const ContactForm: FC<ContactFormProps> = ({
 
   const mutation = useMutation(
     async (formValues: FormValues) => {
-      const { data } = await axios.post(
+      const response = await fetch(
         motorId ? `/api/contact/${motorSlug}` : "/api/contact",
         {
-          ...formValues,
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formValues),
         }
       );
 
+      if (!response.ok) {
+        throw new Error("Failed to submit the form");
+      }
+
+      const data = await response.json();
       return data;
     },
     {
       onError: (error) => {
-        console.log(error);
+        console.error(error);
         message.error("Při odesílání zprávy došlo k chybě");
       },
       onSuccess: (data) => {
