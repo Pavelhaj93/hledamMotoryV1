@@ -30,7 +30,7 @@ export async function POST(
       return new NextResponse("Motor nenalezen", { status: 404 });
     }
 
-    transporter.sendMail(
+    await transporter.sendMail(
       {
         ...mailOptions,
         subject: `Nová zpráva od - email ${email}`,
