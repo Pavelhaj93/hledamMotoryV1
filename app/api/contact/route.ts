@@ -10,12 +10,22 @@ export async function POST(req: Request) {
       return new NextResponse("Missing fields", { status: 400 });
     }
 
-    await transporter.sendMail({
-      ...mailOptions,
-      subject: `Nová zpráva od ${name}`,
-      text: message,
-      html: `<h2>Nová zpráva od ${name}</h2><br></br><p>${message}</p><br></br><p>Zpráva od ${email}</p>`,
-    });
+    transporter.sendMail(
+      {
+        ...mailOptions,
+        subject: `Nová zpráva od ${name}`,
+        text: message,
+        html: `<h2>Nová zpráva od ${name}</h2><br></br><p>${message}</p><br></br><p>Zpráva od ${email}</p>`,
+      },
+      (err, info) => {
+        if (err) {
+          console.error(err);
+          return new NextResponse("Failed to send the message", {
+            status: 500,
+          });
+        }
+      }
+    );
 
     return NextResponse.json(body);
   } catch (err) {
