@@ -46,6 +46,7 @@ export async function POST(
         }
         if (info) {
           console.log("info", info);
+          return NextResponse.json(info, { status: 200 });
         }
       }
     );
