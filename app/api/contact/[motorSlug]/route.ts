@@ -9,9 +9,9 @@ export async function POST(
 ) {
   try {
     const body = await req.json();
-    const { name, email, message, motorVariant } = body;
+    const { email, message, motorVariant } = body;
 
-    if (!name || !email || !message || !motorVariant) {
+    if (!email || !message || !motorVariant) {
       return new NextResponse("Missing fields", { status: 400 });
     }
 
@@ -30,14 +30,27 @@ export async function POST(
       return new NextResponse("Motor nenalezen", { status: 404 });
     }
 
-    await transporter.sendMail({
-      ...mailOptions,
-      subject: `Nová zpráva od ${name} - email ${email}`,
-      text: message,
-      html: `<h2>Nová zpráva od ${name}</h2><br></br><h3>Uživatel ${name} má zájem o motor ${motor?.name} s ID: ${motor?.id} a cenou ${motor?.price} CZK.</h3><br></br><p>Zpráva od uživatele: ${message}</p>`,
-    });
+    transporter.sendMail(
+      {
+        ...mailOptions,
+        subject: `Nová zpráva od - email ${email}`,
+        text: message,
+        html: `<h2>Nová zpráva od - email ${email}</h2><br></br><h3>Uživatel ${email} má zájem o motor ${motor?.name} s ID: ${motor?.id} a cenou ${motor?.price} CZK.</h3><br></br><p>Zpráva od uživatele: ${message}</p>`,
+      },
+      (err, info) => {
+        if (err) {
+          console.error(err);
+          return new NextResponse("Failed to send the message", {
+            status: 500,
+          });
+        }
+      }
+    );
 
-    return new NextResponse("Zpráva úspěsně odeslána", { status: 200 });
+    return NextResponse.json(
+      { message: "Message sent successfully" },
+      { status: 200 }
+    );
   } catch (err) {
     console.error(err);
     return new NextResponse("Internal server error", { status: 500 });

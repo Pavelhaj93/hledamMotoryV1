@@ -9,7 +9,6 @@ const layout = ({ children }: { children: ReactNode }) => {
     <>
       <Navbar />
       {children}
-
       <CookieBanner />
       <Footer />
     </>

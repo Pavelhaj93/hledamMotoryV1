@@ -105,12 +105,9 @@ const SelectorGroup = <
                         item.name
                       )}.png`}
                       alt={`car brand logo of ${item.name}`}
-                      style={{
-                        width: 50,
-                        height: "auto",
-                      }}
                       width={50}
                       height={50}
+                      className="object-cover w-full h-full"
                     />
                   </span>
                 )}
