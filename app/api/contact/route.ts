@@ -19,10 +19,13 @@ export async function POST(req: Request) {
       },
       (err, info) => {
         if (err) {
-          console.error(err);
+          console.error("err", err);
           return new NextResponse("Failed to send the message", {
             status: 500,
           });
+        }
+        if (info) {
+          console.log("info", info);
         }
       }
     );
