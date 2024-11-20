@@ -16,10 +16,8 @@ const formSchema = z.object({
   email: z.string().nonempty("Zadejte email"),
   message: z.string().nonempty("Zadejte zprávu"),
   motorVariant: z.string(),
-  acceptPrivacyPolicy: z.literal(true, {
-    errorMap: () => ({
-      message: "Musíte souhlasit s podmínkami ochrany osobních údajů.",
-    }),
+  acceptPrivacyPolicy: z.boolean().refine((value) => value === true, {
+    message: "Musíte souhlasit s podmínkami ochrany osobních údajů",
   }),
 });
 
@@ -36,7 +34,7 @@ const ContactForm: FC<ContactFormProps> = ({
   motorId,
   motorName,
   motorSlug,
-  motorVariant,
+  motorVariant = "",
 }) => {
   const message = useMessage();
   const {
@@ -106,11 +104,6 @@ const ContactForm: FC<ContactFormProps> = ({
             register={register as keyof typeof register}
             error={errors.message}
             textCenter="left"
-            defaultValue={
-              motorId &&
-              motorName &&
-              "Zajímá mě motor " + motorName + " (ID: " + motorId + ")"
-            }
             className="h-32"
           />
 
