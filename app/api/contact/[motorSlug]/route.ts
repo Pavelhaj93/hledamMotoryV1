@@ -30,14 +30,29 @@ export async function POST(
       return new NextResponse("Motor nenalezen", { status: 404 });
     }
 
-    transporter.sendMail({
-      ...mailOptions,
-      subject: `Nová zpráva od - email ${email}`,
-      text: message,
-      html: `<h2>Nová zpráva od - email ${email}</h2><br></br><h3>Uživatel ${email} má zájem o motor ${motor?.name} s ID: ${motor?.id} a cenou ${motor?.price} CZK.</h3><br></br><p>Zpráva od uživatele: ${message}</p>`,
+    await new Promise((resolve, reject) => {
+      transporter.sendMail(
+        {
+          ...mailOptions,
+          subject: `Nová zpráva od - email ${email}`,
+          text: message,
+          html: `<h2>Nová zpráva od - email ${email}</h2><br></br><h3>Uživatel ${email} má zájem o motor ${motor?.name} s ID: ${motor?.id} a cenou ${motor?.price} CZK.</h3><br></br><p>Zpráva od uživatele: ${message}</p>`,
+          replyTo: email,
+        },
+        (err, info) => {
+          if (err) {
+            console.error("err", err);
+            reject(err);
+          }
+          if (info) {
+            console.log("info", info);
+            resolve(info);
+          }
+        }
+      );
     });
 
-    return new NextResponse("OK", { status: 200 });
+    return NextResponse.json({ message: "OK" }, { status: 200 });
   } catch (err) {
     console.error(err);
     return new NextResponse("Internal server error", { status: 500 });
