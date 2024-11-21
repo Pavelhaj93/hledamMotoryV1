@@ -17,7 +17,7 @@ export async function POST(req: Request) {
       html: `<h2>Nová zpráva od - email ${email}</h2><br></br><p>${message}</p><br></br>>`,
     });
 
-    return NextResponse.json({ message: "ok" }, { status: 200 });
+    return new NextResponse("ok", { status: 200 });
   } catch (err) {
     console.error(err);
     return new NextResponse("Internal server error", { status: 500 });
