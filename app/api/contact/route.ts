@@ -10,7 +10,7 @@ export async function POST(req: Request) {
       return new NextResponse("Missing fields", { status: 400 });
     }
 
-    transporter.sendMail({
+    await transporter.sendMail({
       ...mailOptions,
       subject: `Nová zpráva od - email ${email}`,
       text: message,
