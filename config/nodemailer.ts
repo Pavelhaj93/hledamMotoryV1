@@ -6,7 +6,7 @@ export const transporter = nodemailer.createTransport({
   secure: false, // Set to true if using a secure connection (like SSL/TLS)
   auth: {
     user: "info@hledammotory.cz",
-    pass: "Neuro164,
+    pass: "Neuro164",
   },
   tls: {
     rejectUnauthorized: false,
@@ -15,6 +15,6 @@ export const transporter = nodemailer.createTransport({
 });
 
 export const mailOptions = {
-  from: 'info@hledammotory.cz',
+  from: "info@hledammotory.cz",
   to: "info@hledammotory.cz",
 };
