@@ -6,8 +6,8 @@ import Input from "@/components/inputs/Input";
 import TextArea from "@/components/inputs/TextArea";
 import { zodResolver } from "@hookform/resolvers/zod";
 import React, { FC } from "react";
-import { useForm } from "react-hook-form";
-
+import { SubmitHandler, useForm } from "react-hook-form";
+import { useMutation } from "react-query";
 import { z } from "zod";
 
 const formSchema = z.object({
@@ -21,32 +21,6 @@ const formSchema = z.object({
 });
 
 type FormValues = z.infer<typeof formSchema>;
-
-export function sendEmail(data: FormValues) {
-  const apiEndpoint = data.motorVariant
-    ? `/api/contact/${data.motorVariant}`
-    : "/api/contact";
-
-  fetch(apiEndpoint, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      throw new Error("Failed to send the message");
-    })
-    .then((data) => {
-      console.log("Success:", data);
-    })
-    .catch((err) => {
-      console.error("Error:", err);
-    });
-}
 
 interface ContactFormProps {
   motorId?: string;
@@ -77,8 +51,37 @@ const ContactForm: FC<ContactFormProps> = ({
     },
   });
 
-  const onSubmit = async (data: FormValues) => {
-    sendEmail(data);
+  const mutation = useMutation(
+    async (formValues: FormValues) => {
+      const response = await fetch(
+        motorId ? `/api/contact/${motorSlug}` : "/api/contact",
+        {
+          method: "POST",
+
+          body: JSON.stringify(formValues),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to submit the form");
+      }
+
+      const data = await response.json();
+      return data;
+    },
+    {
+      onError: (error) => {
+        console.error(error);
+        message.error("Při odesílání zprávy došlo k chybě");
+      },
+      onSuccess: (data) => {
+        message.success("Zpráva byla úspěšně odeslána");
+      },
+    }
+  );
+
+  const onSubmit: SubmitHandler<FormValues> = async (formValues) => {
+    mutation.mutate(formValues);
   };
 
   return (
@@ -145,7 +148,7 @@ const ContactForm: FC<ContactFormProps> = ({
           <Button
             className="max-lg:w-full w-1/2 ml-0"
             type="submit"
-            disabled={isSubmitting}
+            disabled={mutation.isLoading || isSubmitting}
             color="primary"
             arrow
           >
