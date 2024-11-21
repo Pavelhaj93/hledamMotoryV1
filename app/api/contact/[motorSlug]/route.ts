@@ -2,6 +2,7 @@ import { mailOptions, transporter } from "@/config/nodemailer";
 import { NextResponse } from "next/server";
 
 import prisma from "@/app/libs/prismadb";
+import { SafeMotor } from "@/app/(site)/(motory)/components/MotorsList";
 
 export async function POST(
   req: Request,
@@ -15,7 +16,7 @@ export async function POST(
       return new NextResponse("Missing fields", { status: 400 });
     }
 
-    let motor;
+    let motor: SafeMotor;
     if (motorVariant === "stary-motor") {
       motor = await prisma?.oldMotor.findUnique({
         where: { slug: params.motorSlug },
