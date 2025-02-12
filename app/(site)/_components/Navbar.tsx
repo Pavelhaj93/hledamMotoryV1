@@ -5,6 +5,7 @@ import Image from "next/image";
 import HamburgerMenu from "./HamburgerMenu";
 import useClickOutside from "@/app/hooks/useClickOutside";
 import Link from "next/link";
+import { IconPhone, IconMail } from "@tabler/icons-react";
 
 const siteMenu = [
   {
@@ -53,17 +54,16 @@ const Navbar = () => {
           />
         </Link>
         <span className="flex flex-row gap-10 items-center z-10">
+          <span className="flex flex-row gap-2 items-center max-md:hidden text-xl font-bold">
+            <IconPhone className="w-10 h-10 stroke-red-500" />
+            +420 724 704 764
+          </span>
           <a
             href="mailto:info@hledammotory.cz"
-            className="max-md:hidden block text-xl font-bold"
+            className="max-lg:hidden block text-xl font-bold"
           >
-            <span className="flex flex-row gap-10 items-center">
-              <Image
-                src="/images/frontend/icon-bubble.png"
-                alt="icon-bubble"
-                width={45}
-                height={37}
-              />
+            <span className="flex flex-row gap-4 items-center">
+              <IconMail className="w-10 h-10 stroke-red-500" />
               <span>info@hledammotory.cz</span>
             </span>
           </a>
