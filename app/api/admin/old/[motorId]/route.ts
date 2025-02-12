@@ -56,7 +56,11 @@ export async function DELETE(
     });
 
     // Wait for all Cloudinary deletions to complete
-    await Promise.all(deletePromises);
+    const awaitPromises = await Promise.all(deletePromises);
+
+    if (!awaitPromises) {
+      return new NextResponse("Failed to delete images", { status: 500 });
+    }
 
     await prisma.oldMotor.delete({
       where: {
