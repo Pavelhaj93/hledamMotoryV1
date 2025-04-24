@@ -3,6 +3,8 @@ import MotorsContainer from "../../(motory)/components/MotorsContainer";
 import { SafeMotor } from "../../(motory)/components/MotorsList";
 import { fetchMotors } from "../../(motory)/utils/fetchMotors";
 
+export const dynamic = "force-dynamic"; // 👈 force dynamic behavior
+
 async function RepasSection() {
   const data = await fetchMotors({ motorsVariant: "repasovane-motory" });
   return (
