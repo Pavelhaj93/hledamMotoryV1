@@ -38,9 +38,9 @@ const Navbar = () => {
   const { isOpen, toggleOpen, ref } = useClickOutside();
 
   return (
-    <header className="py-2 flex h-28 shadow-xl sticky z-20 bg-white top-0">
+    <header className="py-2 flex h-24 shadow-xl fixed w-full z-20 bg-white top-0">
       {/* <div className="w-screen bg-white z-20 h-40"> */}
-      <Container className="w-full h-24 flex flex-row justify-between items-center mx-auto z-20">
+      <Container className="w-full flex flex-row justify-between items-center mx-auto z-20">
         <Link
           className="z-10 cursor-pointer hover:scale-90 transform transition-all duration-300"
           href="/"
