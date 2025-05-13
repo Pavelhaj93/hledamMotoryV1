@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-import prisma from "@/app/libs/prismadb";
+import prismaDB from "@/prisma/prismaDB";
 import cloudinary from "cloudinary";
 
 // Configure Cloudinary (ensure that your Cloudinary credentials are set in environment variables)
@@ -34,7 +34,7 @@ export async function DELETE(
     }
 
     // Fetch the images of the motor from the database
-    const motor = await prisma.motor.findUnique({
+    const motor = await prismaDB.motor.findUnique({
       where: {
         id: motorId,
       },
@@ -58,7 +58,7 @@ export async function DELETE(
     // Wait for all Cloudinary deletions to complete
     await Promise.all(deletePromises);
 
-    await prisma.motor.delete({
+    await prismaDB.motor.delete({
       where: {
         id: motorId,
       },
@@ -84,7 +84,7 @@ export async function PUT(
       return new NextResponse("Missing fields", { status: 400 });
     }
 
-    const motor = await prisma.motor.update({
+    const motor = await prismaDB.motor.update({
       where: {
         id: motorId,
       },

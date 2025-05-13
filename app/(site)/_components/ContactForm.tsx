@@ -1,22 +1,26 @@
 "use client";
 
-import useMessage from "@/app/hooks/useMessage";
-import Button from "@/components/Button";
-import Input from "@/components/inputs/Input";
-import TextArea from "@/components/inputs/TextArea";
-import { zodResolver } from "@hookform/resolvers/zod";
-import React, { FC } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { useMutation } from "react-query";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "react-query";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import useMessage from "@/app/hooks/useMessage";
+import React from "react";
 
 const formSchema = z.object({
   name: z.string().nonempty("Zadejte jméno"),
   email: z.string().nonempty("Zadejte email"),
   message: z.string().nonempty("Zadejte zprávu"),
-  motorVariant: z.string(),
-  acceptPrivacyPolicy: z.boolean().refine((value) => value === true, {
-    message: "Musíte souhlasit s podmínkami ochrany osobních údajů",
+  motorVariant: z.string().optional(),
+  acceptPrivacyPolicy: z.literal(true, {
+    errorMap: () => ({
+      message: "Musíte souhlasit s podmínkami ochrany osobních údajů",
+    }),
   }),
 });
 
@@ -29,13 +33,14 @@ interface ContactFormProps {
   motorVariant?: string;
 }
 
-const ContactForm: FC<ContactFormProps> = ({
+const ContactForm: React.FC<ContactFormProps> = ({
   motorId,
   motorName,
   motorSlug,
   motorVariant = "",
 }) => {
   const message = useMessage();
+
   const {
     register,
     handleSubmit,
@@ -57,7 +62,6 @@ const ContactForm: FC<ContactFormProps> = ({
         motorId ? `/api/contact/${motorSlug}` : "/api/contact",
         {
           method: "POST",
-
           body: JSON.stringify(formValues),
         }
       );
@@ -66,96 +70,95 @@ const ContactForm: FC<ContactFormProps> = ({
         throw new Error("Failed to submit the form");
       }
 
-      const data = await response.json();
-      return data;
+      return await response.json();
     },
     {
-      onError: (error) => {
-        console.error(error);
+      onError: () => {
         message.error("Při odesílání zprávy došlo k chybě");
       },
-      onSuccess: (data) => {
+      onSuccess: () => {
         message.success("Zpráva byla úspěšně odeslána");
       },
     }
   );
 
-  const onSubmit: SubmitHandler<FormValues> = async (formValues) => {
+  const onSubmit: SubmitHandler<FormValues> = (formValues) => {
     mutation.mutate(formValues);
   };
 
   return (
-    <div className="max-lg:w-full w-1/2">
-      <h3 className="max-lg:text-center max-lg:mb-7 mb-9 mt-5 font-bold text-2xl">
+    <div className="w-full max-lg:w-full max-w-xl">
+      <h3 className="text-2xl font-bold mb-9 max-lg:mb-7 max-lg:text-center mt-5">
         Nebo využijte náš formulář a my se vám ozveme
       </h3>
-      <div className="flex flex-col gap-4">
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <Input
-            id="name"
-            type="text"
-            label="Jméno a příjmení"
-            register={register as keyof typeof register}
-            error={errors.name}
-          />
-          <Input
-            id="email"
-            label="Váš email"
-            type="email"
-            register={register as keyof typeof register}
-            error={errors.email}
-          />
-          <TextArea
+
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+        <div>
+          <Label htmlFor="name">Jméno a příjmení</Label>
+          <Input id="name" type="text" {...register("name")} />
+          {errors.name && (
+            <p className="text-sm text-red-600 mt-1">{errors.name.message}</p>
+          )}
+        </div>
+
+        <div>
+          <Label htmlFor="email">Váš email</Label>
+          <Input id="email" type="email" {...register("email")} />
+          {errors.email && (
+            <p className="text-sm text-red-600 mt-1">{errors.email.message}</p>
+          )}
+        </div>
+
+        <div>
+          <Label htmlFor="message">Zpráva</Label>
+          <Textarea
             id="message"
-            label="Zpráva"
-            register={register as keyof typeof register}
-            error={errors.message}
-            textCenter="left"
-            className="h-32"
+            className="h-32 resize-none"
+            {...register("message")}
           />
+          {errors.message && (
+            <p className="text-sm text-red-600 mt-1">
+              {errors.message.message}
+            </p>
+          )}
+        </div>
 
-          {/* Privacy policy checkbox */}
-          <div className="flex flex-col my-8">
-            <div className="flex items-center gap-6">
-              <input
-                type="checkbox"
-                id="acceptPrivacyPolicy"
-                {...register("acceptPrivacyPolicy")}
-                className="w-6 h-6 ml-6 text-red-600 border-gray-30 checked:bg-red-600 rounded focus:ring-red-500"
-              />
-              <label
-                htmlFor="acceptPrivacyPolicy"
-                className="lg:text-lg text-gray-700"
+        <div className="space-y-2 my-6">
+          <div className="flex items-start gap-3">
+            <Checkbox
+              id="acceptPrivacyPolicy"
+              {...register("acceptPrivacyPolicy")}
+            />
+            <Label
+              htmlFor="acceptPrivacyPolicy"
+              className="text-muted-foreground"
+            >
+              Souhlasím s{" "}
+              <a
+                href="/ochrana-osobnich-udaju"
+                className="underline text-red-600"
+                target="_blank"
+                rel="noopener noreferrer"
               >
-                Souhlasím s{" "}
-                <a
-                  href="/ochrana-osobnich-udaju"
-                  className="text-red-600 text-lg underline"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  podmínkami ochrany osobních údajů
-                </a>
-              </label>
-            </div>
-            {errors.acceptPrivacyPolicy && (
-              <p className="text-red-600 text-sm max-lg:text-center">
-                {errors.acceptPrivacyPolicy.message}
-              </p>
-            )}
+                podmínkami ochrany osobních údajů
+              </a>
+            </Label>
           </div>
+          {errors.acceptPrivacyPolicy && (
+            <p className="text-sm text-red-600 max-lg:text-center">
+              {errors.acceptPrivacyPolicy.message}
+            </p>
+          )}
+        </div>
 
-          <Button
-            className="max-lg:w-full w-1/2 ml-0"
-            type="submit"
-            disabled={mutation.isLoading || isSubmitting}
-            color="primary"
-            arrow
-          >
-            Odeslat
-          </Button>
-        </form>
-      </div>
+        <Button
+          type="submit"
+          disabled={mutation.isLoading || isSubmitting}
+          className="w-1/2 max-lg:w-full"
+        >
+          Odeslat
+        </Button>
+      </form>
     </div>
   );
 };

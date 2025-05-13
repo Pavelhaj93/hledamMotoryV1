@@ -1,6 +1,6 @@
 import { marks } from "@/public/data/marks";
 import Image from "next/image";
-import React, { FC } from "react";
+import React, { type FC } from "react";
 
 interface YourChoiceLogoProps {
   selectedItem: string;

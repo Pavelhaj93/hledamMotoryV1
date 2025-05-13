@@ -1,46 +1,59 @@
 "use client";
 
-import Dialog from "@/components/modal/Dialog";
+import { type FC, useState } from "react";
 import {
-  Autocomplete,
-  Chip,
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Form,
   FormControl,
-  FormHelperText,
-  Stack,
-  TextField,
-} from "@mui/material";
-import axios from "axios";
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent } from "@/components/ui/card";
+import { Check, ChevronDown, CloudUpload, Edit, Trash2 } from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { marks } from "@/public/data/marks";
-
-import { FC } from "react";
-import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { Motor } from "@prisma/client";
+import type { Motor } from "@prisma/client";
 import useMessage from "@/app/hooks/useMessage";
 import { CldUploadButton } from "next-cloudinary";
 import Image from "next/image";
-import CloudUploadOutlinedIcon from "@mui/icons-material/CloudUploadOutlined";
 import { useMutation, useQueryClient } from "react-query";
-import DeleteIcon from "@mui/icons-material/DeleteOutlined";
-import EditOutlined from "@mui/icons-material/EditOutlined";
+import axios from "axios";
+import { cn } from "@/lib/utils";
 
 interface MotorDialogProps {
   open: boolean;
   onClose: () => void;
   variant: "create" | "edit";
   motor?: Motor;
-  motorsVariant: "repas" | "old";
+  motorsVariant: "repas" | "old" | "motorHead";
 }
-
-type FormValues = {
-  id: string | undefined;
-  name: string | undefined;
-  description: string | undefined;
-  markName: string | undefined;
-  price: number | undefined;
-  images: string[] | undefined;
-};
 
 const formSchema = z.object({
   id: z.string().optional(),
@@ -52,11 +65,13 @@ const formSchema = z.object({
     .string({ required_error: "Vyberte značku motoru" })
     .nonempty("Vyberte značku motoru"),
   price: z.preprocess(
-    Number,
+    (val) => (val === "" ? undefined : Number(val)),
     z.number({ invalid_type_error: "Cena musí obsahovat čísla" })
   ),
   images: z.array(z.string()).nonempty("Nahrajte alespoň jeden obrázek"),
 });
+
+type FormValues = z.infer<typeof formSchema>;
 
 const MotorDialog: FC<MotorDialogProps> = ({
   open,
@@ -67,41 +82,30 @@ const MotorDialog: FC<MotorDialogProps> = ({
 }) => {
   const message = useMessage();
   const queryClient = useQueryClient();
+  const [openMarkCombobox, setOpenMarkCombobox] = useState(false);
 
   const dataMarks = marks?.map((mark) => mark.name);
 
-  const {
-    control,
-    handleSubmit,
-    reset,
-    watch,
-    setValue,
-    formState: { isSubmitting },
-  } = useForm<FormValues>({
+  const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       id: motor?.id ?? undefined,
-      name: motor?.name ?? undefined,
-      description: motor?.description ?? undefined,
-      markName: motor?.markName ?? undefined,
+      name: motor?.name ?? "",
+      description: motor?.description ?? "",
+      markName: motor?.markName ?? "",
       price: motor?.price ?? undefined,
-      images: motor?.images ?? undefined,
+      images: motor?.images ?? [],
     },
   });
 
-  const watchImages = watch("images");
+  const watchImages = form.watch("images");
 
   const handleUpload = (result: any) => {
     const imageUrl = result?.info?.secure_url;
 
     if (imageUrl) {
-      // Get the current value of the "images" field
-
-      // Combine the current images with the new image URL and store as an array
       const updatedImages = [...(watchImages ?? []), imageUrl];
-
-      // Update the value of the "images" field
-      setValue("images", updatedImages, {
+      form.setValue("images", updatedImages, {
         shouldValidate: true,
       });
     }
@@ -117,15 +121,13 @@ const MotorDialog: FC<MotorDialogProps> = ({
     {
       onSuccess: () => {
         message.success("Motor byl úspěšně vytvořen");
-        queryClient.invalidateQueries(
-          motorsVariant === "repas" ? "motors" : "oldMotors"
-        );
+        queryClient.invalidateQueries(["motors", motorsVariant]);
       },
       onError: (error) => {
         message.error(error as string);
       },
       onSettled: () => {
-        reset();
+        form.reset();
         onClose();
       },
     }
@@ -144,45 +146,39 @@ const MotorDialog: FC<MotorDialogProps> = ({
     {
       onSuccess: () => {
         message.success("Motor byl úspěšně upraven");
-        queryClient.invalidateQueries(
-          motorsVariant === "repas" ? "motors" : "oldMotors"
-        );
+        queryClient.invalidateQueries([
+          "motors",
+          motorsVariant,
+          form.getValues("id"),
+        ]);
       },
       onError: (error) => {
         message.error(error as string);
       },
       onSettled: () => {
-        reset();
+        form.reset();
         onClose();
       },
     }
   );
 
   const handleDeleteImage = (image: string) => {
-    setValue(
-      "images",
-      watchImages?.map((img) => img).filter((img) => img !== image),
-      {
-        shouldValidate: true,
-      }
-    );
+    form.setValue("images", watchImages?.filter((img) => img !== image) || [], {
+      shouldValidate: true,
+    });
   };
 
   const handleSelectPrimaryImage = (image: string) => {
-    setValue(
+    form.setValue(
       "images",
-      [
-        image,
-        ...(watchImages?.map((img) => img).filter((img) => img !== image) ??
-          []),
-      ],
+      [image, ...(watchImages?.filter((img) => img !== image) || [])],
       {
         shouldValidate: true,
       }
     );
   };
 
-  const onSubmit: SubmitHandler<FormValues> = async (formValues) => {
+  const onSubmit = (formValues: FormValues) => {
     if (variant === "create") {
       createMutation.mutate(formValues);
     } else {
@@ -190,152 +186,333 @@ const MotorDialog: FC<MotorDialogProps> = ({
     }
   };
 
+  const handleDialogClose = () => {
+    console.log("Dialog closed");
+    form.reset();
+    onClose();
+  };
+
+  const handleOpenChange = (newState: boolean) => {
+    if (!newState) {
+      handleDialogClose();
+    }
+  };
+
   return (
-    <Dialog
-      open={open}
-      onClose={onClose}
-      fullWidth
-      title={variant === "create" ? "Nový motor" : "Upravit motor"}
-      onSubmit={handleSubmit(onSubmit)}
-      submitDisabled={isSubmitting}
-    >
-      <Stack spacing={2}>
-        <Controller
-          name="name"
-          control={control}
-          render={({ field, fieldState }) => (
-            <FormControl size="small" error={!!fieldState.error}>
-              <TextField
-                placeholder="Zadejte název motoru"
-                label="Název motoru"
-                {...field}
-              />
-              {!!fieldState.error && (
-                <FormHelperText>{fieldState.error?.message}</FormHelperText>
+    <Dialog open={open} onOpenChange={handleOpenChange} modal={false}>
+      <DialogContent
+        className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto"
+        onInteractOutside={(e) => e.preventDefault()}
+      >
+        <DialogHeader>
+          <DialogTitle>{titleConfig[variant][motorsVariant].title}</DialogTitle>
+        </DialogHeader>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Název motoru</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder={
+                        titleConfig[variant][motorsVariant].namePlaceholder
+                      }
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
               )}
-            </FormControl>
-          )}
-        />
-        <Controller
-          name="description"
-          control={control}
-          render={({ field, fieldState }) => (
-            <FormControl size="small" error={!!fieldState.error}>
-              <TextField
-                placeholder="Zadajte popis motoru"
-                label="Popis motoru"
-                {...field}
-                multiline
-                rows={6}
-                onChange={(e) => {
-                  const updatedValue = e.target.value.replace(/\r?\n/g, "\n");
-                  field.onChange(updatedValue);
-                }}
-              />
-              {!!fieldState.error && (
-                <FormHelperText>{fieldState.error?.message}</FormHelperText>
-              )}
-            </FormControl>
-          )}
-        />
-        <Controller
-          name="markName"
-          control={control}
-          render={({ field, fieldState }) => (
-            <FormControl size="small" error={!!fieldState.error}>
-              <Autocomplete
-                value={field.value}
-                onChange={(_event, value) => field.onChange(value as string)}
-                placeholder="Zadajte značku motoru"
-                options={dataMarks ?? []}
-                renderInput={(params) => (
-                  <TextField {...params} label="Značka motoru" />
-                )}
-              />
-              {!!fieldState.error && (
-                <FormHelperText>{fieldState.error?.message}</FormHelperText>
-              )}
-            </FormControl>
-          )}
-        />
-        <Controller
-          name="price"
-          control={control}
-          render={({ field, fieldState }) => (
-            <FormControl size="small" error={!!fieldState.error}>
-              <TextField
-                placeholder="Zadajte cenu motoru"
-                label="Cena motoru"
-                {...field}
-              />
-              {!!fieldState.error && (
-                <FormHelperText>{fieldState.error?.message}</FormHelperText>
-              )}
-            </FormControl>
-          )}
-        />
-        <div className="flex flex-col">
-          <h3 className="font-bold">Fotky: </h3>
-          <CldUploadButton
-            options={{ maxFiles: 5 }}
-            onUpload={handleUpload}
-            uploadPreset="x9zk83j9"
-          >
-            <Chip
-              className="flex flex-row gap-5"
-              label={
-                watchImages && watchImages.length === 0
-                  ? "Nahrát fotky"
-                  : "Nahrát další fotky"
-              }
-              clickable
-              icon={<CloudUploadOutlinedIcon />}
             />
-          </CldUploadButton>
-        </div>
-        <Controller
-          name="images"
-          control={control}
-          render={({ field, fieldState }) => (
-            <FormControl size="small" error={!!fieldState.error}>
-              <div className="flex flex-col justify-center items-center gap-5">
-                {watchImages?.map((img) => (
-                  <div
-                    key={img}
-                    className="flex flex-col items-end border-2 border-rgb(59 130 246 / 0.5) rounded-lg p-5"
+
+            <FormField
+              control={form.control}
+              name="description"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Popis motoru</FormLabel>
+                  <FormControl>
+                    <Textarea
+                      placeholder={
+                        titleConfig[variant][motorsVariant]
+                          .descriptionPlaceholder
+                      }
+                      className="min-h-[120px]"
+                      {...field}
+                      onChange={(e) => {
+                        const updatedValue = e.target.value.replace(
+                          /\r?\n/g,
+                          "\n"
+                        );
+                        field.onChange(updatedValue);
+                      }}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="markName"
+              render={({ field }) => (
+                <FormItem className="flex flex-col">
+                  <FormLabel>Značka motoru</FormLabel>
+                  <Popover
+                    open={openMarkCombobox}
+                    onOpenChange={setOpenMarkCombobox}
                   >
-                    <Image src={img} alt="test" width={400} height={400} />
-                    <div className="flex gap-5 mt-3">
-                      <Chip
-                        icon={<EditOutlined />}
-                        label={
-                          watchImages?.[0] === img
-                            ? "Hlavní fotka"
-                            : "Nastavit jako hlavní fotku"
-                        }
-                        color={watchImages?.[0] === img ? "primary" : "default"}
-                        onClick={() => handleSelectPrimaryImage(img)}
-                      />
-                      <Chip
-                        icon={<DeleteIcon />}
-                        label="Smazat fotku"
-                        color="error"
-                        onClick={() => handleDeleteImage(img)}
-                      />
+                    <PopoverTrigger asChild>
+                      <FormControl>
+                        <Button
+                          size=""
+                          variant="outline"
+                          // biome-ignore lint/a11y/useSemanticElements: it needs to be a button
+                          role="combobox"
+                          aria-expanded={openMarkCombobox}
+                          className={cn(
+                            "w-full justify-between",
+                            !field.value && "text-muted-foreground"
+                          )}
+                        >
+                          {field.value || "Vyberte značku motoru"}
+                          <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                        </Button>
+                      </FormControl>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-full p-0">
+                      <Command>
+                        <CommandInput
+                          placeholder={
+                            titleConfig[variant][motorsVariant]
+                              .markNamePlaceholder
+                          }
+                        />
+                        <CommandList>
+                          <CommandEmpty>Značka nenalezena.</CommandEmpty>
+                          <CommandGroup className="max-h-[200px] md:w-[550px] overflow-y-auto">
+                            {dataMarks?.map((mark) => (
+                              <CommandItem
+                                key={mark}
+                                value={mark}
+                                onSelect={() => {
+                                  form.setValue("markName", mark, {
+                                    shouldValidate: true,
+                                  });
+                                  setOpenMarkCombobox(false);
+                                }}
+                              >
+                                <Check
+                                  className={cn(
+                                    "mr-2 h-4 w-4",
+                                    field.value === mark
+                                      ? "opacity-100"
+                                      : "opacity-0"
+                                  )}
+                                />
+                                {mark}
+                              </CommandItem>
+                            ))}
+                          </CommandGroup>
+                        </CommandList>
+                      </Command>
+                    </PopoverContent>
+                  </Popover>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="price"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Cena motoru</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="number"
+                      placeholder={
+                        titleConfig[variant][motorsVariant].pricePlaceholder
+                      }
+                      {...field}
+                      onChange={(e) => field.onChange(e.target.value)}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="images"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Fotky</FormLabel>
+                  <div className="flex flex-col gap-4">
+                    <CldUploadButton
+                      options={{ maxFiles: 5 }}
+                      onUpload={handleUpload}
+                      uploadPreset="x9zk83j9"
+                    >
+                      <Button
+                        variant="outline"
+                        type="button"
+                        className="w-full"
+                      >
+                        <CloudUpload className="mr-2 h-4 w-4" />
+                        {watchImages && watchImages.length === 0
+                          ? "Nahrát fotky"
+                          : "Nahrát další fotky"}
+                      </Button>
+                    </CldUploadButton>
+
+                    <div className="space-y-4">
+                      {watchImages?.map((img, index) => (
+                        <Card key={img} className="overflow-hidden">
+                          <CardContent className="p-0">
+                            <div className="relative">
+                              <Image
+                                src={img || "/placeholder.svg"}
+                                alt={`Motor image ${index + 1}`}
+                                width={500}
+                                height={500}
+                                className="w-full h-auto object-cover"
+                              />
+                              {index === 0 && (
+                                <Badge className="absolute top-2 left-2 bg-primary">
+                                  Hlavní fotka
+                                </Badge>
+                              )}
+                            </div>
+                            <div className="flex justify-end gap-2 p-3">
+                              {index !== 0 && (
+                                <Button
+                                  variant="outline"
+                                  size="sm"
+                                  type="button"
+                                  onClick={() => handleSelectPrimaryImage(img)}
+                                >
+                                  <Edit className="mr-2 h-4 w-4" />
+                                  Nastavit jako hlavní
+                                </Button>
+                              )}
+                              <Button
+                                variant="destructive"
+                                size="sm"
+                                type="button"
+                                onClick={() => handleDeleteImage(img)}
+                              >
+                                <Trash2 className="mr-2 h-4 w-4" />
+                                Smazat
+                              </Button>
+                            </div>
+                          </CardContent>
+                        </Card>
+                      ))}
                     </div>
                   </div>
-                ))}
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-                {!!fieldState.error && (
-                  <FormHelperText>{fieldState.error?.message}</FormHelperText>
-                )}
-              </div>
-            </FormControl>
-          )}
-        />
-      </Stack>
+            <DialogFooter>
+              <Button
+                type="button"
+                variant="secondary"
+                onClick={handleDialogClose}
+              >
+                Zrušit
+              </Button>
+              <Button
+                variant="default"
+                type="submit"
+                disabled={form.formState.isSubmitting}
+              >
+                {variant === "create" ? "Vytvořit" : "Uložit změny"}
+              </Button>
+            </DialogFooter>
+          </form>
+        </Form>
+      </DialogContent>
     </Dialog>
   );
 };
 
 export default MotorDialog;
+
+type TitleConfig = {
+  create: {
+    [key in "old" | "repas" | "motorHead"]: {
+      title: string;
+      namePlaceholder: string;
+      descriptionPlaceholder: string;
+      markNamePlaceholder: string;
+      pricePlaceholder: string;
+    };
+  };
+  edit: {
+    [key in "old" | "repas" | "motorHead"]: {
+      title: string;
+      namePlaceholder: string;
+      descriptionPlaceholder: string;
+      markNamePlaceholder: string;
+      pricePlaceholder: string;
+    };
+  };
+};
+
+const titleConfig: TitleConfig = {
+  create: {
+    old: {
+      title: "Přidat starý motor",
+      namePlaceholder: "Zadejte název starého motoru",
+      descriptionPlaceholder: "Zadejte popis starého motoru",
+      markNamePlaceholder: "Zadejte značku starého motoru",
+      pricePlaceholder: "Zadejte cenu starého motoru",
+    },
+    repas: {
+      title: "Přidat repasovaný motor",
+      namePlaceholder: "Zadejte název repasovaného motoru",
+      descriptionPlaceholder: "Zadejte popis repasovaného motoru",
+      markNamePlaceholder: "Zadejte značku repasovaného motoru",
+      pricePlaceholder: "Zadejte cenu repasovaného motoru",
+    },
+    motorHead: {
+      title: "Přidat motorovou hlavu",
+      namePlaceholder: "Zadejte název motorové hlavy",
+      descriptionPlaceholder: "Zadejte popis motorové hlavy",
+      markNamePlaceholder: "Zadejte značku motorové hlavy",
+      pricePlaceholder: "Zadejte cenu motorové hlavy",
+    },
+  },
+  edit: {
+    old: {
+      title: "Upravit starý motor",
+      namePlaceholder: "Zadejte název starého motoru",
+      descriptionPlaceholder: "Zadejte popis starého motoru",
+      markNamePlaceholder: "Zadejte značku starého motoru",
+      pricePlaceholder: "Zadejte cenu starého motoru",
+    },
+    repas: {
+      title: "Upravit repasovaný motor",
+      namePlaceholder: "Zadejte název repasovaného motoru",
+      descriptionPlaceholder: "Zadejte popis repasovaného motoru",
+      markNamePlaceholder: "Zadejte značku repasovaného motoru",
+      pricePlaceholder: "Zadejte cenu repasovaného motoru",
+    },
+    motorHead: {
+      title: "Upravit motorovou hlavu",
+      namePlaceholder: "Zadejte název motorové hlavy",
+      descriptionPlaceholder: "Zadejte popis motorové hlavy",
+      markNamePlaceholder: "Zadejte značku motorové hlavy",
+      pricePlaceholder: "Zadejte cenu motorové hlavy",
+    },
+  },
+};

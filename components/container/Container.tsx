@@ -1,17 +1,17 @@
-import clsx from "clsx";
-import { FC, ReactNode } from "react";
+import { cn } from "@/lib/utils";
+import type { FC, ReactNode } from "react";
 
 interface ContainerProps {
   className?: string;
   children: ReactNode;
-  ref?: any;
+  ref?: React.Ref<HTMLDivElement>;
 }
 
 const Container: FC<ContainerProps> = ({ children, className, ref }) => {
   return (
     <div
       ref={ref}
-      className={clsx(`container max-w-7xl px-6 mx-auto my-0`, className)}
+      className={cn("container max-w-7xl px-6 mx-auto my-0", className)}
     >
       {children}
     </div>

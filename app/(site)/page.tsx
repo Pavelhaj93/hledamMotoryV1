@@ -2,9 +2,10 @@ import TopSection from "./_components/sections/TopSection";
 import HowItWorksSection from "./_components/sections/HowItWorksSection";
 import Benefits from "./_components/sections/Benefits";
 import ContactSection from "./_components/sections/ContactSection";
-import { Metadata } from "next";
+import type { Metadata } from "next";
 import RepasSection from "./_components/sections/RepasSection";
 import OldSection from "./_components/sections/OldSection";
+import MotorHeadSection from "./_components/sections/MotorHeadSection";
 
 export const metadata: Metadata = {
   title:
@@ -18,6 +19,7 @@ export default function Page() {
     <>
       <RepasSection />
       <OldSection />
+      <MotorHeadSection />
       <TopSection />
       <HowItWorksSection />
       <Benefits />

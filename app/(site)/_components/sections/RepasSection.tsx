@@ -1,23 +1,26 @@
-import Button from "@/components/Button";
+import { Button } from "@/components/ui/button";
 import MotorsContainer from "../../(motory)/components/MotorsContainer";
-import { SafeMotor } from "../../(motory)/components/MotorsList";
+import type { SafeMotor } from "../../(motory)/components/MotorsList";
 import { fetchMotors } from "../../(motory)/utils/fetchMotors";
+import { ChevronRight } from "lucide-react";
+import Link from "next/link";
 
 export const dynamic = "force-dynamic"; // 👈 force dynamic behavior
 
 async function RepasSection() {
   const data = await fetchMotors({ motorsVariant: "repasovane-motory" });
   return (
-    <section className="flex flex-col justify-center items-center">
+    <section className="flex flex-col justify-center items-center mt-16">
       <MotorsContainer
         params={{ motorsVariant: "repasovane-motory" }}
         data={data?.slice(0, 4) as SafeMotor[]}
       />
-      <a href="/motory/repasovane-motory">
-        <Button arrow color="primary">
+      <Button asChild>
+        <Link href="/motory/repasovane-motory">
           Další motory
-        </Button>
-      </a>
+          <ChevronRight className="ml-2 w-10 h-10" />
+        </Link>
+      </Button>
     </section>
   );
 }

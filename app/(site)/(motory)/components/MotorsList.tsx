@@ -2,9 +2,10 @@
 
 import { Motor, OldMotor } from "@prisma/client";
 import MotorCard from "./MotorCard";
-import { Grid } from "@mui/material";
-import { FC } from "react";
-import Button from "@/components/Button";
+
+import type { FC } from "react";
+import { Button } from "@/components/ui/button";
+import { ChevronRight } from "lucide-react";
 
 export type SafeMotor = {
   id: string;
@@ -20,7 +21,7 @@ export type SafeMotor = {
 
 interface MotorsListProps {
   data: SafeMotor[];
-  variant: "repas" | "old";
+  variant: "repas" | "old" | "motorHead";
 }
 
 const MotorsList: FC<MotorsListProps> = ({ data, variant }) => {
@@ -40,9 +41,9 @@ const MotorsList: FC<MotorsListProps> = ({ data, variant }) => {
               color="primary"
               className="w-72 mx-auto"
               onClick={() => (window.location.href = "/stare-motory")}
-              arrow
             >
               Starší motory
+              <ChevronRight size={32} className="mr-2" />
             </Button>
           </>
         ) : (
@@ -54,25 +55,37 @@ const MotorsList: FC<MotorsListProps> = ({ data, variant }) => {
               color="primary"
               className="w-72 mx-auto"
               onClick={() => (window.location.href = "/repasovane-motory")}
-              arrow
             >
               Repasované motory
+              <ChevronRight className="mr-2" />
             </Button>
           </>
         )}
       </div>
     );
   }
+  // return (
+  //   <Grid container spacing={3} className="mb-10">
+  //     {data.map((motor) => {
+  //       return (
+  //         <Grid item xs={12} sm={6} md={3} key={motor.id}>
+  //           <MotorCard motor={motor} variant={variant} />
+  //         </Grid>
+  //       );
+  //     })}
+  //   </Grid>
+  // );
+  // recreate the grid above without usage of material grid component
   return (
-    <Grid container spacing={3} className="mb-10">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
       {data.map((motor) => {
         return (
-          <Grid item xs={12} sm={6} md={3} key={motor.id}>
+          <div key={motor.id} className="w-full">
             <MotorCard motor={motor} variant={variant} />
-          </Grid>
+          </div>
         );
       })}
-    </Grid>
+    </div>
   );
 };
 

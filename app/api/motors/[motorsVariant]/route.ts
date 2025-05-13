@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-import prisma from "@/app/libs/prismadb";
+import prismaDB from "@/prisma/prismaDB";
 
 export async function GET(
   req: Request,
@@ -9,6 +9,12 @@ export async function GET(
   try {
     const { motorsVariant } = params;
 
+    const motorVariants = ["old", "repas", "motorHead"];
+
+    if (!motorVariants.includes(motorsVariant)) {
+      return new NextResponse("Invalid motors variant", { status: 400 });
+    }
+
     if (!motorsVariant) {
       return new NextResponse("Missing fields", { status: 400 });
     }
@@ -16,9 +22,11 @@ export async function GET(
     const fetchMotors = () => {
       switch (motorsVariant) {
         case "old":
-          return prisma.oldMotor.findMany();
+          return prismaDB.oldMotor.findMany();
         case "repas":
-          return prisma.motor.findMany();
+          return prismaDB.motor.findMany();
+        case "motorHead":
+          return prismaDB.motorHead.findMany();
       }
     };
 

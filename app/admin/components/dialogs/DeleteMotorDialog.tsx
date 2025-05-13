@@ -1,17 +1,23 @@
 "use client";
 
-import Dialog from "@/components/modal/Dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import useMessage from "@/app/hooks/useMessage";
-import { Motor } from "@prisma/client";
+import type { Motor } from "@prisma/client";
 import axios from "axios";
-import React, { FC } from "react";
+import React, { type FC } from "react";
 import { useMutation, useQueryClient } from "react-query";
+import { Button } from "@/components/ui/button";
 
 interface DeleteMotorDialogProps {
   open: boolean;
   onClose: () => void;
   motor: Motor | null;
-  motorsVariant: "repas" | "old";
+  motorsVariant: "repas" | "old" | "motorHead";
 }
 
 const DeleteMotorDialog: FC<DeleteMotorDialogProps> = ({
@@ -32,9 +38,9 @@ const DeleteMotorDialog: FC<DeleteMotorDialogProps> = ({
     {
       onSuccess: (data) => {
         message.success(`Motor s id ${data} byl úspěšně smazán.`);
-        queryClient.invalidateQueries(
-          motorsVariant === "repas" ? "motors" : "oldMotors"
-        );
+        queryClient.invalidateQueries(["motors", motorsVariant], {
+          exact: true,
+        });
         onClose();
       },
       onError: (error) => {
@@ -48,13 +54,29 @@ const DeleteMotorDialog: FC<DeleteMotorDialogProps> = ({
   }
 
   return (
-    <Dialog
-      open={open}
-      onClose={onClose}
-      submitTitle="Smazat"
-      onSubmit={() => mutate(motor?.id)}
-    >
-      Opravdu chcete smazat <strong>{motor?.name}</strong>?
+    <Dialog open={open} onOpenChange={onClose}>
+      <DialogHeader>
+        <DialogTitle className="text-2xl font-bold">Smazat motor</DialogTitle>
+      </DialogHeader>
+      <DialogContent>
+        <div className="flex flex-col gap-4">
+          <span>Opravdu chcete smazat</span>{" "}
+          <span>
+            <strong>{motor?.name}</strong>?
+          </span>
+        </div>
+        <div className="w-full flex gap-2 mt-2">
+          <Button onClick={() => mutate(motor?.id)} className="w-full">
+            Smazat
+          </Button>
+          <Button variant="outline" onClick={onClose} className="w-full">
+            Zrušit
+          </Button>
+        </div>
+      </DialogContent>
+      {/* <DialogFooter> */}
+
+      {/* </DialogFooter> */}
     </Dialog>
   );
 };

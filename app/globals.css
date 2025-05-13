@@ -1,12 +1,11 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
 * {
   box-sizing: border-box;
 }
 
-body, html {
+body,
+html {
   max-width: 100%;
   overflow-x: hidden;
 }
@@ -15,4 +14,44 @@ main {
   min-height: calc(100vh - 208px);
 }
 
+:root {
+  /* color red 500 */
+  --color-primary: #ef4444;
+}
 
+@theme {
+  --color-primary: var(--color-red-500);
+}
+
+@layer components {
+  /* Animated Hamburger Icon */
+  .hamburger-icon {
+    width: 30px;
+    height: 24px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .hamburger-icon .line {
+    display: block;
+    height: 3px;
+    width: 100%;
+    border-radius: 10px;
+    background: red;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .hamburger-icon.open .line:nth-child(1) {
+    transform: translateY(10.5px) rotate(45deg);
+  }
+
+  .hamburger-icon.open .line:nth-child(2) {
+    opacity: 0;
+  }
+
+  .hamburger-icon.open .line:nth-child(3) {
+    transform: translateY(-10.5px) rotate(-45deg);
+  }
+}

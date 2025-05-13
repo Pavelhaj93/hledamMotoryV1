@@ -1,8 +1,8 @@
 import ContactSection from "@/app/(site)/_components/sections/ContactSection";
-import prisma from "@/app/libs/prismadb";
+import prismaDB from "@/prisma/prismaDB";
 import Container from "@/components/container/Container";
 import ImageGallery from "../../components/ImageGallery";
-import { Metadata } from "next";
+import type { Metadata } from "next";
 import { formatPrice } from "@/app/utils/utils";
 
 type Props = {
@@ -16,13 +16,19 @@ async function fetchMotor(params: Props["params"]) {
   let motor;
 
   if (params.motorVariant === "stary-motor") {
-    motor = await prisma.oldMotor.findUnique({
+    motor = await prismaDB.oldMotor.findUnique({
       where: {
         slug: params.motorSlug,
       },
     });
   } else if (params.motorVariant === "repasovany-motor") {
-    motor = await prisma.motor.findUnique({
+    motor = await prismaDB.motor.findUnique({
+      where: {
+        slug: params.motorSlug,
+      },
+    });
+  } else if (params.motorVariant === "motorova-hlava") {
+    motor = await prismaDB.motorHead.findUnique({
       where: {
         slug: params.motorSlug,
       },

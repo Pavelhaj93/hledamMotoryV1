@@ -1,4 +1,4 @@
-import { cn } from "@/app/utils/cn";
+import { cn } from "@/lib/utils";
 import { type VariantProps, cva } from "class-variance-authority";
 
 import IconCookieSVG from "./svg/cookie.svg";

@@ -1,6 +1,7 @@
-import Button from "@/components/Button";
+import { Button } from "@/components/ui/button";
 import Container from "@/components/container/Container";
 import React from "react";
+import { ChevronRight } from "lucide-react";
 
 const Section404 = () => {
   return (
@@ -11,8 +12,9 @@ const Section404 = () => {
           Omlouváme se ale tato stránka neexistuje.
         </h2>
         <a href="/">
-          <Button color="primary" fullWidth arrow>
+          <Button color="primary">
             Zpět na hlavní stránku
+            <ChevronRight className="mr-2" />
           </Button>
         </a>
       </div>

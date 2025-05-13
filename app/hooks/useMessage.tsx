@@ -2,7 +2,7 @@
 
 import { useCallback } from "react";
 
-import { SnackbarMessage, useSnackbar } from "notistack";
+import { type SnackbarMessage, useSnackbar } from "notistack";
 
 import MessageToast from "./MessageToast";
 
@@ -24,7 +24,7 @@ const useMessage = () => {
               message={message}
               description={options.description}
               onInfoClick={options.onInfoClick}
-              severity="info"
+              variant="info"
             />
           ),
         }),
@@ -40,7 +40,7 @@ const useMessage = () => {
               message={message}
               description={options.description}
               onInfoClick={options.onInfoClick}
-              severity="success"
+              variant="success"
             />
           ),
         }),
@@ -57,7 +57,7 @@ const useMessage = () => {
               message={message}
               description={options.description}
               onInfoClick={options.onInfoClick}
-              severity="warning"
+              variant="warning"
             />
           ),
         }),
@@ -74,7 +74,7 @@ const useMessage = () => {
               message={message}
               description={options.description}
               onInfoClick={options.onInfoClick}
-              severity="error"
+              variant="destructive"
             />
           ),
         }),

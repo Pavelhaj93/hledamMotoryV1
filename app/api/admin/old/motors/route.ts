@@ -1,9 +1,9 @@
-import prisma from "@/app/libs/prismadb";
+import prismaDB from "@/prisma/prismaDB";
 import { NextResponse } from "next/server";
 
 export async function GET(req: Request) {
   try {
-    const motors = await prisma.oldMotor.findMany();
+    const motors = await prismaDB.oldMotor.findMany();
 
     return NextResponse.json(motors);
   } catch (err) {

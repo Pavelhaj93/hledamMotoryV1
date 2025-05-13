@@ -57,12 +57,14 @@ export default function CookieBanner() {
 
           <div className="flex space-x-4">
             <button
+              type="button"
               onClick={() => handleConsent(true)}
               className="bg-red-500 hover:bg-red-600 transition-colors text-white text-sm md:text-base px-3 py-2 rounded"
             >
               Přijmout
             </button>
             <button
+              type="button"
               onClick={() => handleConsent(false)}
               className="bg-gray-600 hover:bg-gray-500 transition-colors text-white text-sm px-3 py-2 rounded"
             >

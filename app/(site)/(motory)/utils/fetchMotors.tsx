@@ -1,4 +1,4 @@
-import prisma from "@/app/libs/prismadb";
+import prismaDB from "@/prisma/prismaDB";
 
 export type Props = {
   params: {
@@ -10,9 +10,11 @@ export async function fetchMotors(params: Props["params"]) {
   let motor;
 
   if (params.motorsVariant === "stare-motory") {
-    motor = await prisma.oldMotor.findMany();
+    motor = await prismaDB.oldMotor.findMany();
   } else if (params.motorsVariant === "repasovane-motory") {
-    motor = await prisma.motor.findMany();
+    motor = await prismaDB.motor.findMany();
+  } else if (params.motorsVariant === "motorove-hlavy") {
+    motor = await prismaDB.motorHead.findMany();
   }
 
   return motor;

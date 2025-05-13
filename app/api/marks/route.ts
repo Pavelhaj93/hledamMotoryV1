@@ -1,9 +1,9 @@
-import prisma from "@/app/libs/prismadb";
+import prismaDB from "@/prisma/prismaDB";
 import { NextResponse } from "next/server";
 
 export async function GET(req: Request) {
   try {
-    const marks = await prisma.mark.findMany();
+    const marks = await prismaDB.mark.findMany();
 
     if (!marks) {
       return new NextResponse("Not marks found", { status: 404 });

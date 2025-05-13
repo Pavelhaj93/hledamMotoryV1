@@ -1,83 +1,58 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { Loader2 } from "lucide-react";
+import { cn } from "@/lib/utils";
 
-import {
-  Box,
-  LinearProgress,
-  LinearProgressProps,
-  Typography,
-} from "@mui/material";
-
-export interface LoadingProps extends LinearProgressProps {
+export interface LoadingProps extends React.HTMLAttributes<HTMLDivElement> {
   centered?: boolean;
-
   delayed?: boolean;
-
   /**
    * The time of a delay
-   *
-   * @default 700ms
+   * @default 700
    */
   delay?: number;
-
   hideLabel?: boolean;
-
   label?: string;
 }
 
-const Loading: React.FC<LoadingProps> = ({
+export const Loading: React.FC<LoadingProps> = ({
   centered,
   delayed,
   delay = 700,
   label,
   hideLabel,
-  ...other
+  className,
+  ...props
 }) => {
   const [showComponent, setShowComponent] = useState(!delayed);
 
   useEffect(() => {
+    if (!delayed) return;
     const timer = setTimeout(() => setShowComponent(true), delay);
-
     return () => clearTimeout(timer);
-  }, [delay]);
+  }, [delayed, delay]);
 
-  return showComponent ? (
-    <Box
-      sx={
-        centered
-          ? {
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-              width: "100%",
-              flex: "1 1 auto",
-              height: "50vh",
-            }
-          : { maxWidth: 200, textAlign: "center" }
-      }
+  if (!showComponent) return null;
+
+  return (
+    <div
+      className={cn(
+        "w-full max-w-xs",
+        centered &&
+          "flex flex-col items-center justify-center h-[50vh] mx-auto",
+        className
+      )}
+      {...props}
     >
       {!hideLabel && (
-        <Typography variant="h3">{label ?? "Načítám data"}</Typography>
+        <h3 className="text-lg font-semibold mb-2">
+          {label ?? "Načítám data"}
+        </h3>
       )}
-
-      <Box
-        sx={{
-          display: "flex",
-          position: "relative",
-          margin: centered ? "8px auto" : undefined,
-          width: "100%",
-          maxWidth: 200,
-        }}
-      >
-        <LinearProgress
-          {...other}
-          sx={{ position: "absolute", top: 0, left: 0, right: 0 }}
-        />
-      </Box>
-    </Box>
-  ) : null;
+      <div className="relative w-full h-2 bg-muted rounded overflow-hidden">
+        <div className="absolute inset-0 animate-loading-bar bg-primary" />
+      </div>
+    </div>
+  );
 };
-
-export default Loading;

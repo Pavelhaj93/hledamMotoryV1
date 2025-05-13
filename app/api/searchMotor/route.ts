@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
-import prisma from "@/app/libs/prismadb";
+import prismaDB from "@/prisma/prismaDB";
 import { mailOptions, transporter } from "@/config/nodemailer";
-import { RequestMotor } from "@/app/hooks/useRequestMotors";
+import type { RequestMotor } from "@/app/hooks/useRequestMotors";
 
 export async function POST(req: Request) {
   try {
@@ -12,24 +12,20 @@ export async function POST(req: Request) {
       return new NextResponse("Missing fields", { status: 400 });
     }
 
-    const findMotorsInDb = requests.forEach(async (element: RequestMotor) => {
-      const findMark = await prisma.mark.findUnique({
+    for (const element of requests) {
+      const findMark = await prismaDB.mark.findUnique({
         where: { name: element.mark ?? "" },
       });
-      const findModel = await prisma.model.findUnique({
+      const findModel = await prismaDB.model.findUnique({
         where: { name: element.model ?? "" },
       });
-      const findEngineType = await prisma.engineType.findUnique({
+      const findEngineType = await prismaDB.engineType.findUnique({
         where: { name: element.engineType ?? "" },
       });
 
       if (!findMark || !findModel || !findEngineType) {
         return new NextResponse("Motor neexistuje v databázi", { status: 404 });
       }
-    });
-
-    if (findMotorsInDb) {
-      return new NextResponse("Motor neexistuje v databázi", { status: 404 });
     }
 
     transporter.sendMail(

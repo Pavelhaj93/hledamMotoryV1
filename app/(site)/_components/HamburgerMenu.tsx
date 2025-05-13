@@ -1,129 +1,173 @@
 "use client";
 
-import { RequestMotor } from "@/app/hooks/useRequestMotors";
-import Container from "@/components/container/Container";
-import { useLocalStorageValue } from "@react-hookz/web";
-import clsx from "clsx";
+import { useState, useEffect } from "react";
+import Link from "next/link";
 import { signOut } from "next-auth/react";
-import Image from "next/image";
-import { FC, useEffect, useState } from "react";
+import { useLocalStorageValue } from "@react-hookz/web";
+import { Menu, X } from "lucide-react";
+import type { RequestMotor } from "@/app/hooks/useRequestMotors";
+import { cn } from "@/lib/utils";
 
-interface HamburgerMenuProps {
-  menu: { title: string; href: string }[];
-  admin?: boolean;
-  isOpen?: boolean;
-  handleMenuOpen?: () => void;
+interface MenuItem {
+  title: string;
+  href: string;
 }
 
-const HamburgerMenu: FC<HamburgerMenuProps> = ({
+interface HamburgerMenuProps {
+  menu: MenuItem[];
+  admin?: boolean;
+  className?: string;
+  animated?: boolean;
+  isOpen?: boolean;
+  setIsOpen: (isOpen: boolean) => void;
+}
+
+export default function HamburgerMenu({
   menu,
-  admin,
+  admin = false,
+  className,
+  animated = true,
   isOpen,
-  handleMenuOpen,
-}) => {
-  const [imageSrc, setImageSrc] = useState(
-    "/images/frontend/icon-hamburger.png"
-  );
-
-  useEffect(() => {
-    if (isOpen) {
-      setImageSrc("/images/frontend/icon-cross.png");
-    } else {
-      setImageSrc("/images/frontend/icon-hamburger.png");
-    }
-  }, [isOpen]);
-
+  setIsOpen,
+}: HamburgerMenuProps) {
   const { value: requestMotors } =
     useLocalStorageValue<RequestMotor[]>("requestMotors");
-  const [reqMotors, setReqMotors] = useState<RequestMotor[] | undefined>(
-    undefined
-  );
 
+  // Toggle menu state
+  const toggleMenu = () => setIsOpen(!isOpen);
+
+  // Close menu when clicking outside
   useEffect(() => {
-    setReqMotors(requestMotors);
-  }, [requestMotors]);
+    if (!isOpen) return;
+
+    const handleClickOutside = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      const mobileMenu = document.getElementById("mobile-menu");
+      // if the target is not the menu or its children, close the menu
+      if (
+        mobileMenu &&
+        !mobileMenu.contains(target) &&
+        !target.closest(".hamburger-icon")
+      ) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [isOpen]);
+
+  // Prevent scrolling when menu is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isOpen]);
 
   return (
-    <span
-      className="flex flex-row gap-5 items-center z-10 max-sm:mr-5 cursor-pointer"
-      onClick={handleMenuOpen}
-    >
-      <Image
-        src={imageSrc}
-        alt="icon-hamburger"
-        width={34}
-        height={28}
-        className="z-30"
-      />
-      <span className="text-xl font-bold max-sm:hidden z-0">Menu</span>
+    <div className={cn("relative z-50", className)}>
+      {/* Menu Button */}
+      <button
+        onClick={toggleMenu}
+        type="button"
+        className="flex items-center gap-5 cursor-pointer"
+        aria-expanded={isOpen}
+        aria-controls="mobile-menu"
+        aria-label={isOpen ? "Close menu" : "Open menu"}
+      >
+        {animated ? (
+          <div className="relative w-8 h-8 flex items-center justify-center">
+            <div className={cn("hamburger-icon", isOpen && "open")}>
+              <span className="line" />
+              <span className="line" />
+              <span className="line" />
+            </div>
+          </div>
+        ) : isOpen ? (
+          <X size={28} className="z-30" />
+        ) : (
+          <Menu size={28} className="z-30" />
+        )}
+        <span className="text-xl font-bold max-sm:hidden">Menu</span>
+      </button>
 
-      <Container
-        className={clsx(
-          "fixed right-0 left-0 top-0 flex justify-end px-0 cursor-default",
-          imageSrc === "/images/frontend/icon-hamburger.png" && "hidden"
+      {/* Menu Overlay */}
+      {isOpen && (
+        <div className="fixed inset-0 bg-black/20 z-20" aria-hidden="true" />
+      )}
+
+      {/* Menu Content */}
+      <div
+        className={cn(
+          "fixed inset-0 z-30 transform transition-transform duration-300 ease-in-out",
+          isOpen ? "translate-x-0" : "translate-x-full"
         )}
       >
-        <nav
-          className={clsx(
-            "opacity-1 w-645 z-20 bg-white pt-28 pr-28 pb-12 pl-12 transition-all duration-300 ease-in-out max-md:right-0 max-md:fixed max-md:w-full max-md:h-full max-md:pr-12",
-            imageSrc === "/images/frontend/icon-hamburger.png" &&
-              "opacity-0 h-0 "
-          )}
+        <div
+          id="mobile-menu"
+          className="absolute right-0 top-0 h-full w-full md:w-[645px] bg-white pt-28 pr-28 pb-12 pl-12 max-md:pr-12 overflow-y-auto"
         >
-          {menu.map(({ title, href }, index) => {
-            return (
-              <span
+          <button
+            className="absolute top-10 right-10 text-gray-500 hover:text-gray-700 focus:outline-none cursor-pointer"
+            onClick={() => setIsOpen(false)}
+            aria-label="Close menu"
+            type="button"
+          >
+            <X size={36} className="text-red-500" />
+          </button>
+          {/* close icon */}
+          <nav className="space-y-0">
+            {menu.map((item, index) => (
+              <div
                 key={index}
-                className={clsx(
-                  "block border-t-2 border-gray-100 border-opacity-80 py-6",
-                  imageSrc === "/images/frontend/icon-hamburger.png" && "hidden"
-                )}
+                className="border-t-2 border-gray-100 border-opacity-80 py-6"
               >
-                <a
-                  className="text-2xl font-black text-center block hover:underline"
-                  href={href}
+                <Link
+                  href={item.href}
+                  className="text-2xl font-black block hover:underline"
+                  onClick={() => setIsOpen(false)}
                 >
-                  {title}
-                </a>
-              </span>
-            );
-          })}
+                  {item.title}
+                </Link>
+              </div>
+            ))}
 
-          {reqMotors?.length && !admin ? (
-            <span
-              className={clsx(
-                "block border-t-2 border-gray-100 border-opacity-80 py-6",
-                imageSrc === "/images/frontend/icon-hamburger.png" && "hidden"
-              )}
-            >
-              <a
-                className="text-2xl font-black text-center block hover:underline"
-                href="/inquiry"
-              >
-                Rekapitulace poptávky
-              </a>
-            </span>
-          ) : null}
+            {/* Conditional menu item for request motors */}
+            {requestMotors?.length && requestMotors?.length > 0 && !admin && (
+              <div className="border-t-2 border-gray-100 border-opacity-80 py-6">
+                <Link
+                  href="/inquiry"
+                  className="text-2xl font-black block hover:underline"
+                  onClick={() => setIsOpen(false)}
+                >
+                  Rekapitulace poptávky
+                </Link>
+              </div>
+            )}
 
-          {admin && (
-            <span
-              className={clsx(
-                "block border-t-2 border-gray-100 border-opacity-80 py-6",
-                imageSrc === "/images/frontend/icon-hamburger.png" && "hidden"
-              )}
-            >
-              <a
-                className="text-2xl font-black text-center block hover:underline"
-                onClick={() => signOut()}
-              >
-                Odhlásit se
-              </a>
-            </span>
-          )}
-        </nav>
-      </Container>
-    </span>
+            {/* Admin logout option */}
+            {admin && (
+              <div className="border-t-2 border-gray-100 border-opacity-80 py-6">
+                <button
+                  type="button"
+                  className="text-2xl font-black block hover:underline text-left w-full"
+                  onClick={() => {
+                    signOut();
+                    setIsOpen(false);
+                  }}
+                >
+                  Odhlásit se
+                </button>
+              </div>
+            )}
+          </nav>
+        </div>
+      </div>
+    </div>
   );
-};
-
-export default HamburgerMenu;
+}

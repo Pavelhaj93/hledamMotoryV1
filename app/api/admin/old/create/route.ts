@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-import prisma from "@/app/libs/prismadb";
+import prismaDB from "@/prisma/prismaDB";
 import { generateSlug } from "@/app/utils/utils";
 
 export async function POST(req: Request) {
@@ -12,7 +12,7 @@ export async function POST(req: Request) {
       return new NextResponse("Missing fields", { status: 400 });
     }
 
-    const motor = await prisma.oldMotor.create({
+    const motor = await prismaDB.oldMotor.create({
       data: {
         name,
         description,
@@ -27,7 +27,7 @@ export async function POST(req: Request) {
     const slug = generateSlug(name, motor.id);
 
     // Update the motor's slug in the database
-    await prisma.oldMotor.update({
+    await prismaDB.oldMotor.update({
       where: {
         id: motor.id,
       },

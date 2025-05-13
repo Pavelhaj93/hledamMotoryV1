@@ -1,22 +1,25 @@
 "use client";
 
 import { formatPrice } from "@/app/utils/utils";
-import { Motor } from "@prisma/client";
+import type { Motor } from "@prisma/client";
 import Image from "next/image";
-import React, { FC } from "react";
+import Link from "next/link";
+import React, { type FC } from "react";
 
 interface MotorCardProps {
   motor: Motor;
-  variant: "repas" | "old";
+  variant: "repas" | "old" | "motorHead";
 }
+
+const linkConfig = {
+  repas: "repasovany-motor",
+  old: "stary-motor",
+  motorHead: "motorova-hlava",
+};
 
 const MotorCard: FC<MotorCardProps> = ({ motor, variant }) => {
   return (
-    <a
-      href={`/${variant === "repas" ? "repasovany-motor" : "stary-motor"}/${
-        motor.slug
-      }`}
-    >
+    <Link href={`/${linkConfig[variant]}/${motor.slug}`}>
       <div className="flex flex-col items-center justify-between cursor-pointer group hover:scale-105 transition-all duration-300 ease-in-out h-full">
         <Image
           src={motor.images?.[0] ?? "/images/placeholder.png"}
@@ -42,7 +45,7 @@ const MotorCard: FC<MotorCardProps> = ({ motor, variant }) => {
           </div>
         </div>
       </div>
-    </a>
+    </Link>
   );
 };
 

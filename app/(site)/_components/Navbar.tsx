@@ -5,7 +5,7 @@ import Image from "next/image";
 import HamburgerMenu from "./HamburgerMenu";
 import useClickOutside from "@/app/hooks/useClickOutside";
 import Link from "next/link";
-import { IconPhone, IconMail } from "@tabler/icons-react";
+import { Mail, Phone } from "lucide-react";
 
 const siteMenu = [
   {
@@ -23,6 +23,10 @@ const siteMenu = [
   {
     title: "Repasované motory",
     href: "/motory/repasovane-motory",
+  },
+  {
+    title: "Motorové hlavy",
+    href: "/motory/motorove-hlavy",
   },
   {
     title: "O nás",
@@ -55,7 +59,7 @@ const Navbar = () => {
         </Link>
         <span className="flex flex-row gap-10 items-center z-10">
           <span className="flex flex-row gap-2 items-center max-md:hidden text-xl font-bold">
-            <IconPhone className="w-10 h-10 stroke-red-500" />
+            <Phone size={36} className=" stroke-red-500" />
             +420 724 704 764
           </span>
           <a
@@ -63,7 +67,7 @@ const Navbar = () => {
             className="max-lg:hidden block text-xl font-bold"
           >
             <span className="flex flex-row gap-4 items-center">
-              <IconMail className="w-10 h-10 stroke-red-500" />
+              <Mail size={36} className="stroke-red-500" />
               <span>info@hledammotory.cz</span>
             </span>
           </a>
@@ -71,7 +75,7 @@ const Navbar = () => {
             <HamburgerMenu
               menu={siteMenu}
               isOpen={isOpen}
-              handleMenuOpen={toggleOpen}
+              setIsOpen={toggleOpen}
             />
           </div>
         </span>

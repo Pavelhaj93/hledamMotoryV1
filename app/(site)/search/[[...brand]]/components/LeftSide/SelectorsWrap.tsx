@@ -1,18 +1,19 @@
 "use client";
 
-import React, { FC, useContext, useEffect } from "react";
+import React, { type FC, useContext, useEffect } from "react";
 
 import { useQuery } from "react-query";
 import useMessage from "@/app/hooks/useMessage";
 import axios from "axios";
 import { marks } from "@/public/data/marks";
 import SelectorGroup from "./SelectorGroup";
-import TextArea from "@/components/inputs/TextArea";
-import Button from "@/components/Button";
+import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
 
 import { InquiryContext } from "@/app/context/InquiryContext";
 import { useRequestMotors } from "@/app/hooks/useRequestMotors";
 import InquiryFooter from "../RightSide/YourChoice";
+import { ChevronRight } from "lucide-react";
 
 enum handleSaveVariant {
   searchNext = "searchNext",
@@ -115,10 +116,8 @@ const SelectorsWrap: FC<SelectorsWrapProps> = ({ brand }) => {
           />
         </div>
         <div className="w-full">
-          <TextArea
-            rounded
+          <Textarea
             placeholder="Upřesněte vybráný motor, nejlépe označení motoru"
-            textCenter="left"
             id="textArea"
             setValue={setTextArea}
             disabled={!selectedEngineType || !selectedMark || !selectedModel}
@@ -126,7 +125,6 @@ const SelectorsWrap: FC<SelectorsWrapProps> = ({ brand }) => {
         </div>
         <div className="flex flex-col md:max-lg:flex-row max-md:gap-0 gap-4 w-full">
           <Button
-            arrow
             color="primary"
             className="w-full mb-4 md:max=lg:w-1/2"
             onClick={() => {
@@ -136,6 +134,7 @@ const SelectorsWrap: FC<SelectorsWrapProps> = ({ brand }) => {
             disabled={!selectedMark || !selectedModel || !selectedEngineType}
           >
             Poptat motory
+            <ChevronRight className="ml-2" />
           </Button>
           <Button
             color="secondary"

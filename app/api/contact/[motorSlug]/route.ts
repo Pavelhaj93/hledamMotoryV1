@@ -1,7 +1,7 @@
 import { mailOptions, transporter } from "@/config/nodemailer";
 import { NextResponse } from "next/server";
 
-import prisma from "@/app/libs/prismadb";
+import prismaDB from "@/prisma/prismaDB";
 import { SafeMotor } from "@/app/(site)/(motory)/components/MotorsList";
 
 export async function POST(

@@ -3,12 +3,13 @@ import Container from "@/components/container/Container";
 import React from "react";
 import Image from "next/image";
 
-import Button from "@/components/Button";
+import { Button } from "@/components/ui/button";
 import BrandImagesList from "../BrandImagesList";
+import { ChevronRight } from "lucide-react";
 
 const TopSection = () => {
   return (
-    <section className="flex-wrap h-full bg-[url('/images/frontend/background.png')] bg-cover relative">
+    <section className="flex-wrap h-full bg-[url('/images/frontend/background.png')] bg-cover relative py-16">
       <Container className="flex flex-col w-full lg:flex-row">
         <div className="inline-block align-middle w-full h-full max-lg:pr-0 pr-4 pt-12 lg:w-full max-lg:flex flex-col items-center">
           <h2 className="text-2xl font-black text-red-500 w-7/12 max-lg:text-center lg:w-full lg:text-4xl">
@@ -30,8 +31,9 @@ const TopSection = () => {
               <span className="text-2xl"> značky</span>
             </a>
 
-            <Button color="primary" arrow>
+            <Button>
               <a href="/search">Hledat motor</a>
+              <ChevronRight className="mr-2" />
             </Button>
           </div>
         </div>

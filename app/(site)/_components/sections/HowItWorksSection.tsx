@@ -1,11 +1,12 @@
-import Button from "@/components/Button";
+import { Button } from "@/components/ui/button";
 import Container from "@/components/container/Container";
 import Image from "next/image";
 import React from "react";
+import { ChevronRight } from "lucide-react";
 
 const HowItWorksSection = () => {
   return (
-    <section className="w-full h-full overflow-hidden mt-10">
+    <section className="w-full h-full overflow-hidden my-10">
       <Container className="max-md:text-center">
         <div className="text-center">
           <h3 className="text-2xl font-semibold text-center mb-1 text-red-500">
@@ -17,7 +18,7 @@ const HowItWorksSection = () => {
         </div>
         <div className="text-center py-20 pr-20 max-xl:pr-0">
           <div className="flex flex-row max-lg:flex-col items-center justify-center gap-6">
-            <div className="step my-0 min-lg:my-4 flex flex-col justify-between items-center h-96 max-xl:h-600 gap-6">
+            <div className="step my-0 min-lg:my-4 flex flex-col justify-between items-center h-96 max-xl:h-[600px] gap-6">
               <div className="upperpart">
                 <div className="flex h-20 items-center justify-center">
                   <Image
@@ -32,7 +33,7 @@ const HowItWorksSection = () => {
                 </p>
               </div>
               <div className="navigators-row h-22 flex flex-row justify-center items-center my-6">
-                <div className="block h-1 max-lg:w-14 w-24 bg-red-500 rotate-45 max-lg:w-15 max-lg:rotate-90 "></div>
+                <div className="block h-1 w-24 bg-red-500 rotate-45 max-lg:w-15 max-lg:rotate-90" />
               </div>
               <div className="lowerPart max-lg:ml-0 max-xl:ml-40 ml-80">
                 <div className="flex h-20 items-center justify-center">
@@ -48,10 +49,10 @@ const HowItWorksSection = () => {
                 </p>
               </div>
               <div className="navigators-row visible-t h-22 max-lg:block hidden  justify-center items-center py-6 max-lg:flex-row">
-                <div className="block h-1 max-lg:w-14 w-24 bg-red-500 rotate-45 max-lg:w-15 max-lg:rotate-90 "></div>
+                <div className="block h-1 w-24 bg-red-500 rotate-45 max-lg:w-15 max-lg:rotate-90" />
               </div>
             </div>
-            <div className="step my-0 max-xl:mt-10 flex flex-col justify-between items-center h-96 max-xl:h-600 gap-6 w-48">
+            <div className="step my-0 max-xl:mt-10 flex flex-col justify-between items-center h-96 max-xl:h-[600px] gap-6 w-48">
               <div className="upperpart">
                 <div className="flex h-20 items-center justify-center">
                   <Image
@@ -67,10 +68,10 @@ const HowItWorksSection = () => {
               </div>
               <div className="flex flex-row">
                 <div className="navigators-row h-22 max-lg:hidden flex flex-row justify-center items-center my-6">
-                  <div className="block h-1 max-lg:w-14 w-24 bg-red-500 rotate-135 max-lg:w-15 max-lg:rotate-90 "></div>
+                  <div className="block h-1 w-24 bg-red-500 rotate-[135] max-lg:w-15 max-lg:rotate-90" />
                 </div>
                 <div className="navigators-row h-22 flex flex-row justify-center items-center my-6">
-                  <div className="block h-1 max-lg:w-14 w-24 bg-red-500 rotate-45 max-lg:w-15 max-lg:rotate-90 "></div>
+                  <div className="block h-1 w-24 bg-red-500 rotate-[135] max-lg:w-15 max-lg:rotate-90" />
                 </div>
               </div>
               <div className="lowerPart max-lg:ml-0 max-xl:ml-60 ml-80">
@@ -87,10 +88,10 @@ const HowItWorksSection = () => {
                 </p>
               </div>
               <div className="navigators-row visible-t h-22 max-lg:block hidden justify-center items-center py-6 max-lg:flex-row">
-                <div className="block h-1 max-lg:w-14 w-24 bg-red-500 rotate-45 max-lg:w-15 max-lg:rotate-90 "></div>
+                <div className="block h-1 w-24 bg-red-500 rotate-45 max-lg:w-15 max-lg:rotate-90 " />
               </div>
             </div>
-            <div className="step my-0 max-xl:mt-10 flex flex-col justify-between items-center h-96 max-xl:h-480 gap-6">
+            <div className="step my-0 max-xl:mt-10 flex flex-col justify-between items-center h-96 max-xl:h-[480px] gap-6">
               <div className="upperpart">
                 <div className="flex h-20 items-center justify-center">
                   <Image
@@ -107,10 +108,10 @@ const HowItWorksSection = () => {
               </div>
               <div className="flex flex-row">
                 <div className="navigators-row h-22 max-lg:hidden flex flex-row justify-center items-center my-6">
-                  <div className="block h-1 max-lg:max-lg:w-14 w-24 bg-red-500 rotate-135 max-lg:w-15 max-lg:rotate-90 "></div>
+                  <div className="block h-1 max-lg:max-lg:w-14 w-24 bg-red-500 rotate-135 max-lg:w-15 max-lg:rotate-90" />
                 </div>
                 <div className="navigators-row h-22 flex flex-row justify-center items-center my-6">
-                  <div className="block h-1 max-lg:max-lg:w-14 w-24 bg-red-500 rotate-45 max-lg:w-15 max-lg:rotate-90 "></div>
+                  <div className="block h-1 max-lg:max-lg:w-14 w-24 bg-red-500 rotate-45 max-lg:w-15 max-lg:rotate-90" />
                 </div>
               </div>
               <div className="lowerPart max-lg:ml-0 max-xl:ml-40 ml-64">
@@ -125,13 +126,14 @@ const HowItWorksSection = () => {
                 <p className="text-xl mt-5 px-5 w-64">Máte motor u sebe</p>
               </div>
               <div className="navigators-row visible-t h-22 hidden justify-center items-center py-6 max-lg:flex-row">
-                <div className="block h-1 max-lg:max-lg:w-14 w-24 bg-red-500 rotate-45 max-lg:w-15 max-lg:rotate-90 "></div>
+                <div className="block h-1 max-lg:max-lg:w-14 w-24 bg-red-500 rotate-45 max-lg:w-15 max-lg:rotate-90" />
               </div>
             </div>
           </div>
         </div>
-        <Button color="primary" arrow>
+        <Button>
           Poptat motor
+          <ChevronRight size={32} className="ml-2" />
         </Button>
       </Container>
     </section>

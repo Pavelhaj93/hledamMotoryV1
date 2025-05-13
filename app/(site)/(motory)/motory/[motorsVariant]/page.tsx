@@ -1,7 +1,7 @@
 import React from "react";
-import prisma from "@/app/libs/prismadb";
-import { SafeMotor } from "../../components/MotorsList";
-import { Metadata } from "next";
+import prismaDB from "@/prisma/prismaDB";
+import type { SafeMotor } from "../../components/MotorsList";
+import type { Metadata } from "next";
 import MotorsContainer from "../../components/MotorsContainer";
 import TopSection from "@/app/(site)/_components/sections/TopSection";
 import ContactSection from "@/app/(site)/_components/sections/ContactSection";
@@ -13,12 +13,14 @@ type Props = {
 };
 
 async function fetchMotors(params: Props["params"]) {
-  let motor;
+  let motor = {};
 
   if (params.motorsVariant === "stare-motory") {
-    motor = await prisma.oldMotor.findMany();
+    motor = await prismaDB.oldMotor.findMany();
   } else if (params.motorsVariant === "repasovane-motory") {
-    motor = await prisma.motor.findMany();
+    motor = await prismaDB.motor.findMany();
+  } else if (params.motorsVariant === "motorove-hlavy") {
+    motor = await prismaDB.motorHead.findMany();
   }
 
   return motor;
@@ -43,7 +45,7 @@ export default async function StareMotoryPage({
 
   return (
     <>
-      <MotorsContainer params={params} data={data as SafeMotor[]} />;
+      <MotorsContainer params={params} data={data as SafeMotor[]} />
       <TopSection />
       <ContactSection />
     </>

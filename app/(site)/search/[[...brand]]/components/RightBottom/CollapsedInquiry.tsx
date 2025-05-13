@@ -1,10 +1,14 @@
 "use client";
 
-import { RequestMotor, useRequestMotors } from "@/app/hooks/useRequestMotors";
-import Button from "@/components/Button";
+import {
+  type RequestMotor,
+  useRequestMotors,
+} from "@/app/hooks/useRequestMotors";
+import { Button } from "@/components/ui/button";
 
-import { FC, useEffect, useState } from "react";
+import { type FC, useEffect, useState } from "react";
 import CollapsedMotor from "./CollapsedMotor";
+import { ChevronRight } from "lucide-react";
 
 interface CollapsedInquiryProps {
   searchNext?: boolean;
@@ -37,9 +41,9 @@ const CollapsedInquiry: FC<CollapsedInquiryProps> = ({
             color="primary"
             onClick={() => (window.location.href = "/inquiry")}
             className="mt-4 w-full"
-            arrow
           >
             Odeslat poptávku
+            <ChevronRight className="ml-2" />
           </Button>
         )}
         {searchNext && (
@@ -47,7 +51,6 @@ const CollapsedInquiry: FC<CollapsedInquiryProps> = ({
             color="secondary"
             className="w-full text-center"
             onClick={() => (window.location.href = "/search")}
-            center
           >
             Vyhledat další
           </Button>

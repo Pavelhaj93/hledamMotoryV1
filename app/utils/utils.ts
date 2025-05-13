@@ -1,4 +1,4 @@
-import { RequestMotor } from "../hooks/useRequestMotors";
+import type { RequestMotor } from "../hooks/useRequestMotors";
 
 export const generateSlug = (str: string, id: string) => {
   const slug = str

@@ -16,6 +16,7 @@ const useClickOutside = () => {
     setIsOpen((prevIsOpen) => !prevIsOpen);
   };
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: not necessary
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (

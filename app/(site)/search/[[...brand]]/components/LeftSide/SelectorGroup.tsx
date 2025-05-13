@@ -113,7 +113,7 @@ const SelectorGroup = <
                 )}
                 <span
                   className={clsx(
-                    "bg-[url('/images/frontend/icon-arrowRight.png')] h-5 w-10 bg-no-repeat align-self-center align-middle mt-8 mr-6 max-md:mt-5"
+                    "bg-[url('/images/frontend/icon-ChevronRight.png')] h-5 w-10 bg-no-repeat align-self-center align-middle mt-8 mr-6 max-md:mt-5"
                   )}
                 />
               </div>

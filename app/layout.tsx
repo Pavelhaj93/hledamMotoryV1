@@ -1,12 +1,11 @@
 import { Analytics } from "@vercel/analytics/react";
-import clsx from "clsx";
 import { Raleway } from "next/font/google";
 import Script from "next/script";
 import AuthContext from "./context/AuthContext";
-import { MaterialThemeProvider } from "./context/MaterialThemeProvider";
 import { ReactQueryProvider } from "./context/ReactQueryProvider";
 import { SnackBarProvider } from "./context/SnackBarProvider";
 import "./globals.css";
+import { cn } from "@/lib/utils";
 
 const inter = Raleway({ subsets: ["latin"] });
 
@@ -50,15 +49,14 @@ export default function RootLayout({
           gtag('config', 'G-ND4D88XRC9');`}
         </Script>
       </head>
-      <body className={clsx(`w-screen`, inter.className)}>
-        <main className="h-full w-full">
-          <MaterialThemeProvider>
-            <SnackBarProvider>
-              <ReactQueryProvider>
-                <AuthContext>{children}</AuthContext>
-              </ReactQueryProvider>
-            </SnackBarProvider>
-          </MaterialThemeProvider>
+      <body className={cn("w-screen", inter.className)}>
+        <main className="h-full w-full mt-28">
+          <SnackBarProvider>
+            <ReactQueryProvider>
+              <AuthContext>{children}</AuthContext>
+            </ReactQueryProvider>
+          </SnackBarProvider>
+
           <Analytics />
         </main>
       </body>
