@@ -1,143 +1,139 @@
-import { Button } from "@/components/ui/button";
-import Container from "@/components/container/Container";
-import Image from "next/image";
-import React from "react";
-import { ChevronRight } from "lucide-react";
+"use client";
 
-const HowItWorksSection = () => {
+import {
+  ClipboardCheck,
+  Mail,
+  Handshake,
+  Megaphone,
+  Target,
+  Package,
+  ChevronRight,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+
+export default function ProcessStepsAlternative() {
+  const steps = [
+    {
+      id: 1,
+      icon: <ClipboardCheck className="h-12 w-12 text-red-600" />,
+      title: "Poptáte motor který hledáte",
+      description: "Vyplníte jednoduchý formulář s požadavky na motor.",
+    },
+    {
+      id: 2,
+      icon: <Megaphone className="h-12 w-12 text-red-600" />,
+      title: "Oslovíme za Vás všechny prodejce motorů",
+      description:
+        "Vaši poptávku rozešleme všem relevantním prodejcům v naší síti.",
+    },
+    {
+      id: 3,
+      icon: <Mail className="h-12 w-12 text-red-600" />,
+      title: "Zašleme Vám odpovídající nabídky",
+      description:
+        "Obdržíte přehledný seznam nabídek odpovídajících vašim požadavkům.",
+    },
+    {
+      id: 4,
+      icon: <Target className="h-12 w-12 text-red-600" />,
+      title: "Vyberete si pro Vás tu nejlepší nabídku",
+      description:
+        "Porovnáte ceny, dostupnost a další parametry a vyberete nejlepší nabídku.",
+    },
+    {
+      id: 5,
+      icon: <Handshake className="h-12 w-12 text-red-600" />,
+      title: "Prodejce Vás kontaktuje a domluvíte se na předání",
+      description: "Prodejce s vámi dohodne detaily předání a platby.",
+    },
+    {
+      id: 6,
+      icon: <Package className="h-12 w-12 text-red-600" />,
+      title: "Máte motor u sebe",
+      description: "Získáte požadovaný motor a můžete ho začít používat.",
+    },
+  ];
+
   return (
-    <section className="w-full h-full overflow-hidden my-10">
-      <Container className="max-md:text-center">
-        <div className="text-center">
-          <h3 className="text-2xl font-semibold text-center mb-1 text-red-500">
-            Princip
-          </h3>
-          <h2 className="text-4xl font-black text-center mb-10">
-            Jak to funguje?
+    <section className="py-20 bg-white">
+      <div className="container mx-auto px-4">
+        <div className="text-center mb-16">
+          <h2 className="text-3xl font-bold mb-4">
+            Jak získat motor v 6 jednoduchých krocích
           </h2>
+          <p className="text-gray-600 max-w-2xl mx-auto">
+            Náš proces je navržen tak, aby byl pro vás co nejjednodušší a
+            nejefektivnější. Stačí sledovat těchto 6 kroků a brzy budete mít
+            svůj motor.
+          </p>
         </div>
-        <div className="text-center py-20 pr-20 max-xl:pr-0">
-          <div className="flex flex-row max-lg:flex-col items-center justify-center gap-6">
-            <div className="step my-0 min-lg:my-4 flex flex-col justify-between items-center h-96 max-xl:h-[600px] gap-6">
-              <div className="upperpart">
-                <div className="flex h-20 items-center justify-center">
-                  <Image
-                    src="/images/frontend/flow-icons/icon-form.png"
-                    alt="icon-form"
-                    width={56}
-                    height={58}
-                  />
-                </div>
-                <p className="text-xl mt-5 px-5 w-64">
-                  Poptáte motor který hledáte
-                </p>
-              </div>
-              <div className="navigators-row h-22 flex flex-row justify-center items-center my-6">
-                <div className="block h-1 w-24 bg-red-500 rotate-45 max-lg:w-15 max-lg:rotate-90" />
-              </div>
-              <div className="lowerPart max-lg:ml-0 max-xl:ml-40 ml-80">
-                <div className="flex h-20 items-center justify-center">
-                  <Image
-                    src="/images/frontend/flow-icons/icon-speaker.png"
-                    alt="icon-form"
-                    width={56}
-                    height={58}
-                  />
-                </div>
-                <p className="text-xl mt-5 px-5 w-64">
-                  Oslovíme za Vás všechny prodejce motorů
-                </p>
-              </div>
-              <div className="navigators-row visible-t h-22 max-lg:block hidden  justify-center items-center py-6 max-lg:flex-row">
-                <div className="block h-1 w-24 bg-red-500 rotate-45 max-lg:w-15 max-lg:rotate-90" />
-              </div>
-            </div>
-            <div className="step my-0 max-xl:mt-10 flex flex-col justify-between items-center h-96 max-xl:h-[600px] gap-6 w-48">
-              <div className="upperpart">
-                <div className="flex h-20 items-center justify-center">
-                  <Image
-                    src="/images/frontend/flow-icons/icon-envelope.png"
-                    alt="icon-envelope"
-                    width={56}
-                    height={58}
-                  />
-                </div>
-                <p className="text-xl mt-5 px-5 w-64">
-                  Zašleme Vám odpovídající nabídky
-                </p>
-              </div>
-              <div className="flex flex-row">
-                <div className="navigators-row h-22 max-lg:hidden flex flex-row justify-center items-center my-6">
-                  <div className="block h-1 w-24 bg-red-500 rotate-[135] max-lg:w-15 max-lg:rotate-90" />
-                </div>
-                <div className="navigators-row h-22 flex flex-row justify-center items-center my-6">
-                  <div className="block h-1 w-24 bg-red-500 rotate-[135] max-lg:w-15 max-lg:rotate-90" />
+
+        <div className="relative">
+          {/* Timeline line */}
+          <div className="hidden lg:block absolute left-1/2 top-0 bottom-0 w-1 bg-red-100 transform -translate-x-1/2" />
+
+          <div className="space-y-12">
+            {steps.map((step, index) => (
+              <div key={step.id} className="relative">
+                <div
+                  className={`lg:flex items-center ${
+                    index % 2 === 0 ? "lg:flex-row" : "lg:flex-row-reverse"
+                  }`}
+                >
+                  {/* Timeline dot */}
+                  <div className="hidden lg:block absolute left-1/2 transform -translate-x-1/2 w-8 h-8 rounded-full bg-red-600 z-10">
+                    <span className="flex items-center justify-center h-full text-white font-bold">
+                      {index + 1}
+                    </span>
+                  </div>
+
+                  {/* Content */}
+                  <div
+                    className={`lg:w-1/2 ${
+                      index % 2 === 0 ? "lg:pr-16 lg:text-right" : "lg:pl-16"
+                    }`}
+                  >
+                    <div className="bg-gray-50 p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                      <div className="flex items-center mb-4 lg:hidden">
+                        <div className="w-8 h-8 rounded-full bg-red-600 flex items-center justify-center mr-3">
+                          <span className="text-white font-bold">
+                            {index + 1}
+                          </span>
+                        </div>
+                        <h3 className="text-xl font-semibold">{step.title}</h3>
+                      </div>
+                      <div className="hidden lg:block mb-3">
+                        <h3 className="text-xl font-semibold">{step.title}</h3>
+                      </div>
+                      <p className="text-gray-600">{step.description}</p>
+                    </div>
+                  </div>
+
+                  {/* Icon */}
+                  <div
+                    className={`hidden lg:flex lg:w-1/2 ${
+                      index % 2 === 0
+                        ? "lg:justify-start lg:pl-16"
+                        : "lg:justify-end lg:pr-16"
+                    } items-center`}
+                  >
+                    <div className="bg-white p-4 rounded-full shadow-sm">
+                      {step.icon}
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div className="lowerPart max-lg:ml-0 max-xl:ml-60 ml-80">
-                <div className="flex h-20 items-center justify-center">
-                  <Image
-                    src="/images/frontend/flow-icons/icon-target.png"
-                    alt="icon-target"
-                    width={56}
-                    height={58}
-                  />
-                </div>
-                <p className="text-xl mt-5 px-5 w-64">
-                  Vyberete si pro Vás tu nejlepší nabídku
-                </p>
-              </div>
-              <div className="navigators-row visible-t h-22 max-lg:block hidden justify-center items-center py-6 max-lg:flex-row">
-                <div className="block h-1 w-24 bg-red-500 rotate-45 max-lg:w-15 max-lg:rotate-90 " />
-              </div>
-            </div>
-            <div className="step my-0 max-xl:mt-10 flex flex-col justify-between items-center h-96 max-xl:h-[480px] gap-6">
-              <div className="upperpart">
-                <div className="flex h-20 items-center justify-center">
-                  <Image
-                    src="/images/frontend/flow-icons/icon-hands.png"
-                    alt="icon-hands"
-                    width={56}
-                    height={58}
-                  />
-                </div>
-                <p className="text-xl mt-5 px-5 w-96">
-                  Prodejce použitých motorů Vás kontaktuje a domluvíte se na
-                  způsobu předání
-                </p>
-              </div>
-              <div className="flex flex-row">
-                <div className="navigators-row h-22 max-lg:hidden flex flex-row justify-center items-center my-6">
-                  <div className="block h-1 max-lg:max-lg:w-14 w-24 bg-red-500 rotate-135 max-lg:w-15 max-lg:rotate-90" />
-                </div>
-                <div className="navigators-row h-22 flex flex-row justify-center items-center my-6">
-                  <div className="block h-1 max-lg:max-lg:w-14 w-24 bg-red-500 rotate-45 max-lg:w-15 max-lg:rotate-90" />
-                </div>
-              </div>
-              <div className="lowerPart max-lg:ml-0 max-xl:ml-40 ml-64">
-                <div className="flex h-20 items-center justify-center">
-                  <Image
-                    src="/images/frontend/flow-icons/icon-piston.png"
-                    alt="icon-engine-piston"
-                    width={76}
-                    height={78}
-                  />
-                </div>
-                <p className="text-xl mt-5 px-5 w-64">Máte motor u sebe</p>
-              </div>
-              <div className="navigators-row visible-t h-22 hidden justify-center items-center py-6 max-lg:flex-row">
-                <div className="block h-1 max-lg:max-lg:w-14 w-24 bg-red-500 rotate-45 max-lg:w-15 max-lg:rotate-90" />
-              </div>
-            </div>
+            ))}
           </div>
         </div>
-        <Button>
-          Poptat motor
-          <ChevronRight size={32} className="ml-2" />
-        </Button>
-      </Container>
+
+        <div className="mt-16 text-center">
+          <Button>
+            Poptat motor
+            <ChevronRight className="ml-2 h-4 w-4" />
+          </Button>
+        </div>
+      </div>
     </section>
   );
-};
-
-export default HowItWorksSection;
+}
