@@ -55,7 +55,7 @@ export default function HamburgerMenu({
 
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [isOpen]);
+  }, [isOpen, setIsOpen]);
 
   // Prevent scrolling when menu is open
   useEffect(() => {

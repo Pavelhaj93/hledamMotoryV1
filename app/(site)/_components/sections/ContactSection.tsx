@@ -1,5 +1,5 @@
 import Container from "@/components/container/Container";
-import React, { FC } from "react";
+import React, { type FC } from "react";
 import ContactForm from "../ContactForm";
 
 interface ContactSectionProps {

@@ -44,7 +44,7 @@ const Navbar = () => {
               menu={siteMenu}
               admin
               isOpen={isOpen}
-              handleMenuOpen={toggleOpen}
+              setIsOpen={toggleOpen}
             />
           </div>
         </span>

@@ -41,7 +41,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import type { Motor } from "@prisma/client";
 import useMessage from "@/app/hooks/useMessage";
-import { CldUploadButton } from "next-cloudinary";
+import { CldUploadButton, CldUploadWidgetResults } from "next-cloudinary";
 import Image from "next/image";
 import { useMutation, useQueryClient } from "react-query";
 import axios from "axios";
@@ -64,10 +64,7 @@ const formSchema = z.object({
   markName: z
     .string({ required_error: "Vyberte značku motoru" })
     .nonempty("Vyberte značku motoru"),
-  price: z.preprocess(
-    (val) => (val === "" ? undefined : Number(val)),
-    z.number({ invalid_type_error: "Cena musí obsahovat čísla" })
-  ),
+  price: z.number().optional(),
   images: z.array(z.string()).nonempty("Nahrajte alespoň jeden obrázek"),
 });
 
@@ -89,25 +86,32 @@ const MotorDialog: FC<MotorDialogProps> = ({
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      id: motor?.id ?? undefined,
-      name: motor?.name ?? "",
+      id: motor?.id,
+      name: motor?.name,
       description: motor?.description ?? "",
-      markName: motor?.markName ?? "",
-      price: motor?.price ?? undefined,
-      images: motor?.images ?? [],
+      markName: motor?.markName,
+      price: motor?.price ?? 0,
+      images: motor?.images ?? [""],
     },
   });
 
   const watchImages = form.watch("images");
 
+  // biome-ignore lint/suspicious/noExplicitAny: TODO: find correct type and fix
   const handleUpload = (result: any) => {
     const imageUrl = result?.info?.secure_url;
 
     if (imageUrl) {
       const updatedImages = [...(watchImages ?? []), imageUrl];
-      form.setValue("images", updatedImages, {
-        shouldValidate: true,
-      });
+      form.setValue(
+        "images",
+        updatedImages.length > 0
+          ? (updatedImages as [string, ...string[]])
+          : [""],
+        {
+          shouldValidate: true,
+        }
+      );
     }
   };
 
@@ -163,9 +167,16 @@ const MotorDialog: FC<MotorDialogProps> = ({
   );
 
   const handleDeleteImage = (image: string) => {
-    form.setValue("images", watchImages?.filter((img) => img !== image) || [], {
-      shouldValidate: true,
-    });
+    const filteredImages = watchImages?.filter((img) => img !== image) || [];
+    if (filteredImages.length > 0) {
+      form.setValue("images", filteredImages as [string, ...string[]], {
+        shouldValidate: true,
+      });
+    } else {
+      form.setValue("images", [""], {
+        shouldValidate: true,
+      });
+    }
   };
 
   const handleSelectPrimaryImage = (image: string) => {
@@ -269,7 +280,6 @@ const MotorDialog: FC<MotorDialogProps> = ({
                     <PopoverTrigger asChild>
                       <FormControl>
                         <Button
-                          size=""
                           variant="outline"
                           // biome-ignore lint/a11y/useSemanticElements: it needs to be a button
                           role="combobox"

@@ -14,6 +14,13 @@ import { InquiryContext } from "@/app/context/InquiryContext";
 import { useRequestMotors } from "@/app/hooks/useRequestMotors";
 import InquiryFooter from "../RightSide/YourChoice";
 import { ChevronRight } from "lucide-react";
+import {
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 
 enum handleSaveVariant {
   searchNext = "searchNext",
@@ -116,11 +123,14 @@ const SelectorsWrap: FC<SelectorsWrapProps> = ({ brand }) => {
           />
         </div>
         <div className="w-full">
-          <Textarea
+          <textarea
             placeholder="Upřesněte vybráný motor, nejlépe označení motoru"
             id="textArea"
-            setValue={setTextArea}
+            onChange={(e) => {
+              setTextArea(e.target.value);
+            }}
             disabled={!selectedEngineType || !selectedMark || !selectedModel}
+            className="w-full h-32 resize-none border-2 border-gray-300 rounded-md p-2 focus:outline-none focus:border-red-500"
           />
         </div>
         <div className="flex flex-col md:max-lg:flex-row max-md:gap-0 gap-4 w-full">

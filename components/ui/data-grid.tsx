@@ -243,16 +243,10 @@ export function DataGrid<TData, TValue>({
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
-                  <TableHead
-                    key={header.id}
-                    className={cn(
-                      header.column.columnDef.meta?.headerAlign === "right"
-                        ? "text-right"
-                        : ""
-                    )}
-                  >
+                  <TableHead key={header.id}>
                     {header.isPlaceholder ? null : (
-                      <div
+                      <button
+                        type="button"
                         className={cn(
                           "flex items-center gap-1",
                           header.column.getCanSort()
@@ -276,7 +270,7 @@ export function DataGrid<TData, TValue>({
                             )}
                           </div>
                         )}
-                      </div>
+                      </button>
                     )}
                   </TableHead>
                 ))}
@@ -291,14 +285,7 @@ export function DataGrid<TData, TValue>({
                   data-state={row.getIsSelected() && "selected"}
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell
-                      key={cell.id}
-                      className={cn(
-                        cell.column.columnDef.meta?.align === "right"
-                          ? "text-right"
-                          : ""
-                      )}
-                    >
+                    <TableCell key={cell.id}>
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()

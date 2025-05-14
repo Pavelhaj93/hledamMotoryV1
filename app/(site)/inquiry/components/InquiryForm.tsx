@@ -1,16 +1,28 @@
 "use client";
 
-import useMessage from "@/app/hooks/useMessage";
-import { useRequestMotors } from "@/app/hooks/useRequestMotors";
-import Button from "@/components/Button";
-import Input from "@/components/inputs/Input";
-import TextArea from "@/components/inputs/TextArea";
+import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import axios from "axios";
-import React from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useMutation } from "react-query";
 import { z } from "zod";
+import axios from "axios";
+import { ChevronRight } from "lucide-react";
+
+import { useRequestMotors } from "@/app/hooks/useRequestMotors";
+import useMessage from "@/app/hooks/useMessage";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Checkbox } from "@/components/ui/checkbox";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 
 const RequestMotorsSchema = z.object({
   mark: z.string().nullable(),
@@ -36,14 +48,10 @@ type FormValues = z.infer<typeof formSchema>;
 
 const InquiryForm = () => {
   const { requestMotors, setRequestMotors } = useRequestMotors();
-
   const message = useMessage();
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors, isSubmitting },
-  } = useForm<FormValues>({
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       email: "",
@@ -59,7 +67,6 @@ const InquiryForm = () => {
       const { data } = await axios.post("/api/searchMotor", {
         ...formValues,
       });
-
       return data;
     },
     {
@@ -71,88 +78,122 @@ const InquiryForm = () => {
         message.success("Zpráva byla úspěšně odeslána");
       },
       onSettled: () => {
-        reset();
+        form.reset();
         setRequestMotors([]);
+        setIsSubmitting(false);
       },
     }
   );
 
-  const onSubmit: SubmitHandler<FormValues> = async (formValues) => {
+  const onSubmit = (formValues: FormValues) => {
+    setIsSubmitting(true);
     mutation.mutate(formValues);
   };
 
   return (
     <div className="flex flex-col items-start justify-center max-lg:gap-10 gap-2 max-lg:w-full w-1/2 h-full">
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="w-full">
-          <Input
-            id="email"
-            type="email"
-            placeholder="Emailová adresa"
-            required
-            rounded
-            register={register as keyof typeof register}
-            error={errors.email}
-          />
-          <Input
-            id="phone"
-            type="text"
-            placeholder="Telefon"
-            required
-            rounded
-            register={register as keyof typeof register}
-            error={errors.phone}
-          />
-          <TextArea
-            id="note"
-            placeholder="Poznámka"
-            rounded
-            register={register as keyof typeof register}
-            error={errors.note}
-            textCenter="left"
-          />
-        </div>
-        <div className="w-full flex flex-col items-center gap-2">
-          <div className="flex flex-col my-8">
-            <div className="flex items-center gap-6">
-              <input
-                type="checkbox"
-                id="acceptPrivacyPolicy"
-                {...register("acceptPrivacyPolicy")}
-                className="w-6 h-6 ml-6 text-red-600 border-gray-30 checked:bg-red-600 rounded focus:ring-red-500"
-              />
-              <label
-                htmlFor="acceptPrivacyPolicy"
-                className="lg:text-lg text-gray-700"
-              >
-                Souhlasím s{" "}
-                <a
-                  href="/ochrana-osobnich-udaju"
-                  className="text-red-600 text-lg underline"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  podmínkami ochrany osobních údajů
-                </a>
-              </label>
-            </div>
-            {errors.acceptPrivacyPolicy && (
-              <p className="text-red-600 text-sm max-lg:text-center">
-                {errors.acceptPrivacyPolicy.message}
-              </p>
-            )}
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="w-full space-y-6"
+        >
+          <div className="space-y-4">
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input
+                      placeholder="Emailová adresa"
+                      type="email"
+                      required
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="phone"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input
+                      placeholder="Telefon"
+                      type="text"
+                      required
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="note"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Textarea
+                      placeholder="Poznámka"
+                      className="resize-none"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
           </div>
-          <Button
-            color="primary"
-            type="submit"
-            className="w-full"
-            arrow
-            disabled={isSubmitting}
-          >
-            Odeslat poptávku
-          </Button>
-        </div>
-      </form>
+
+          <div className="w-full flex flex-col items-center gap-2">
+            <FormField
+              control={form.control}
+              name="acceptPrivacyPolicy"
+              render={({ field }) => (
+                <FormItem className="flex flex-col my-8">
+                  <div className="flex items-center gap-6">
+                    <FormControl>
+                      <Checkbox
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                        className="w-6 h-6 ml-6 data-[state=checked]:bg-red-600 data-[state=checked]:text-white border-gray-300 rounded"
+                      />
+                    </FormControl>
+                    <FormLabel className="lg:text-lg text-gray-700 font-normal">
+                      Souhlasím s{" "}
+                      <a
+                        href="/ochrana-osobnich-udaju"
+                        className="text-red-600 text-lg underline"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        podmínkami ochrany osobních údajů
+                      </a>
+                    </FormLabel>
+                  </div>
+                  <FormMessage className="text-center mt-2" />
+                </FormItem>
+              )}
+            />
+
+            <Button
+              type="submit"
+              className="w-full bg-red-600 hover:bg-red-700 text-white"
+              disabled={isSubmitting}
+            >
+              Odeslat poptávku
+              <ChevronRight className="ml-2 h-4 w-4" />
+            </Button>
+          </div>
+        </form>
+      </Form>
     </div>
   );
 };
