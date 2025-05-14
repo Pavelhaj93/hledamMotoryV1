@@ -7,14 +7,6 @@ import Image from "next/image";
 
 const siteMenu = [
   {
-    title: "Repasované motory",
-    href: "/admin/repas",
-  },
-  {
-    title: "Starší motory",
-    href: "/admin/old",
-  },
-  {
     title: "Zpět na HledamMotory.cz",
     href: "/",
   },
