@@ -46,25 +46,26 @@ import Image from "next/image";
 import { useMutation, useQueryClient } from "react-query";
 import axios from "axios";
 import { cn } from "@/lib/utils";
+import { ProductVariant } from "@/types/ProductVariant";
 
 interface MotorDialogProps {
   open: boolean;
   onClose: () => void;
   variant: "create" | "edit";
   motor?: Motor;
-  motorsVariant: "repas" | "old" | "motorHead";
+  productVariant: ProductVariant;
 }
 
 const formSchema = z.object({
   id: z.string().optional(),
   name: z
-    .string({ required_error: "Zadajte název motoru" })
-    .nonempty("Zadajte název motoru"),
-  description: z.string().nonempty("Zadajte popis motoru"),
+    .string({ required_error: "Zadajte název produktu" })
+    .nonempty("Zadajte název produktu"),
+  description: z.string().nonempty("Zadajte popis produktu"),
   markName: z
-    .string({ required_error: "Vyberte značku motoru" })
-    .nonempty("Vyberte značku motoru"),
-  price: z.number().optional(),
+    .string({ required_error: "Vyberte značku produktu" })
+    .nonempty("Vyberte značku produktu"),
+  price: z.coerce.number(),
   images: z.array(z.string()).nonempty("Nahrajte alespoň jeden obrázek"),
 });
 
@@ -75,7 +76,7 @@ const MotorDialog: FC<MotorDialogProps> = ({
   onClose,
   variant,
   motor,
-  motorsVariant,
+  productVariant,
 }) => {
   const message = useMessage();
   const queryClient = useQueryClient();
@@ -90,12 +91,14 @@ const MotorDialog: FC<MotorDialogProps> = ({
       name: motor?.name,
       description: motor?.description ?? "",
       markName: motor?.markName,
-      price: motor?.price ?? 0,
-      images: motor?.images ?? [""],
+      price: motor?.price ?? undefined,
+      images: motor?.images,
     },
   });
 
   const watchImages = form.watch("images");
+
+  console.log("watchImages", watchImages);
 
   // biome-ignore lint/suspicious/noExplicitAny: TODO: find correct type and fix
   const handleUpload = (result: any) => {
@@ -117,15 +120,15 @@ const MotorDialog: FC<MotorDialogProps> = ({
 
   const createMutation = useMutation(
     async (formValues: FormValues) => {
-      const { data } = await axios.post(`/api/admin/${motorsVariant}/create`, {
+      const { data } = await axios.post(`/api/admin/${productVariant}/create`, {
         ...formValues,
       });
       return data;
     },
     {
       onSuccess: () => {
-        message.success("Motor byl úspěšně vytvořen");
-        queryClient.invalidateQueries(["motors", motorsVariant]);
+        message.success("Produkt byl úspěšně přídán");
+        queryClient.invalidateQueries(["motors", productVariant]);
       },
       onError: (error) => {
         message.error(error as string);
@@ -140,7 +143,7 @@ const MotorDialog: FC<MotorDialogProps> = ({
   const editMutation = useMutation(
     async (formValues: FormValues) => {
       const { data } = await axios.put(
-        `/api/admin/${motorsVariant}/${formValues.id}`,
+        `/api/admin/${productVariant}/${formValues.id}`,
         {
           ...formValues,
         }
@@ -149,10 +152,10 @@ const MotorDialog: FC<MotorDialogProps> = ({
     },
     {
       onSuccess: () => {
-        message.success("Motor byl úspěšně upraven");
+        message.success("Produkt byl úspěšně upraven");
         queryClient.invalidateQueries([
           "motors",
-          motorsVariant,
+          productVariant,
           form.getValues("id"),
         ]);
       },
@@ -216,7 +219,9 @@ const MotorDialog: FC<MotorDialogProps> = ({
         onInteractOutside={(e) => e.preventDefault()}
       >
         <DialogHeader>
-          <DialogTitle>{titleConfig[variant][motorsVariant].title}</DialogTitle>
+          <DialogTitle>
+            {titleConfig[variant][productVariant].title}
+          </DialogTitle>
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -229,7 +234,7 @@ const MotorDialog: FC<MotorDialogProps> = ({
                   <FormControl>
                     <Input
                       placeholder={
-                        titleConfig[variant][motorsVariant].namePlaceholder
+                        titleConfig[variant][productVariant].namePlaceholder
                       }
                       {...field}
                     />
@@ -248,7 +253,7 @@ const MotorDialog: FC<MotorDialogProps> = ({
                   <FormControl>
                     <Textarea
                       placeholder={
-                        titleConfig[variant][motorsVariant]
+                        titleConfig[variant][productVariant]
                           .descriptionPlaceholder
                       }
                       className="min-h-[120px]"
@@ -298,7 +303,7 @@ const MotorDialog: FC<MotorDialogProps> = ({
                       <Command>
                         <CommandInput
                           placeholder={
-                            titleConfig[variant][motorsVariant]
+                            titleConfig[variant][productVariant]
                               .markNamePlaceholder
                           }
                         />
@@ -347,10 +352,10 @@ const MotorDialog: FC<MotorDialogProps> = ({
                     <Input
                       type="number"
                       placeholder={
-                        titleConfig[variant][motorsVariant].pricePlaceholder
+                        titleConfig[variant][productVariant].pricePlaceholder
                       }
                       {...field}
-                      onChange={(e) => field.onChange(e.target.value)}
+                      onChange={(e) => field.onChange(Number(e.target.value))}
                     />
                   </FormControl>
                   <FormMessage />
@@ -376,7 +381,7 @@ const MotorDialog: FC<MotorDialogProps> = ({
                         className="w-full"
                       >
                         <CloudUpload className="mr-2 h-4 w-4" />
-                        {watchImages && watchImages.length === 0
+                        {!watchImages?.length
                           ? "Nahrát fotky"
                           : "Nahrát další fotky"}
                       </Button>
@@ -437,6 +442,7 @@ const MotorDialog: FC<MotorDialogProps> = ({
                 type="button"
                 variant="secondary"
                 onClick={handleDialogClose}
+                disabled={form.formState.isSubmitting}
               >
                 Zrušit
               </Button>
@@ -459,7 +465,7 @@ export default MotorDialog;
 
 type TitleConfig = {
   create: {
-    [key in "old" | "repas" | "motorHead"]: {
+    [key in ProductVariant]: {
       title: string;
       namePlaceholder: string;
       descriptionPlaceholder: string;
@@ -468,7 +474,7 @@ type TitleConfig = {
     };
   };
   edit: {
-    [key in "old" | "repas" | "motorHead"]: {
+    [key in ProductVariant]: {
       title: string;
       namePlaceholder: string;
       descriptionPlaceholder: string;
@@ -480,49 +486,63 @@ type TitleConfig = {
 
 const titleConfig: TitleConfig = {
   create: {
-    old: {
+    [ProductVariant.Old]: {
       title: "Přidat starý motor",
       namePlaceholder: "Zadejte název starého motoru",
       descriptionPlaceholder: "Zadejte popis starého motoru",
       markNamePlaceholder: "Zadejte značku starého motoru",
       pricePlaceholder: "Zadejte cenu starého motoru",
     },
-    repas: {
+    [ProductVariant.Repaired]: {
       title: "Přidat repasovaný motor",
       namePlaceholder: "Zadejte název repasovaného motoru",
       descriptionPlaceholder: "Zadejte popis repasovaného motoru",
       markNamePlaceholder: "Zadejte značku repasovaného motoru",
       pricePlaceholder: "Zadejte cenu repasovaného motoru",
     },
-    motorHead: {
+    [ProductVariant.EngineHeads]: {
       title: "Přidat motorovou hlavu",
       namePlaceholder: "Zadejte název motorové hlavy",
       descriptionPlaceholder: "Zadejte popis motorové hlavy",
       markNamePlaceholder: "Zadejte značku motorové hlavy",
       pricePlaceholder: "Zadejte cenu motorové hlavy",
     },
+    [ProductVariant.Turbochargers]: {
+      title: "Přidat turbodmychadlo",
+      namePlaceholder: "Zadejte název turbodmychadla",
+      descriptionPlaceholder: "Zadejte popis turbodmychadla",
+      markNamePlaceholder: "Zadejte značku turbodmychadla",
+      pricePlaceholder: "Zadejte cenu turbodmychadla",
+    },
   },
   edit: {
-    old: {
+    [ProductVariant.Old]: {
       title: "Upravit starý motor",
       namePlaceholder: "Zadejte název starého motoru",
       descriptionPlaceholder: "Zadejte popis starého motoru",
       markNamePlaceholder: "Zadejte značku starého motoru",
       pricePlaceholder: "Zadejte cenu starého motoru",
     },
-    repas: {
+    [ProductVariant.Repaired]: {
       title: "Upravit repasovaný motor",
       namePlaceholder: "Zadejte název repasovaného motoru",
       descriptionPlaceholder: "Zadejte popis repasovaného motoru",
       markNamePlaceholder: "Zadejte značku repasovaného motoru",
       pricePlaceholder: "Zadejte cenu repasovaného motoru",
     },
-    motorHead: {
+    [ProductVariant.EngineHeads]: {
       title: "Upravit motorovou hlavu",
       namePlaceholder: "Zadejte název motorové hlavy",
       descriptionPlaceholder: "Zadejte popis motorové hlavy",
       markNamePlaceholder: "Zadejte značku motorové hlavy",
       pricePlaceholder: "Zadejte cenu motorové hlavy",
+    },
+    [ProductVariant.Turbochargers]: {
+      title: "Upravit turbodmychadlo",
+      namePlaceholder: "Zadejte název turbodmychadla",
+      descriptionPlaceholder: "Zadejte popis turbodmychadla",
+      markNamePlaceholder: "Zadejte značku turbodmychadla",
+      pricePlaceholder: "Zadejte cenu turbodmychadla",
     },
   },
 };

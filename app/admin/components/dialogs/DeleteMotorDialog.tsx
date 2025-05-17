@@ -12,33 +12,34 @@ import axios from "axios";
 import React, { type FC } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { Button } from "@/components/ui/button";
+import type { ProductVariant } from "@/types/ProductVariant";
 
 interface DeleteMotorDialogProps {
   open: boolean;
   onClose: () => void;
   motor: Motor | null;
-  motorsVariant: "repas" | "old" | "motorHead";
+  productVariant: ProductVariant;
 }
 
 const DeleteMotorDialog: FC<DeleteMotorDialogProps> = ({
   open,
   onClose,
   motor,
-  motorsVariant,
+  productVariant,
 }) => {
   const message = useMessage();
   const queryClient = useQueryClient();
   const { mutate } = useMutation(
     async (motorId: string) => {
       const { data } = await axios.delete(
-        `/api/admin/${motorsVariant}/${motorId}`
+        `/api/admin/${productVariant}/${motorId}`
       );
       return data;
     },
     {
       onSuccess: (data) => {
         message.success(`Motor s id ${data} byl úspěšně smazán.`);
-        queryClient.invalidateQueries(["motors", motorsVariant], {
+        queryClient.invalidateQueries(["motors", productVariant], {
           exact: true,
         });
         onClose();

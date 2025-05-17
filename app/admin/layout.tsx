@@ -1,13 +1,13 @@
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 import Navbar from "./components/Navbar";
-import { Metadata } from "next";
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Admin | hledammotory.cz",
   description: "Admin",
 };
 
-const layout = ({ children }: { children: ReactNode }) => {
+const AdminLayout = ({ children }: { children: ReactNode }) => {
   return (
     <>
       <Navbar />
@@ -16,4 +16,4 @@ const layout = ({ children }: { children: ReactNode }) => {
   );
 };
 
-export default layout;
+export default AdminLayout;

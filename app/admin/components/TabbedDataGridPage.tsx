@@ -19,12 +19,13 @@ import { Button } from "@/components/ui/button";
 import MotorDialog from "./dialogs/MotorDialog";
 import DeleteMotorDialog from "./dialogs/DeleteMotorDialog";
 import type { Motor } from "@prisma/client";
+import { ProductVariant } from "@/types/ProductVariant";
 
 export default function TabbedDataGridPage() {
   const message = useMessage();
 
-  const [activeTab, setActiveTab] = useState<"repas" | "old" | "motorHead">(
-    "repas"
+  const [activeTab, setActiveTab] = useState<ProductVariant>(
+    ProductVariant.Repaired
   );
   const [openUpdateModal, setOpenUpdateModal] = useState<Motor | null>(null);
   const [openDeleteModal, setOpenDeleteModal] = useState<Motor | null>(null);
@@ -34,7 +35,7 @@ export default function TabbedDataGridPage() {
   const { data, isLoading, isError } = useQuery(
     ["motors", activeTab], // Using an array as the query key with activeTab
     async () => {
-      const { data } = await axios.get<Motor[]>(`/api/motors/${activeTab}`);
+      const { data } = await axios.get<Motor[]>(`/api/admin/${activeTab}/get`);
       return data;
     },
     {
@@ -46,11 +47,6 @@ export default function TabbedDataGridPage() {
       refetchOnWindowFocus: false,
     }
   );
-
-  useEffect(() => {
-    // setopendelete modal clicked
-    console.log("openDeleteModal", openDeleteModal);
-  }, [openDeleteModal]);
 
   useEffect(() => {
     // if active tab changes, close the dialogs
@@ -66,20 +62,25 @@ export default function TabbedDataGridPage() {
 
   // Define tab content configuration
   const tabConfig = {
-    repas: {
+    [ProductVariant.Repaired]: {
       title: "Repasované motory",
       description: "Přehled všech dostupných repasovaných motorů.",
       buttonText: "Přidat repasovaný motor",
     },
-    old: {
+    [ProductVariant.Old]: {
       title: "Staré motory",
       description: "Přehled všech dostupných starých motorů.",
       buttonText: "Přidat starý motor",
     },
-    motorHead: {
+    [ProductVariant.EngineHeads]: {
       title: "Motorové hlavy",
       description: "Přehled všech dostupných motorových hlav.",
       buttonText: "Přidat motorovou hlavu",
+    },
+    [ProductVariant.Turbochargers]: {
+      title: "Turba",
+      description: "Přehled všech dostupných turbodmychadel.",
+      buttonText: "Přidat turbo",
     },
   };
 
@@ -96,15 +97,15 @@ export default function TabbedDataGridPage() {
         >
           <div className="flex justify-between items-center mb-6">
             <TabsList>
-              <TabsTrigger value="repas" className="text-base">
-                Repasované motory
-              </TabsTrigger>
-              <TabsTrigger value="old" className="text-base">
-                Staré motory
-              </TabsTrigger>
-              <TabsTrigger value="motorHead" className="text-base">
-                Motorové hlavy
-              </TabsTrigger>
+              {Object.keys(tabConfig).map((tabKey) => (
+                <TabsTrigger
+                  key={tabKey}
+                  value={tabKey}
+                  className="text-lg font-semibold"
+                >
+                  {tabConfig[tabKey as keyof typeof tabConfig].title}
+                </TabsTrigger>
+              ))}
             </TabsList>
             <div className="flex items-center">
               <Button
@@ -162,20 +163,20 @@ export default function TabbedDataGridPage() {
           onClose={() => setOpenUpdateModal(null)}
           motor={openUpdateModal}
           variant="edit"
-          motorsVariant={activeTab}
+          productVariant={activeTab}
         />
       )}
       <MotorDialog
         open={openMotorModal}
         onClose={() => setOpenMotorModal(false)}
         variant="create"
-        motorsVariant={activeTab}
+        productVariant={activeTab}
       />
       <DeleteMotorDialog
         open={!!openDeleteModal}
         onClose={() => setOpenDeleteModal(null)}
         motor={openDeleteModal}
-        motorsVariant={activeTab}
+        productVariant={activeTab}
       />
     </>
   );

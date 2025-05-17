@@ -82,6 +82,20 @@ model MotorHead {
   mark Mark @relation(fields: [markName], references: [name], onDelete: Cascade)
 }
 
+model Turbo {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  markName  String
+  slug      String    @unique
+  name      String
+  description String?
+  price     Float?
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
+  images    String[]
+
+  mark Mark @relation(fields: [markName], references: [name], onDelete: Cascade)
+}
+
 model Mark {
   id        String     @id @default(auto()) @map("_id") @db.ObjectId
   name      String     @unique
@@ -91,6 +105,7 @@ model Mark {
   OldMotor  OldMotor[]
   Model     Model[]
   MotorHead MotorHead[]
+  Turbo     Turbo[]
 }
 
 model Model {
