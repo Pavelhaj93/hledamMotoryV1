@@ -10,15 +10,15 @@ import useMessage from "@/app/hooks/useMessage";
 import type { Motor } from "@prisma/client";
 import axios from "axios";
 import React, { type FC } from "react";
-import { useMutation, useQueryClient } from "react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
-import type { ProductVariant } from "@/types/ProductVariant";
+import type { ProductsVariant } from "@/types/products";
 
 interface DeleteMotorDialogProps {
   open: boolean;
   onClose: () => void;
   motor: Motor | null;
-  productVariant: ProductVariant;
+  productVariant: ProductsVariant;
 }
 
 const DeleteMotorDialog: FC<DeleteMotorDialogProps> = ({
@@ -29,26 +29,22 @@ const DeleteMotorDialog: FC<DeleteMotorDialogProps> = ({
 }) => {
   const message = useMessage();
   const queryClient = useQueryClient();
-  const { mutate } = useMutation(
-    async (motorId: string) => {
+  const { mutate } = useMutation({
+    mutationFn: async (motorId: string) => {
       const { data } = await axios.delete(
         `/api/admin/${productVariant}/${motorId}`
       );
       return data;
     },
-    {
-      onSuccess: (data) => {
-        message.success(`Motor s id ${data} byl úspěšně smazán.`);
-        queryClient.invalidateQueries(["motors", productVariant], {
-          exact: true,
-        });
-        onClose();
-      },
-      onError: (error) => {
-        message.error(error as string);
-      },
-    }
-  );
+    onSuccess: (data) => {
+      message.success(`Motor s id ${data} byl úspěšně smazán.`);
+      queryClient.invalidateQueries({ queryKey: ["motors", productVariant] });
+      onClose();
+    },
+    onError: (error: Error) => {
+      message.error(error.message);
+    },
+  });
 
   if (!motor) {
     return null;

@@ -101,6 +101,7 @@ model Mark {
   name      String     @unique
   createdAt DateTime?  @default(now())
   updatedAt DateTime?  @updatedAt
+  Image     String?
   Motor     Motor[]
   OldMotor  OldMotor[]
   Model     Model[]

@@ -1,8 +1,6 @@
 import { mailOptions, transporter } from "@/config/nodemailer";
-import { NextResponse } from "next/server";
-
 import prismaDB from "@/prisma/prismaDB";
-import { SafeMotor } from "@/app/(site)/(motory)/components/MotorsList";
+import { NextResponse } from "next/server";
 
 export async function POST(
   req: Request,
@@ -18,11 +16,11 @@ export async function POST(
 
     let motor: any;
     if (motorVariant === "stary-motor") {
-      motor = await prisma?.oldMotor.findUnique({
+      motor = await prismaDB?.oldMotor.findUnique({
         where: { slug: params.motorSlug },
       });
     } else {
-      motor = await prisma?.motor.findUnique({
+      motor = await prismaDB?.motor.findUnique({
         where: { slug: params.motorSlug },
       });
     }

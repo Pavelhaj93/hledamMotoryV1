@@ -2,7 +2,6 @@
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation } from "react-query";
 import Link from "next/link";
 
 import {
@@ -18,6 +17,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import useMessage from "@/app/hooks/useMessage";
+import { useContactFormMutation } from "@/hooks/mutations/useContactFormMutation";
 
 const formSchema = z.object({
   name: z.string().nonempty("Zadejte jméno"),
@@ -58,40 +58,13 @@ const ContactForm = ({
     },
   });
 
-  const mutation = useMutation(
-    async (formValues: FormValues) => {
-      const response = await fetch(
-        motorId ? `/api/contact/${motorSlug}` : "/api/contact",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formValues),
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error("Failed to submit the form");
-      }
-
-      return await response.json();
-    },
-    {
-      onError: () => {
-        message.error("Při odesílání zprávy došlo k chybě");
-      },
-      onSuccess: () => {
-        message.success("Zpráva byla úspěšně odeslána");
-        form.reset({
-          name: "",
-          email: "",
-          message: motorName ? `Mám zájem o motor ${motorName}` : "",
-          motorVariant,
-        });
-      },
-    }
-  );
+  const mutation = useContactFormMutation({
+    motorId,
+    motorSlug,
+    motorName,
+    motorVariant,
+    form,
+  });
 
   const onSubmit = (formValues: FormValues) => {
     console.log("Form submitted:", formValues);
@@ -195,7 +168,7 @@ const ContactForm = ({
 
           <Button
             type="submit"
-            disabled={mutation.isLoading || form.formState.isSubmitting}
+            disabled={form.formState.isSubmitting}
             className="w-1/2 max-lg:w-full"
           >
             Odeslat

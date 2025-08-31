@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import prismaDB from "@/prisma/prismaDB";
 
-export async function POST(
+export async function GET(
   req: Request,
   { params }: { params: { selectedMark: string } }
 ) {

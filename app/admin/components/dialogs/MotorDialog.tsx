@@ -43,17 +43,17 @@ import type { Motor } from "@prisma/client";
 import useMessage from "@/app/hooks/useMessage";
 import { CldUploadButton, CldUploadWidgetResults } from "next-cloudinary";
 import Image from "next/image";
-import { useMutation, useQueryClient } from "react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { cn } from "@/lib/utils";
-import { ProductVariant } from "@/types/ProductVariant";
+import { ProductsVariant } from "@/types/products";
 
 interface MotorDialogProps {
   open: boolean;
   onClose: () => void;
   variant: "create" | "edit";
   motor?: Motor;
-  productVariant: ProductVariant;
+  productVariant: ProductsVariant;
 }
 
 const formSchema = z.object({
@@ -118,30 +118,28 @@ const MotorDialog: FC<MotorDialogProps> = ({
     }
   };
 
-  const createMutation = useMutation(
-    async (formValues: FormValues) => {
+  const createMutation = useMutation({
+    mutationFn: async (formValues: FormValues) => {
       const { data } = await axios.post(`/api/admin/${productVariant}/create`, {
         ...formValues,
       });
       return data;
     },
-    {
-      onSuccess: () => {
-        message.success("Produkt byl úspěšně přídán");
-        queryClient.invalidateQueries(["motors", productVariant]);
-      },
-      onError: (error) => {
-        message.error(error as string);
-      },
-      onSettled: () => {
-        form.reset();
-        onClose();
-      },
-    }
-  );
+    onSuccess: () => {
+      message.success("Produkt byl úspěšně přídán");
+      queryClient.invalidateQueries({ queryKey: ["motors", productVariant] });
+    },
+    onError: (error: Error) => {
+      message.error(error.message);
+    },
+    onSettled: () => {
+      form.reset();
+      onClose();
+    },
+  });
 
-  const editMutation = useMutation(
-    async (formValues: FormValues) => {
+  const editMutation = useMutation({
+    mutationFn: async (formValues: FormValues) => {
       const { data } = await axios.put(
         `/api/admin/${productVariant}/${formValues.id}`,
         {
@@ -150,24 +148,20 @@ const MotorDialog: FC<MotorDialogProps> = ({
       );
       return data;
     },
-    {
-      onSuccess: () => {
-        message.success("Produkt byl úspěšně upraven");
-        queryClient.invalidateQueries([
-          "motors",
-          productVariant,
-          form.getValues("id"),
-        ]);
-      },
-      onError: (error) => {
-        message.error(error as string);
-      },
-      onSettled: () => {
-        form.reset();
-        onClose();
-      },
-    }
-  );
+    onSuccess: () => {
+      message.success("Produkt byl úspěšně upraven");
+      queryClient.invalidateQueries({
+        queryKey: ["motors", productVariant, form.getValues("id")],
+      });
+    },
+    onError: (error: Error) => {
+      message.error(error.message);
+    },
+    onSettled: () => {
+      form.reset();
+      onClose();
+    },
+  });
 
   const handleDeleteImage = (image: string) => {
     const filteredImages = watchImages?.filter((img) => img !== image) || [];
@@ -465,7 +459,7 @@ export default MotorDialog;
 
 type TitleConfig = {
   create: {
-    [key in ProductVariant]: {
+    [key in ProductsVariant]: {
       title: string;
       namePlaceholder: string;
       descriptionPlaceholder: string;
@@ -474,7 +468,7 @@ type TitleConfig = {
     };
   };
   edit: {
-    [key in ProductVariant]: {
+    [key in ProductsVariant]: {
       title: string;
       namePlaceholder: string;
       descriptionPlaceholder: string;
@@ -486,28 +480,28 @@ type TitleConfig = {
 
 const titleConfig: TitleConfig = {
   create: {
-    [ProductVariant.Old]: {
+    [ProductsVariant.Old]: {
       title: "Přidat starý motor",
       namePlaceholder: "Zadejte název starého motoru",
       descriptionPlaceholder: "Zadejte popis starého motoru",
       markNamePlaceholder: "Zadejte značku starého motoru",
       pricePlaceholder: "Zadejte cenu starého motoru",
     },
-    [ProductVariant.Repaired]: {
+    [ProductsVariant.Repaired]: {
       title: "Přidat repasovaný motor",
       namePlaceholder: "Zadejte název repasovaného motoru",
       descriptionPlaceholder: "Zadejte popis repasovaného motoru",
       markNamePlaceholder: "Zadejte značku repasovaného motoru",
       pricePlaceholder: "Zadejte cenu repasovaného motoru",
     },
-    [ProductVariant.EngineHeads]: {
+    [ProductsVariant.EngineHeads]: {
       title: "Přidat motorovou hlavu",
       namePlaceholder: "Zadejte název motorové hlavy",
       descriptionPlaceholder: "Zadejte popis motorové hlavy",
       markNamePlaceholder: "Zadejte značku motorové hlavy",
       pricePlaceholder: "Zadejte cenu motorové hlavy",
     },
-    [ProductVariant.Turbochargers]: {
+    [ProductsVariant.Turbochargers]: {
       title: "Přidat turbodmychadlo",
       namePlaceholder: "Zadejte název turbodmychadla",
       descriptionPlaceholder: "Zadejte popis turbodmychadla",
@@ -516,28 +510,28 @@ const titleConfig: TitleConfig = {
     },
   },
   edit: {
-    [ProductVariant.Old]: {
+    [ProductsVariant.Old]: {
       title: "Upravit starý motor",
       namePlaceholder: "Zadejte název starého motoru",
       descriptionPlaceholder: "Zadejte popis starého motoru",
       markNamePlaceholder: "Zadejte značku starého motoru",
       pricePlaceholder: "Zadejte cenu starého motoru",
     },
-    [ProductVariant.Repaired]: {
+    [ProductsVariant.Repaired]: {
       title: "Upravit repasovaný motor",
       namePlaceholder: "Zadejte název repasovaného motoru",
       descriptionPlaceholder: "Zadejte popis repasovaného motoru",
       markNamePlaceholder: "Zadejte značku repasovaného motoru",
       pricePlaceholder: "Zadejte cenu repasovaného motoru",
     },
-    [ProductVariant.EngineHeads]: {
+    [ProductsVariant.EngineHeads]: {
       title: "Upravit motorovou hlavu",
       namePlaceholder: "Zadejte název motorové hlavy",
       descriptionPlaceholder: "Zadejte popis motorové hlavy",
       markNamePlaceholder: "Zadejte značku motorové hlavy",
       pricePlaceholder: "Zadejte cenu motorové hlavy",
     },
-    [ProductVariant.Turbochargers]: {
+    [ProductsVariant.Turbochargers]: {
       title: "Upravit turbodmychadlo",
       namePlaceholder: "Zadejte název turbodmychadla",
       descriptionPlaceholder: "Zadejte popis turbodmychadla",

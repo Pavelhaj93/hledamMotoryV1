@@ -49,14 +49,13 @@ export default function RootLayout({
           gtag('config', 'G-ND4D88XRC9');`}
         </Script>
       </head>
-      <body className={cn("w-screen", inter.className)}>
+      <body className={cn("w-screen h-full", inter.className)}>
         <main className="h-full w-full mt-28">
           <SnackBarProvider>
             <ReactQueryProvider>
               <AuthContext>{children}</AuthContext>
             </ReactQueryProvider>
           </SnackBarProvider>
-
           <Analytics />
         </main>
       </body>

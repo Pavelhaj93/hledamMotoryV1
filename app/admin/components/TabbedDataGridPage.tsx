@@ -11,7 +11,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { getColumns } from "./columns/Columns";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import useMessage from "@/app/hooks";
 import { Loader2, Plus } from "lucide-react";
@@ -19,34 +19,27 @@ import { Button } from "@/components/ui/button";
 import MotorDialog from "./dialogs/MotorDialog";
 import DeleteMotorDialog from "./dialogs/DeleteMotorDialog";
 import type { Motor } from "@prisma/client";
-import { ProductVariant } from "@/types/ProductVariant";
+import { ProductsVariant } from "@/types/products";
 
 export default function TabbedDataGridPage() {
   const message = useMessage();
 
-  const [activeTab, setActiveTab] = useState<ProductVariant>(
-    ProductVariant.Repaired
+  const [activeTab, setActiveTab] = useState<ProductsVariant>(
+    ProductsVariant.Repaired
   );
   const [openUpdateModal, setOpenUpdateModal] = useState<Motor | null>(null);
   const [openDeleteModal, setOpenDeleteModal] = useState<Motor | null>(null);
   const [openMotorModal, setOpenMotorModal] = useState<boolean>(false);
 
   // Use the activeTab as part of the query key to ensure refetching when tab changes
-  const { data, isLoading, isError } = useQuery(
-    ["motors", activeTab], // Using an array as the query key with activeTab
-    async () => {
+  const { data, isLoading, isError } = useQuery<Motor[], Error>({
+    queryKey: ["motors", activeTab],
+    queryFn: async () => {
       const { data } = await axios.get<Motor[]>(`/api/admin/${activeTab}/get`);
       return data;
     },
-    {
-      onError: (error) => {
-        message.error(error as string);
-        console.error(error);
-      },
-      // Refetch when the tab changes
-      refetchOnWindowFocus: false,
-    }
-  );
+    refetchOnWindowFocus: false,
+  });
 
   useEffect(() => {
     // if active tab changes, close the dialogs
@@ -62,22 +55,22 @@ export default function TabbedDataGridPage() {
 
   // Define tab content configuration
   const tabConfig = {
-    [ProductVariant.Repaired]: {
+    [ProductsVariant.Repaired]: {
       title: "Repasované motory",
       description: "Přehled všech dostupných repasovaných motorů.",
       buttonText: "Přidat repasovaný motor",
     },
-    [ProductVariant.Old]: {
+    [ProductsVariant.Old]: {
       title: "Staré motory",
       description: "Přehled všech dostupných starých motorů.",
       buttonText: "Přidat starý motor",
     },
-    [ProductVariant.EngineHeads]: {
+    [ProductsVariant.EngineHeads]: {
       title: "Motorové hlavy",
       description: "Přehled všech dostupných motorových hlav.",
       buttonText: "Přidat motorovou hlavu",
     },
-    [ProductVariant.Turbochargers]: {
+    [ProductsVariant.Turbochargers]: {
       title: "Turba",
       description: "Přehled všech dostupných turbodmychadel.",
       buttonText: "Přidat turbo",

@@ -54,7 +54,21 @@ export default function HamburgerMenu({
     };
 
     document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    // add listener for esc key
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        setIsOpen(false);
+      }
+    });
+    // cleanup function to remove the event listener
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("keydown", (e) => {
+        if (e.key === "Escape") {
+          setIsOpen(false);
+        }
+      });
+    };
   }, [isOpen, setIsOpen]);
 
   // Prevent scrolling when menu is open
