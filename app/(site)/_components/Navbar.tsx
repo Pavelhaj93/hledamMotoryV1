@@ -13,28 +13,32 @@ const siteMenu = [
     href: "/",
   },
   {
-    title: "Poptat motor",
-    href: "/search",
+    title: "O nás",
+    href: "/o-nas",
   },
   {
-    title: "Starší motory",
-    href: "/motory/stare-motory",
+    title: "Poptat motory nebo díly",
+    href: "/poptavka-dilu",
+  },
+  {
+    title: "Použité motory",
+    href: "/kategorie/pouzite-motory",
   },
   {
     title: "Repasované motory",
-    href: "/motory/repasovane-motory",
+    href: "/kategorie/repasovane-motory",
   },
   {
     title: "Motorové hlavy",
-    href: "/motory/motorove-hlavy",
+    href: "/kategorie/motorove-hlavy",
   },
   {
-    title: "O nás",
-    href: "/about-us",
+    title: "Převodovky",
+    href: "/kategorie/prevodovky",
   },
   {
     title: "Kontakt",
-    href: "/contact",
+    href: "/kontakt",
   },
 ];
 

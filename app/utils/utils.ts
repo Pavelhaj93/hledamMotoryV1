@@ -19,11 +19,3 @@ export const getInquiryFooterAmount = (requestMotors: RequestMotor[]) => {
   }
   return `Máte <b>${amount} motorů</b> připraveno k poptání`;
 };
-
-export const formatPrice = (price: number) => {
-  if (typeof price !== "number") {
-    throw new Error("Input must be a number");
-  }
-
-  return price.toLocaleString("cs-CZ");
-};

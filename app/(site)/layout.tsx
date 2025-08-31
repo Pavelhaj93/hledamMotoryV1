@@ -1,8 +1,7 @@
-import React, { ReactNode } from "react";
+import React, { type ReactNode } from "react";
 import Navbar from "./_components/Navbar";
-import Footer from "./_components/Footer";
-import { IconCookie } from "@/icons";
 import CookieBanner from "@/app/(site)/_components/CookieBanner/CookieBanner";
+import { Footer } from "./_components/Footer";
 
 const layout = ({ children }: { children: ReactNode }) => {
   return (
