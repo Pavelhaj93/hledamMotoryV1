@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import prismaDB from "@/prisma/prismaDB";
 import { generateSlug } from "@/app/utils/utils";
+import { revalidatePath } from "next/cache";
 
 export async function POST(req: Request) {
   try {
@@ -36,6 +37,9 @@ export async function POST(req: Request) {
     });
 
     console.log("Motor created with slug:", updatedMotor);
+
+    revalidatePath("/");
+    revalidatePath(`/kategorie/motorove-hlavy`);
 
     return NextResponse.json(updatedMotor);
   } catch (err) {

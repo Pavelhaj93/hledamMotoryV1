@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 
 import prismaDB from "@/prisma/prismaDB";
 import cloudinary from "cloudinary";
+import { revalidatePath } from "next/cache";
 
 // Configure Cloudinary (ensure that your Cloudinary credentials are set in environment variables)
 cloudinary.v2.config({
@@ -68,6 +69,9 @@ export async function DELETE(
       },
     });
 
+    revalidatePath("/");
+    revalidatePath(`/kategorie/turbodmychadla`);
+
     return NextResponse.json(id);
   } catch (err) {
     console.error(err);
@@ -100,6 +104,10 @@ export async function PUT(
         images,
       },
     });
+
+    revalidatePath("/");
+    revalidatePath(`/kategorie/turbodmychadla`);
+    revalidatePath("/produkt/turbo/" + turbo.slug);
 
     return NextResponse.json(turbo);
   } catch (err) {
