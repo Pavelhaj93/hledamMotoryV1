@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 
 import prismaDB from "@/prisma/prismaDB";
 import { generateSlug } from "@/app/utils/utils";
+import { revalidatePath } from "next/cache";
 
 export async function POST(req: Request) {
   try {
@@ -30,6 +31,9 @@ export async function POST(req: Request) {
       where: { id: motor.id },
       data: { slug },
     });
+
+    revalidatePath("/");
+    revalidatePath(`/kategorie/pouzite-motory`);
 
     return NextResponse.json(motor);
   } catch (err) {

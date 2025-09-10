@@ -2,7 +2,7 @@ export enum ProductsVariant {
   Old = "pouzite-motory",
   Repaired = "repasovane-motory",
   EngineHeads = "motorove-hlavy",
-  Turbochargers = "turba",
+  Turbochargers = "turbodmychadla",
   // TODO: add later
   // Transmissions = "prevodovky",
 }

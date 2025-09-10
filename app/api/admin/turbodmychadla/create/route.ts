@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import prismaDB from "@/prisma/prismaDB";
 import { generateSlug } from "@/app/utils/utils";
+import { revalidatePath } from "next/cache";
 
 export async function POST(req: Request) {
   try {
@@ -44,7 +45,8 @@ export async function POST(req: Request) {
       return new NextResponse("Failed to update turbo slug", { status: 500 });
     }
 
-    console.log("Turbo created with slug:", updatedTurbo);
+    revalidatePath("/");
+    revalidatePath(`/kategorie/turbodmychadla`);
 
     return NextResponse.json(updatedTurbo);
   } catch (err) {

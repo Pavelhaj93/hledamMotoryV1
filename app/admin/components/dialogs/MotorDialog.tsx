@@ -47,7 +47,6 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { cn } from "@/lib/utils";
 import { ProductsVariant } from "@/types/products";
-import { revalidatePath } from "next/cache";
 
 interface MotorDialogProps {
   open: boolean;
@@ -129,8 +128,6 @@ const MotorDialog: FC<MotorDialogProps> = ({
     onSuccess: () => {
       message.success("Produkt byl úspěšně přídán");
       queryClient.invalidateQueries({ queryKey: ["motors", productVariant] });
-      revalidatePath("/");
-      revalidatePath(`/kategorie/${productVariant}`);
     },
     onError: (error: Error) => {
       message.error(error.message);
@@ -156,8 +153,6 @@ const MotorDialog: FC<MotorDialogProps> = ({
       queryClient.invalidateQueries({
         queryKey: ["motors", productVariant, form.getValues("id")],
       });
-      revalidatePath("/");
-      revalidatePath(`/kategorie/${productVariant}`);
     },
     onError: (error: Error) => {
       message.error(error.message);
