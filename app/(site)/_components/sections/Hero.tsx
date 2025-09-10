@@ -19,8 +19,9 @@ export function Hero() {
         <div className="grid lg:grid-cols-2 gap-12 items-center min-h-[80vh]">
           <div className="">
             <h1 className="text-5xl md:text-7xl font-bold mb-6 text-balance text-white">
-              Síla a kvalita pro vaše
-              <span className="text-red-500"> vozidla</span>
+              Motory, převodovky,
+              <br />
+              <span className="text-red-500"> turba a další</span>
             </h1>
             <p className="text-xl md:text-2xl mb-8 text-gray-200 text-pretty max-w-lg">
               Prémiové autodíly pro profesionály. Motory, turbodmychadla a
