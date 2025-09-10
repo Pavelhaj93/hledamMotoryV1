@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import Container from "@/components/container/Container";
 import React from "react";
 import { ChevronRight } from "lucide-react";
+import Link from "next/link";
 
 const Section404 = () => {
   return (
@@ -11,12 +12,12 @@ const Section404 = () => {
         <h2 className="text-center">
           Omlouváme se ale tato stránka neexistuje.
         </h2>
-        <a href="/">
+        <Link href="/">
           <Button color="primary">
             Zpět na hlavní stránku
             <ChevronRight className="mr-2" />
           </Button>
-        </a>
+        </Link>
       </div>
     </Container>
   );
