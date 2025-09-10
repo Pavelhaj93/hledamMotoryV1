@@ -1,6 +1,7 @@
 import Container from "@/components/container/Container";
 import type { FC } from "react";
 import ContactForm from "../ContactForm";
+import Link from "next/link";
 
 interface ContactSectionProps {
   title?: string;
@@ -57,12 +58,12 @@ const ContactSection: FC<ContactSectionProps> = ({
                 <h3 className="text-xl font-bold text-gray-900 mb-2">
                   Zavolejte nám
                 </h3>
-                <a
+                <Link
                   href="tel:+420724704764"
                   className="text-2xl font-bold text-red-600 hover:text-red-700 transition-colors"
                 >
                   +420 724 704 764
-                </a>
+                </Link>
                 <p className="text-gray-600 mt-2">
                   Pondělí - Pátek: 8:00 - 17:00
                 </p>
@@ -89,12 +90,12 @@ const ContactSection: FC<ContactSectionProps> = ({
                 <h3 className="text-xl font-bold text-gray-900 mb-2">
                   Napište nám email
                 </h3>
-                <a
+                <Link
                   href="mailto:info@hledammotory.cz"
                   className="text-xl font-bold text-red-600 hover:text-red-700 transition-colors break-all"
                 >
                   info@hledammotory.cz
-                </a>
+                </Link>
                 <p className="text-gray-600 mt-2">Odpovídáme do 24 hodin</p>
               </div>
             </div>
