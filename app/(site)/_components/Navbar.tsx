@@ -71,7 +71,7 @@ const Navbar = () => {
             <Phone size={36} className=" stroke-red-500" />
             +420 724 704 764
           </span>
-          <a
+          <Link
             href="mailto:info@hledammotory.cz"
             className="max-lg:hidden block text-xl font-bold"
           >
@@ -79,7 +79,7 @@ const Navbar = () => {
               <Mail size={36} className="stroke-red-500" />
               <span>info@hledammotory.cz</span>
             </span>
-          </a>
+          </Link>
           <div ref={ref}>
             <HamburgerMenu
               menu={siteMenu}

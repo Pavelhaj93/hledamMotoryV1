@@ -4,6 +4,7 @@ import HamburgerMenu from "@/app/(site)/_components/HamburgerMenu";
 import useClickOutside from "@/app/hooks/useClickOutside";
 import Container from "@/components/container/Container";
 import Image from "next/image";
+import Link from "next/link";
 
 const siteMenu = [
   {
@@ -18,7 +19,7 @@ const Navbar = () => {
   return (
     <header className="py-4 flex h-40">
       <Container className="w-full h-24 flex flex-row justify-between items-center mx-auto z-20">
-        <a
+        <Link
           className="z-10 cursor-pointer hover:scale-90 transform transition-all duration-300"
           href="/"
         >
@@ -29,7 +30,7 @@ const Navbar = () => {
             height={78}
             priority
           />
-        </a>
+        </Link>
         <span className="flex flex-row gap-10 items-center z-10">
           <div ref={ref}>
             <HamburgerMenu

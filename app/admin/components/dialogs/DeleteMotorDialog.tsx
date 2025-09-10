@@ -13,7 +13,6 @@ import React, { type FC } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import type { ProductsVariant } from "@/types/products";
-import { revalidatePath } from "next/cache";
 
 interface DeleteMotorDialogProps {
   open: boolean;
@@ -40,8 +39,6 @@ const DeleteMotorDialog: FC<DeleteMotorDialogProps> = ({
     onSuccess: (data) => {
       message.success(`Motor s id ${data} byl úspěšně smazán.`);
       queryClient.invalidateQueries({ queryKey: ["motors", productVariant] });
-      revalidatePath("/");
-      revalidatePath(`/kategorie/${productVariant}`);
       onClose();
     },
     onError: (error: Error) => {

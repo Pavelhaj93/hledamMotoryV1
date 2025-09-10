@@ -23,10 +23,8 @@ const extractPublicId = (url: string) => {
   return publicId;
 };
 
-export async function DELETE(
-  req: Request,
-  { params }: { params: { motorId: string } }
-) {
+export async function DELETE(req: Request, props: { params: Promise<{ motorId: string }> }) {
+  const params = await props.params;
   try {
     const { motorId } = params;
 
@@ -79,10 +77,8 @@ export async function DELETE(
   }
 }
 
-export async function PUT(
-  req: Request,
-  { params }: { params: { motorId: string } }
-) {
+export async function PUT(req: Request, props: { params: Promise<{ motorId: string }> }) {
+  const params = await props.params;
   try {
     const { motorId } = params;
     const body = await req.json();

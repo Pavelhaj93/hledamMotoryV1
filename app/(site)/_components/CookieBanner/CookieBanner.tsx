@@ -1,9 +1,9 @@
 "use client";
 
-import { IconCookie } from "@/icons";
 import { useState, useEffect } from "react";
 import Cookies from "js-cookie";
 import Link from "next/link";
+import { Cookie } from "lucide-react";
 
 interface ConsentHandler {
   (consent: boolean): void;
@@ -29,10 +29,9 @@ export default function CookieBanner() {
   return (
     <div>
       <div className="group fixed bottom-4 left-4 flex items-center">
-        <IconCookie
-          size={12}
+        <Cookie
           aria-label="Spravovat souhlas s nastavením osobních údajů"
-          className="text-white transition-colors bg-red-500 hover:bg-red-600 rounded-full p-2 cursor-pointer"
+          className="text-white transition-colors bg-red-500 hover:bg-red-600 rounded-full p-2 cursor-pointer size-12"
           onClick={() => setOpenBanner(!openBanner)}
         />
         {!openBanner && (

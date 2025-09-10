@@ -2,10 +2,8 @@ import { NextResponse } from "next/server";
 
 import prismaDB from "@/prisma/prismaDB";
 
-export async function GET(
-  req: Request,
-  { params }: { params: { motorsVariant: string } }
-) {
+export async function GET(req: Request, props: { params: Promise<{ motorsVariant: string }> }) {
+  const params = await props.params;
   try {
     const { motorsVariant } = params;
 

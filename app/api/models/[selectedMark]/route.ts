@@ -1,10 +1,8 @@
 import { NextResponse } from "next/server";
 import prismaDB from "@/prisma/prismaDB";
 
-export async function GET(
-  req: Request,
-  { params }: { params: { selectedMark: string } }
-) {
+export async function GET(req: Request, props: { params: Promise<{ selectedMark: string }> }) {
+  const params = await props.params;
   try {
     const models = await prismaDB.model.findMany({
       where: { markName: params.selectedMark },
