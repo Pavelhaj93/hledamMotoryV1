@@ -33,9 +33,14 @@ const siteMenu = [
     href: "/kategorie/motorove-hlavy",
   },
   {
-    title: "Převodovky",
-    href: "/kategorie/prevodovky",
+    title: "Turbodmychadla",
+    href: "/kategorie/turbodmychadla",
   },
+  // TODO: add when ready
+  // {
+  //   title: "Převodovky",
+  //   href: "/kategorie/prevodovky",
+  // },
   {
     title: "Kontakt",
     href: "/kontakt",

@@ -23,8 +23,6 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
   const repasEngine = product?.repasEngine as Motor;
 
-  console.log("ttt product", product);
-
   if (!product) {
     notFound();
   }

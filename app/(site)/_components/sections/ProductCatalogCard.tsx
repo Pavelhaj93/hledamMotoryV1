@@ -46,9 +46,9 @@ const ProductCatalogCard = ({
             // TODO: finish sizes
             src={product.images[0]}
             alt={product.name}
-            className="w-full h-[500px] items-center object-cover rounded-t-xl"
+            className="w-full h-[400px] items-center object-cover rounded-t-xl"
             width={300}
-            height={900}
+            height={400}
           />
         </Link>
       </CardHeader>

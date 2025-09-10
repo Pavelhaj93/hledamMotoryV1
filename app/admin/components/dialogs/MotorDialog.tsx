@@ -119,7 +119,7 @@ const MotorDialog: FC<MotorDialogProps> = ({
     }
   };
 
-  const createMutation = useMutation({
+  const { mutate: createMutate, isPending: isCreatePending } = useMutation({
     mutationFn: async (formValues: FormValues) => {
       const { data } = await axios.post(`/api/admin/${productVariant}/create`, {
         ...formValues,
@@ -141,7 +141,7 @@ const MotorDialog: FC<MotorDialogProps> = ({
     },
   });
 
-  const editMutation = useMutation({
+  const { mutate: editMutate, isPending: isEditPending } = useMutation({
     mutationFn: async (formValues: FormValues) => {
       const { data } = await axios.put(
         `/api/admin/${productVariant}/${formValues.id}`,
@@ -193,9 +193,9 @@ const MotorDialog: FC<MotorDialogProps> = ({
 
   const onSubmit = (formValues: FormValues) => {
     if (variant === "create") {
-      createMutation.mutate(formValues);
+      createMutate(formValues);
     } else {
-      editMutation.mutate(formValues);
+      editMutate(formValues);
     }
   };
 
@@ -448,7 +448,11 @@ const MotorDialog: FC<MotorDialogProps> = ({
               <Button
                 variant="default"
                 type="submit"
-                disabled={form.formState.isSubmitting}
+                disabled={
+                  form.formState.isSubmitting ||
+                  isCreatePending ||
+                  isEditPending
+                }
               >
                 {variant === "create" ? "Vytvořit" : "Uložit změny"}
               </Button>

@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export const Footer = () => {
   return (
-    <footer className="bg-gray-100 text-primary-foreground py-12">
+    <footer className="bg-gray-100 text-primary-foreground py-8">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Company Info */}
@@ -26,7 +26,7 @@ export const Footer = () => {
             <ul className="space-y-2 text-sm">
               <li>
                 <Link
-                  href="/pouzite-motory"
+                  href="/kategorie/pouzite-motory"
                   className="opacity-90 hover:opacity-100 transition-opacity"
                 >
                   Použité motory
@@ -34,7 +34,7 @@ export const Footer = () => {
               </li>
               <li>
                 <Link
-                  href="/repasovane-motory"
+                  href="/kategorie/repasovane-motory"
                   className="opacity-90 hover:opacity-100 transition-opacity"
                 >
                   Repasované motory
@@ -42,20 +42,21 @@ export const Footer = () => {
               </li>
               <li>
                 <Link
-                  href="/turbodmychadla"
+                  href="/kategorie/turbodmychadla"
                   className="opacity-90 hover:opacity-100 transition-opacity"
                 >
                   Turbodmychadla
                 </Link>
               </li>
-              <li>
+              {/* TODO: add when ready */}
+              {/* <li>
                 <Link
                   href="/prevodovky"
                   className="opacity-90 hover:opacity-100 transition-opacity"
                 >
                   Převodovky
                 </Link>
-              </li>
+              </li> */}
               <li>
                 <Link
                   href="/catalog"
