@@ -4,6 +4,7 @@ import ContactSection from "./_components/sections/ContactSection";
 import type { Metadata } from "next";
 import prismaDB from "@/prisma/prismaDB";
 import { ProductCatalog } from "./_components/sections/ProductCatalog";
+import { Hero } from "./_components/sections/Hero";
 
 async function getAllProducts() {
   const engines = await prismaDB?.motor.findMany();
@@ -32,6 +33,7 @@ export default async function Page() {
 
   return (
     <>
+      <Hero />
       <ProductCatalog products={products} />
       <HowItWorksSection />
       <Benefits />
