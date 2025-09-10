@@ -12,7 +12,11 @@ import { ProductImageGallery } from "./ProductImageGallery";
 
 interface ProductDetailProps {
   product: Motor | MotorHead | Turbo;
-  category: "Repasovaný motor" | "Motorová hlava" | "Použitý motor";
+  category:
+    | "Repasovaný motor"
+    | "Motorová hlava"
+    | "Použitý motor"
+    | "Turbodmychadlo";
 }
 
 export function ProductDetail({ product, category }: ProductDetailProps) {
@@ -31,7 +35,7 @@ export function ProductDetail({ product, category }: ProductDetailProps) {
 
       {/* Back Button */}
       <Button variant="ghost" asChild className="mb-6">
-        <Link href="/">
+        <Link href="/#catalog">
           <ArrowLeft className="w-4 h-4 mr-2" />
           Zpátky do katalogu
         </Link>

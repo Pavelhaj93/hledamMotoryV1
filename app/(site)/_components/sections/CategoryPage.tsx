@@ -128,19 +128,19 @@ export function CategoryPage({
             <h3 className="text-2xl font-bold text-foreground">
               {products.length}
             </h3>
-            <p className="text-muted-foreground">Total {title}</p>
+            <p className="text-muted-foreground">Celkem: {title}</p>
           </div>
           <div>
             <h3 className="text-2xl font-bold text-foreground">
               {brands.length}
             </h3>
-            <p className="text-muted-foreground">Brands Available</p>
+            <p className="text-muted-foreground">Dostupných značek</p>
           </div>
           <div>
             <h3 className="text-2xl font-bold text-foreground">
               {products.length}
             </h3>
-            <p className="text-muted-foreground">In Stock</p>
+            <p className="text-muted-foreground">Skladem</p>
           </div>
         </div>
       </div>

@@ -10,6 +10,7 @@ async function getAllProducts() {
   const engines = await prismaDB?.motor.findMany();
   const engineHeads = await prismaDB?.motorHead?.findMany();
   const oldEngines = await prismaDB?.oldMotor?.findMany();
+  const turbos = await prismaDB?.turbo?.findMany();
 
   //   TODO: addd turbo chargers
   //   const turbochargers = prisma?.turbocharger?.findMany()
@@ -18,6 +19,7 @@ async function getAllProducts() {
     { engines: engines },
     { engineHeads: engineHeads },
     { oldEngines: oldEngines },
+    { turbos: turbos },
   ];
 }
 

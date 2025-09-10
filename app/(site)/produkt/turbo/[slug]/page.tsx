@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 
 import prismaDB from "@/prisma/prismaDB";
 import { ProductDetail } from "@/app/(site)/_components/sections/ProductDetail";
-import { Motor } from "@prisma/client";
+import { Motor, Turbo } from "@prisma/client";
 
 interface ProductPageProps {
   params: {
@@ -11,17 +11,17 @@ interface ProductPageProps {
 }
 
 const getProductById = async (slug: string) => {
-  const repasEngine = await prismaDB?.motor.findUnique({
+  const turbo = await prismaDB?.turbo.findUnique({
     where: { slug: slug },
   });
 
-  return { repasEngine };
+  return { turbo };
 };
 
 export default async function ProductPage({ params }: ProductPageProps) {
   const product = await getProductById(params.slug);
 
-  const repasEngine = product?.repasEngine as Motor;
+  const turbo = product?.turbo as Turbo;
 
   if (!product) {
     notFound();
@@ -29,7 +29,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
   return (
     <div className="min-h-screen bg-background">
-      <ProductDetail product={repasEngine} category="Repasovaný motor" />
+      <ProductDetail product={turbo} category="Turbodmychadlo" />
     </div>
   );
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Select,
   SelectContent,
@@ -9,16 +9,18 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
-import { Search } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Search, ChevronLeft, ChevronRight } from "lucide-react";
 
-import { FlattenedProduct } from "@/types/FlattenedProduct";
+import type { FlattenedProduct } from "@/types/FlattenedProduct";
 import ProductCatalogCard from "./ProductCatalogCard";
-import { Motor, MotorHead, OldMotor } from "@prisma/client";
+import type { Motor, MotorHead, OldMotor, Turbo } from "@prisma/client";
 
 type Products = {
   engines?: Motor[];
   engineHeads?: MotorHead[];
   oldEngines?: OldMotor[];
+  turbos?: Turbo[];
 }[];
 
 const mapProductCategory = (category: string) => {
@@ -40,6 +42,8 @@ export function ProductCatalog({ products }: { products: Products }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [selectedBrand, setSelectedBrand] = useState("all");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [productsPerPage] = useState(9); // 3x3 grid
 
   const flattenedProducts: FlattenedProduct[] = products.flatMap(
     (productGroup) => {
@@ -61,6 +65,12 @@ export function ProductCatalog({ products }: { products: Products }) {
           category: "Použitý motor",
         }));
       }
+      if (productGroup.turbos) {
+        return productGroup.turbos.map((product) => ({
+          ...product,
+          category: "Turbodmychadlo",
+        }));
+      }
       return [];
     }
   );
@@ -80,7 +90,54 @@ export function ProductCatalog({ products }: { products: Products }) {
     return matchesSearch && matchesCategory && matchesBrand;
   });
 
+  const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
+  const startIndex = (currentPage - 1) * productsPerPage;
+  const endIndex = startIndex + productsPerPage;
+  const currentProducts = filteredProducts.slice(startIndex, endIndex);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTerm, selectedCategory, selectedBrand]);
+
   const brands = Array.from(new Set(flattenedProducts.map((p) => p.markName)));
+
+  const goToPage = (page: number) => {
+    setCurrentPage(page);
+    document.getElementById("catalog")?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const getVisiblePages = () => {
+    const delta = 2;
+    const range = [];
+    const rangeWithDots = [];
+
+    for (
+      let i = Math.max(2, currentPage - delta);
+      i <= Math.min(totalPages - 1, currentPage + delta);
+      i++
+    ) {
+      range.push(i);
+    }
+
+    if (currentPage - delta > 2) {
+      rangeWithDots.push(1, "...");
+    } else {
+      rangeWithDots.push(1);
+    }
+
+    rangeWithDots.push(...range);
+
+    if (currentPage + delta < totalPages - 1) {
+      rangeWithDots.push("...", totalPages);
+    } else {
+      rangeWithDots.push(totalPages);
+    }
+
+    return rangeWithDots.filter(
+      (item, index, arr) =>
+        (arr.indexOf(item) === index && item !== 1) || index === 0
+    );
+  };
 
   return (
     <section id="catalog" className="py-16 bg-background">
@@ -116,9 +173,12 @@ export function ProductCatalog({ products }: { products: Products }) {
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">Všechny kategorie</SelectItem>
-                <SelectItem value="engines">Repasované motory</SelectItem>
-                <SelectItem value="engineHeads">Motorové hlavy</SelectItem>
-                <SelectItem value="oldEngines">Použité motory</SelectItem>
+                <SelectItem value="Repasovaný motor">
+                  Repasované motory
+                </SelectItem>
+                <SelectItem value="Motorová hlava">Motorové hlavy</SelectItem>
+                <SelectItem value="Použitý motor">Použité motory</SelectItem>
+                <SelectItem value="Turbodmychadlo">Turbodmychadla</SelectItem>
               </SelectContent>
             </Select>
             <Select value={selectedBrand} onValueChange={setSelectedBrand}>
@@ -135,11 +195,19 @@ export function ProductCatalog({ products }: { products: Products }) {
               </SelectContent>
             </Select>
           </div>
+
+          {filteredProducts.length > 0 && (
+            <div className="mt-4 text-sm text-muted-foreground">
+              Zobrazuje se {startIndex + 1}-
+              {Math.min(endIndex, filteredProducts.length)} z{" "}
+              {filteredProducts.length} produktů
+            </div>
+          )}
         </div>
 
         {/* Product Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
-          {filteredProducts.map((product) => (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 mb-8">
+          {currentProducts.map((product) => (
             <ProductCatalogCard
               key={product.id}
               product={product}
@@ -147,6 +215,51 @@ export function ProductCatalog({ products }: { products: Products }) {
             />
           ))}
         </div>
+
+        {totalPages > 1 && (
+          <div className="flex items-center justify-center gap-2 mb-8">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => goToPage(currentPage - 1)}
+              disabled={currentPage === 1}
+              className="flex items-center gap-1"
+            >
+              <ChevronLeft className="w-4 h-4" />
+              Předchozí
+            </Button>
+
+            <div className="flex items-center gap-1">
+              {getVisiblePages().map((page, index) => (
+                <div key={index}>
+                  {page === "..." ? (
+                    <span className="px-3 py-2 text-muted-foreground">...</span>
+                  ) : (
+                    <Button
+                      variant={currentPage === page ? "default" : "outline"}
+                      size="sm"
+                      onClick={() => goToPage(page as number)}
+                      className="w-10 h-10"
+                    >
+                      {page}
+                    </Button>
+                  )}
+                </div>
+              ))}
+            </div>
+
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => goToPage(currentPage + 1)}
+              disabled={currentPage === totalPages}
+              className="flex items-center gap-1"
+            >
+              Další
+              <ChevronRight className="w-4 h-4" />
+            </Button>
+          </div>
+        )}
 
         {filteredProducts.length === 0 && (
           <div className="text-center py-12">
