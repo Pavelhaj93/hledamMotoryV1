@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { ChevronDown } from "lucide-react";
+import Image from "next/image";
 
 export function Hero() {
   return (
@@ -45,10 +46,13 @@ export function Hero() {
 
           <div className="relative lg:block hidden">
             <div className="relative">
-              <img
+              <Image
                 src="/images/hero/standalone-engine-hero.png"
                 alt="High-performance automotive engine"
                 className="w-full max-w-lg ml-auto object-contain drop-shadow-2xl"
+                width={600}
+                height={400}
+                priority
               />
               {/* <div className="absolute bottom-8 left-0 bg-white/95 backdrop-blur-sm p-6 rounded-lg shadow-xl max-w-xs">
                 <h3 className="font-bold text-gray-900 mb-2">
