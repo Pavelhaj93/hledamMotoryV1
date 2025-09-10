@@ -4,9 +4,9 @@ import { ProductDetail } from "@/app/(site)/_components/sections/ProductDetail";
 import { MotorHead } from "@prisma/client";
 
 interface ProductPageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 const getProductBySlug = async (slug: string) => {
@@ -17,7 +17,8 @@ const getProductBySlug = async (slug: string) => {
   return { engineHead };
 };
 
-export default async function ProductPage({ params }: ProductPageProps) {
+export default async function ProductPage(props: ProductPageProps) {
+  const params = await props.params;
   const product = await getProductBySlug(params.slug);
 
   const engineHead = product?.engineHead as MotorHead;

@@ -2,10 +2,8 @@ import { mailOptions, transporter } from "@/config/nodemailer";
 import prismaDB from "@/prisma/prismaDB";
 import { NextResponse } from "next/server";
 
-export async function POST(
-  req: Request,
-  { params }: { params: { motorSlug: string } }
-) {
+export async function POST(req: Request, props: { params: Promise<{ motorSlug: string }> }) {
+  const params = await props.params;
   try {
     const body = await req.json();
     const { email, message, motorVariant } = body;

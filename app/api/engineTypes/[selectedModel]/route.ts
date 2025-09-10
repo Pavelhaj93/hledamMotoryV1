@@ -1,10 +1,8 @@
 import { NextResponse } from "next/server";
 import prismaDB from "@/prisma/prismaDB";
 
-export async function GET(
-  req: Request,
-  { params }: { params: { selectedModel: string } }
-) {
+export async function GET(req: Request, props: { params: Promise<{ selectedModel: string }> }) {
+  const params = await props.params;
   try {
     const models = await prismaDB.engineType.findMany({
       where: { modelName: params.selectedModel },

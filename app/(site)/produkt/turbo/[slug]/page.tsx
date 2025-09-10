@@ -5,9 +5,9 @@ import { ProductDetail } from "@/app/(site)/_components/sections/ProductDetail";
 import { Motor, Turbo } from "@prisma/client";
 
 interface ProductPageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 const getProductById = async (slug: string) => {
@@ -18,7 +18,8 @@ const getProductById = async (slug: string) => {
   return { turbo };
 };
 
-export default async function ProductPage({ params }: ProductPageProps) {
+export default async function ProductPage(props: ProductPageProps) {
+  const params = await props.params;
   const product = await getProductById(params.slug);
 
   const turbo = product?.turbo as Turbo;
