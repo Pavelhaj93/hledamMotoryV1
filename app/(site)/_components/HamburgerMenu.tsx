@@ -1,12 +1,13 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import Link from "next/link";
 import { signOut } from "next-auth/react";
 import { useLocalStorageValue } from "@react-hookz/web";
-import { Menu, X } from "lucide-react";
+import { Menu, MessageSquareQuote, X } from "lucide-react";
 import type { RequestMotor } from "@/app/hooks/useRequestMotors";
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 
 interface MenuItem {
   title: string;
@@ -136,33 +137,37 @@ export default function HamburgerMenu({
           </button>
           {/* close icon */}
           <nav className="space-y-0">
-            {menu.map((item, index) => (
+            <>
               <div
-                key={index}
+                key="unique"
                 className="border-t-2 border-gray-100 border-opacity-80 py-6"
               >
-                <Link
-                  href={item.href}
-                  className="text-2xl font-black block hover:underline"
-                  onClick={() => setIsOpen(false)}
-                >
-                  {item.title}
-                </Link>
+                <Button asChild>
+                  <Link
+                    href="/poptavka-dilu"
+                    className="whitespace-nowrap"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    Nezávazná poptávka
+                    <MessageSquareQuote size={36} />
+                  </Link>
+                </Button>
               </div>
-            ))}
-
-            {/* Conditional menu item for request motors */}
-            {requestMotors?.length && requestMotors?.length > 0 && !admin && (
-              <div className="border-t-2 border-gray-100 border-opacity-80 py-6">
-                <Link
-                  href="/inquiry"
-                  className="text-2xl font-black block hover:underline"
-                  onClick={() => setIsOpen(false)}
+              {menu.map((item, index) => (
+                <div
+                  key={index}
+                  className="border-t-2 border-gray-100 border-opacity-80 py-6"
                 >
-                  Rekapitulace poptávky
-                </Link>
-              </div>
-            )}
+                  <Link
+                    href={item.href}
+                    className="text-2xl font-bold block hover:underline"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    {item.title}
+                  </Link>
+                </div>
+              ))}
+            </>
 
             {/* Admin logout option */}
             {admin && (

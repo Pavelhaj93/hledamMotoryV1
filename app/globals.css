@@ -27,7 +27,7 @@ main {
   /* Animated Hamburger Icon */
   .hamburger-icon {
     width: 30px;
-    height: 24px;
+    height: 20px;
     position: relative;
     display: flex;
     flex-direction: column;
@@ -36,7 +36,7 @@ main {
 
   .hamburger-icon .line {
     display: block;
-    height: 3px;
+    height: 2px;
     width: 100%;
     border-radius: 10px;
     background: red;
