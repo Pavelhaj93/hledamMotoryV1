@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-// import InquiryForm from "./components/InquiryForm";
+import InquiryForm from "./components/InquiryForm";
 
 const metadata: Metadata = {
   title: "Poptávka motorů nebo dílů | hledammotory.cz",
@@ -9,7 +9,7 @@ const metadata: Metadata = {
 
 export default function InquiryPage() {
   return (
-    <div className="container h-[600px] mx-auto px-4 py-8">
+    <div className="container h-full mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold mb-4">
         Nezávazná poptávka motorů nebo dílů
       </h1>
@@ -18,13 +18,8 @@ export default function InquiryPage() {
         neváhejte nás kontaktovat. Vyplňte formulář níže a my se vám co nejdříve
         ozveme s nabídkou.
       </p>
-      <div className="max-w-3xl mx-auto bg-white p-6 rounded-lg border">
-        {/* <InquiryForm /> */}
-        <h2 className="text-xl font-bold mb-4">
-          Formulář bude brzy k dispozici. Právě ho připravujeme, prosím
-          kontakujte nás na telefon nebo emailem. Děkujeme za pochopení.
-        </h2>
-      </div>
+
+      <InquiryForm />
     </div>
   );
 }
