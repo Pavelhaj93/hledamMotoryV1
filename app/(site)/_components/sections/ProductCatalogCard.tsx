@@ -94,7 +94,7 @@ const ProductCatalogCard = ({
           <Link href={link}>Zobrazit detail</Link>
         </Button>
         <Button variant="outline" className="flex-1 bg-transparent" asChild>
-          <Link href="/quote">Poptat</Link>
+          <Link href="/poptavka-dilu">Poptat</Link>
         </Button>
       </CardFooter>
     </Card>
