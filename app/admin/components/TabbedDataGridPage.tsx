@@ -86,10 +86,10 @@ export default function TabbedDataGridPage() {
           defaultValue="repas"
           value={activeTab}
           onValueChange={setActiveTab as unknown as (value: string) => void}
-          className="w-full "
+          className="w-full"
         >
-          <div className="flex justify-between items-center mb-6">
-            <TabsList>
+          <div className="flex justify-between items-center mb-6 overflow-x-auto">
+            <TabsList className="">
               {Object.keys(tabConfig).map((tabKey) => (
                 <TabsTrigger
                   key={tabKey}

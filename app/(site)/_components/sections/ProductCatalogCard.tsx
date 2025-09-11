@@ -85,7 +85,7 @@ const ProductCatalogCard = ({
         )}
         {product.price && (
           <p className="font-semibold text-accent text-3xl">
-            Cena: {product.price.toLocaleString("CZ")} CZK
+            Cena: {product.price.toLocaleString("cz")} Kč
           </p>
         )}
       </CardContent>

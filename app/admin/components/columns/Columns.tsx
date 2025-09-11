@@ -61,7 +61,7 @@ export const getColumns = (
   },
   {
     id: "actions",
-    header: "Actions",
+    header: "Akce",
     meta: {
       flex: 0.3,
       align: "right",
