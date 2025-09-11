@@ -17,10 +17,6 @@ const siteMenu = [
     href: "/o-nas",
   },
   {
-    title: "Poptat motory nebo díly",
-    href: "/poptavka-dilu",
-  },
-  {
     title: "Použité motory",
     href: "/kategorie/pouzite-motory",
   },
@@ -68,15 +64,20 @@ const Navbar = () => {
         </Link>
         <span className="flex flex-row gap-10 items-center z-10">
           <span className="flex flex-row gap-2 items-center max-md:hidden text-xl font-bold">
-            <Phone size={36} className=" stroke-red-500" />
-            +420 724 704 764
+            <Link
+              href="tel:+420724704764"
+              className="flex flex-row gap-4 items-center"
+            >
+              <Phone size={24} className=" stroke-red-500" />
+              +420 724 704 764
+            </Link>
           </span>
           <Link
             href="mailto:info@hledammotory.cz"
             className="max-lg:hidden block text-xl font-bold"
           >
             <span className="flex flex-row gap-4 items-center">
-              <Mail size={36} className="stroke-red-500" />
+              <Mail size={24} className="stroke-red-500" />
               <span>info@hledammotory.cz</span>
             </span>
           </Link>

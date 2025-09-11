@@ -22,6 +22,8 @@ interface ProductDetailProps {
 export function ProductDetail({ product, category }: ProductDetailProps) {
   const [showInquiryForm, setShowInquiryForm] = useState(false);
 
+  console.log("product", product.description);
+
   return (
     <div className="container mx-auto px-4 py-8">
       {/* Breadcrumb */}
@@ -87,7 +89,7 @@ export function ProductDetail({ product, category }: ProductDetailProps) {
             <div className="w-full">
               {product?.description?.split("\n").map((line, index) => (
                 <p className="text-md leading-loose" key={index}>
-                  - {line}
+                  {line}
                 </p>
               ))}
             </div>

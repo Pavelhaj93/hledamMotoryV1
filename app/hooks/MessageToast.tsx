@@ -50,11 +50,11 @@ const MessageToast = forwardRef<HTMLDivElement, MessageToastProps>(
 
     return (
       <SnackbarContent ref={ref}>
-        <div className="w-full max-w-md">
+        <div className="w-full max-w-md bg-white">
           <Alert
             variant="default"
             className={cn(
-              "relative w-full shadow-md",
+              "relative w-full shadow-md flex gap-2",
               getVariantStyles(variant),
               expanded && "rounded-b-none border-b-0"
             )}
@@ -65,7 +65,7 @@ const MessageToast = forwardRef<HTMLDivElement, MessageToastProps>(
               message
             )}
 
-            <div className="absolute top-2 right-2 flex items-center gap-1">
+            <div className="absolute top-2 right-2 flex items-center gap-4">
               {onInfoClick && (
                 <Button
                   size="icon"

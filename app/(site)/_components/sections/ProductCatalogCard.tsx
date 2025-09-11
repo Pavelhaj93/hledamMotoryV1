@@ -46,9 +46,10 @@ const ProductCatalogCard = ({
             // TODO: finish sizes
             src={product.images[0]}
             alt={product.name}
-            className="w-full h-[400px] items-center object-cover rounded-t-xl"
-            width={300}
-            height={400}
+            className="w-full h-[413px] items-center object-cover rounded-t-xl"
+            width={310}
+            height={413}
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 310px"
           />
         </Link>
       </CardHeader>
@@ -84,7 +85,7 @@ const ProductCatalogCard = ({
         )}
         {product.price && (
           <p className="font-semibold text-accent text-3xl">
-            Cena: {product.price.toLocaleString("CZ")} CZK
+            Cena: {product.price.toLocaleString("cz")} Kč
           </p>
         )}
       </CardContent>

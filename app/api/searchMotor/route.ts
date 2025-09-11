@@ -1,30 +1,45 @@
 import { NextResponse } from "next/server";
 import prismaDB from "@/prisma/prismaDB";
 import { mailOptions, transporter } from "@/config/nodemailer";
-import type { RequestMotor } from "@/app/hooks/useRequestMotors";
+import { ProductCardType } from "@/app/(site)/poptavka-dilu/[[...brand]]/components/InquiryForm";
 
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { requests, email, phone, note } = body;
+    const { personalInfo, products } = body;
 
-    if (!requests || !email || !phone) {
+    if (!personalInfo || !products) {
       return new NextResponse("Missing fields", { status: 400 });
     }
 
-    for (const element of requests) {
+    const { name, phone, email, note } = personalInfo;
+
+    if (!name || !email) {
+      return new NextResponse("Missing personal info fields", { status: 400 });
+    }
+
+    if (products.length === 0) {
+      return new NextResponse("No products in the request", { status: 400 });
+    }
+
+    for (const element of products as ProductCardType[]) {
       const findMark = await prismaDB.mark.findUnique({
-        where: { name: element.mark ?? "" },
+        where: { name: element.brand ?? "" },
       });
+      console.log("findMark", findMark);
       const findModel = await prismaDB.model.findUnique({
         where: { name: element.model ?? "" },
       });
+      console.log("findModel", findModel);
       const findEngineType = await prismaDB.engineType.findUnique({
         where: { name: element.engineType ?? "" },
       });
+      console.log("findEngineType", findEngineType);
 
       if (!findMark || !findModel || !findEngineType) {
-        return new NextResponse("Motor neexistuje v databázi", { status: 404 });
+        return new NextResponse("Produkt neexistuje v databázi", {
+          status: 404,
+        });
       }
     }
 
@@ -35,13 +50,13 @@ export async function POST(req: Request) {
         text: note,
         html: `<h2>Nová zpráva od - email ${email} ${
           phone ? `- telefon ${phone}` : ""
-        }  </h2><br></br><h3>Uživatel má zájem o motory:</h3><div>${requests.map(
-          (request: RequestMotor) => {
+        }  </h2><br></br><h3>Uživatel má zájem o produkty:</h3><div>${products.map(
+          (product: ProductCardType) => {
             return `<div>
-             <h4>Značka: ${request.mark}</h4>
-              <h4>Model: ${request.model}</h4>
-              <h4>Motorizace: ${request.engineType}</h4>
-              <h4>Dodatečná zpráva k motoru: ${request.textArea}</h4>
+             <h4>Značka: ${product.brand}</h4>
+              <h4>Model: ${product.model}</h4>
+              <h4>Motorizace: ${product.engineType}</h4>
+              <h4>Dodatečná zpráva k produktu: ${product.notes}</h4>
           </div>`;
           }
         )}</div><br></br><p>${note}</p>`,
