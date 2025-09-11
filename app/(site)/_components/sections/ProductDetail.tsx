@@ -100,9 +100,12 @@ export function ProductDetail({ product, category }: ProductDetailProps) {
               size="lg"
               className="flex-1"
               onClick={() => setShowInquiryForm(true)}
+              asChild
             >
-              <Package className="w-4 h-4 mr-2" />
-              Nezávazně poptat
+              <Link href="/poptavka-dilu">
+                <Package className="w-4 h-4 mr-2" />
+                Nezávazně poptat
+              </Link>
             </Button>
             {/* <Button
               size="lg"

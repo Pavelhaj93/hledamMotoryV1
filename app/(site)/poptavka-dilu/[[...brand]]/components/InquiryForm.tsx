@@ -637,8 +637,10 @@ export default function InquiryForm() {
                   </h3>
 
                   {products.length === 0 ? (
-                    <Alert className="bg-blue-50 border-blue-200">
-                      <Package className="h-4 w-4 text-blue-600" />
+                    <Alert className="bg-blue-50 border-blue-200 items-center flex">
+                      <div className="mr-3">
+                        <Package className="h-4 w-4 text-blue-600" />
+                      </div>
                       <AlertDescription className="text-blue-800">
                         Žádné produkty nebyly přidány. Přidejte prosím produkty
                         k poptávce pomocí formuláře výše.
@@ -805,7 +807,8 @@ export default function InquiryForm() {
                       </Button>
                       <p className="text-sm text-gray-500 mt-2">
                         Vaše poptávka bude odeslána našim partnerům a obdržíte
-                        nabídky do 24 hodin, pokud chcete urychlit proces, neváhejte nám zavolat.
+                        nabídky do 24 hodin, pokud chcete urychlit proces,
+                        neváhejte nám zavolat.
                       </p>
                     </div>
                   </div>

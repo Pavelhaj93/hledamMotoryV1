@@ -19,13 +19,13 @@ export function Hero() {
         <div className="grid lg:grid-cols-2 gap-12 items-center min-h-[80vh]">
           <div className="">
             <h1 className="text-5xl md:text-7xl font-bold mb-6 text-balance text-white">
-              Motory, převodovky,
+              Motory, hlavy,
               <br />
               <span className="text-red-500"> turba a další</span>
             </h1>
             <p className="text-xl md:text-2xl mb-8 text-gray-200 text-pretty max-w-lg">
-              Prémiové autodíly pro profesionály. Motory, turbodmychadla a
-              převodovky od ověřených výrobců.
+              Prémiové autodíly pro profesionály. Motory, turbodmychadla, hlavy
+              a další díly od ověřených výrobců.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 mb-12">
