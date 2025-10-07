@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import prismaDB from "@/prisma/prismaDB";
 import { mailOptions, transporter } from "@/config/nodemailer";
-import { ProductCardType } from "@/app/(site)/poptavka-dilu/[[...brand]]/components/InquiryForm";
+import { ProductCardType } from "@/app/(site)/poptavka-dilu/components/InquiryForm";
 
 export async function POST(req: Request) {
   try {
