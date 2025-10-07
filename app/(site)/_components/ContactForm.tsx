@@ -69,6 +69,7 @@ const ContactForm = ({
   const onSubmit = (formValues: FormValues) => {
     console.log("Form submitted:", formValues);
     mutation.mutate(formValues);
+    message.success("Zpráva byla úspěšně odeslána. Ozveme se Vám co nejdříve.");
   };
 
   return (
