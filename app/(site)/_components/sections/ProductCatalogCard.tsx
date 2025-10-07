@@ -36,68 +36,58 @@ const ProductCatalogCard = ({
 }) => {
   const link = `/produkt/${category}/${product.slug}`;
   return (
-    <Card
-      key={product.id}
-      className="hover:shadow-lg transition-shadow flex flex-col"
-    >
-      <CardHeader className="p-0">
-        <Link href={link} className="w-full">
-          <Image
-            // TODO: finish sizes
-            src={product.images[0]}
-            alt={product.name}
-            className="w-full h-[413px] items-center object-cover rounded-t-xl"
-            width={310}
-            height={413}
-            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 310px"
-          />
-        </Link>
-      </CardHeader>
-      <CardContent className="p-6">
-        <div className="flex items-center justify-between mb-4">
-          <Badge variant="outline" className="text-xs">
-            {getCategoryDisplayName(product.category ?? category ?? "")}
-          </Badge>
-          <Badge variant="default" className="text-xs">
-            Skladem
-          </Badge>
-        </div>
-        <CardTitle className="text-lg mb-2 uppercase">
-          <Link href={link}>{product.name}</Link>
-        </CardTitle>
-        <p className="text-xl flex gap-2 items-center text-muted-foreground mb-3">
-          Výrobce:{" "}
-          <Image
-            src={`/images/frontend/cars/PNG/${marks
-              .find((mark) => mark.name === product.markName)
-              ?.id.toString()}.png`}
-            alt={product.name}
-            className="h-10 w-auto object-cover rounded-md"
-            width={40}
-            height={40}
-          />
-        </p>
+    <Link href={link}>
+      <Card
+        key={product.id}
+        className="hover:shadow-lg transition-shadow flex flex-col h-full"
+      >
+        <CardHeader className="p-0">
+          <Link href={link} className="w-full">
+            <Image
+              // TODO: finish sizes
+              src={product.images[0]}
+              alt={product.name}
+              className="w-full h-[413px] items-center object-cover rounded-t-xl"
+              width={310}
+              height={413}
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 310px"
+            />
+          </Link>
+        </CardHeader>
+        <CardContent className="flex-col gap-1 flex h-full justify-between">
+          <div className="flex items-center gap-2 mb-1">
+            <Badge variant="outline">
+              {getCategoryDisplayName(product.category ?? category ?? "")}
+            </Badge>
+            <Badge variant="default">Skladem</Badge>
+          </div>
+          <CardTitle className="text-lg uppercase">{product.name}</CardTitle>
+          <p className="text-xl flex gap-2 items-center">
+            Výrobce:{" "}
+            <Image
+              src={`/images/frontend/cars/PNG/${marks
+                .find((mark) => mark.name === product.markName)
+                ?.id.toString()}.png`}
+              alt={product.name}
+              className="h-10 w-auto object-cover rounded-md"
+              width={40}
+              height={40}
+            />
+          </p>
 
-        {product.description && (
-          <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
-            {product.description.substring(0, 100)}...
-          </p>
-        )}
-        {product.price && (
-          <p className="font-semibold text-accent text-3xl">
-            Cena: {product.price.toLocaleString("cz")} Kč
-          </p>
-        )}
-      </CardContent>
-      <CardFooter className="p-6 pt-0 flex gap-2 mt-auto">
-        <Button asChild className="flex-1">
-          <Link href={link}>Zobrazit detail</Link>
-        </Button>
-        <Button variant="outline" className="flex-1 bg-transparent" asChild>
-          <Link href="/poptavka-dilu">Poptat</Link>
-        </Button>
-      </CardFooter>
-    </Card>
+          {product.description && (
+            <p className="text-sm text-muted-foreground line-clamp-2">
+              {product.description.substring(0, 100)}...
+            </p>
+          )}
+          {product.price && (
+            <p className="font-semibold text-accent text-2xl">
+              Cena: {product.price.toLocaleString("cz")} Kč
+            </p>
+          )}
+        </CardContent>
+      </Card>
+    </Link>
   );
 };
 
