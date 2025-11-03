@@ -111,7 +111,7 @@ export const Footer = () => {
           <div>
             <h4 className="font-semibold mb-4">Kontakt</h4>
             <div className="space-y-2 text-sm opacity-90">
-              <p>Telefon: +420 724 704 764</p>
+              <p>Telefon: +420 792 644 755</p>
               <p>Email: info@hledammotory.cz</p>
               <p>Pracovní doba: Po-Pá 8:00-18:00</p>
               {/* <p>Nouzové: 24/7 Podpora</p> */}

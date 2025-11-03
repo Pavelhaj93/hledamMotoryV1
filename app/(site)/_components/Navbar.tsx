@@ -65,11 +65,11 @@ const Navbar = () => {
         <span className="flex flex-row gap-10 items-center z-10">
           <span className="flex flex-row gap-2 items-center max-md:hidden text-xl font-bold">
             <Link
-              href="tel:+420724704764"
+              href="tel:+420792644755"
               className="flex flex-row gap-4 items-center"
             >
               <Phone size={24} className=" stroke-red-500" />
-              +420 724 704 764
+              +420 792 644 755
             </Link>
           </span>
           <Link

@@ -27,7 +27,7 @@ export default function PrivacyPolicy() {
             <br />
             email: info@hledammotory.cz
             <br />
-            telefon: +420 724 704 764
+            telefon: +420 792 644 755
           </p>
           <p className="text-gray-600">
             <strong>3.</strong> Osobními údaji jsou všechny informace o

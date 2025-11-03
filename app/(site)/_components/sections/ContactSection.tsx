@@ -59,10 +59,10 @@ const ContactSection: FC<ContactSectionProps> = ({
                   Zavolejte nám
                 </h3>
                 <Link
-                  href="tel:+420724704764"
+                  href="tel:+420792644755"
                   className="text-2xl font-bold text-red-600 hover:text-red-700 transition-colors"
                 >
-                  +420 724 704 764
+                  +420 792 644 755
                 </Link>
                 <p className="text-gray-600 mt-2">
                   Pondělí - Pátek: 8:00 - 17:00
